@@ -17,6 +17,8 @@ const Templates = Loadable(lazy(() => import('pages/extra-pages/Templates')));
 const CompaignsResult = Loadable(lazy(() => import('pages/extra-pages/CompaignsResult')));
 const SendingProfile = Loadable(lazy(() => import('pages/extra-pages/SendingProfile')));
 const ReportPage = Loadable(lazy(() => import('pages/extra-pages/report')));
+const UserMgt = Loadable(lazy(() => import('pages/management/user')));
+const BillingMgt = Loadable(lazy(() => import('pages/management/billing')));
 
 // render - utilities
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
@@ -63,6 +65,14 @@ const MainRoutes = {
         {
             path: '/templates',
             element: <Templates />
+        },
+        {
+            path: '/user-mgt',
+            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <UserMgt /> : <DashboardDefault />
+        },
+        {
+            path: '/billing-mgt',
+            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <BillingMgt /> : <DashboardDefault />
         },
         {
             path: '/landing-page',

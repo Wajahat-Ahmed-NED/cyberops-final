@@ -9,5 +9,5 @@ import phishing from './phishing';
 const menuItems = {
     items: [phishing, support]
 };
-
+JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' && menuItems.items.unshift(pages);
 export default menuItems;

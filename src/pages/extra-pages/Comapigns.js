@@ -57,6 +57,7 @@ export default function Compaigns() {
     const [open, setOpen] = React.useState(false);
     const [copyModal, setCopyModal] = React.useState(false);
     const [testEmailopen, setTestEmailopen] = React.useState(false);
+    const [loader, setLoader] = React.useState(false);
     const [name, setName] = React.useState('');
     const [todos, setTodos] = useState([]);
     const [envelopSender, setEnvelopSender] = useState('');
@@ -178,6 +179,7 @@ export default function Compaigns() {
     };
 
     const fetchUser = () => {
+        setLoader(true);
         getCompaigns()
             .then((res) => {
                 console.log(res);
@@ -191,6 +193,7 @@ export default function Compaigns() {
             .then((res) => {
                 console.log(res);
                 setTemplates(res.data);
+                setLoader(false);
             })
             .catch((err) => {
                 console.log(err);
@@ -219,6 +222,7 @@ export default function Compaigns() {
             .catch((err) => {
                 console.log(err);
             });
+        setLoader(false);
     };
     const handleDeleteGroup = (i) => {
         deleteCompaign(i)
@@ -509,34 +513,33 @@ export default function Compaigns() {
                             <td>Actions</td>
                         </tr>
                     </thead>
-                    {data?.length < 1 ? (
-                        <h5>Loading...</h5>
-                    ) : (
-                        <tbody>
-                            {data?.map((e, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{e.name}</td>
 
-                                        <td>{new Date(e.created_date).toUTCString()}</td>
-                                        <td>{e.status}</td>
-                                        <td>
-                                            <IconButton>
-                                                <VisibilityIcon color="primary" onClick={() => handleNavigate(e.id)} />
-                                            </IconButton>
-                                            <IconButton>
-                                                <ContentCopyIcon color="primary" onClick={() => handleCopyModal(e)} />
-                                            </IconButton>
-                                            <IconButton>
-                                                <DeleteIcon color="error" onClick={() => handleDeleteGroup(e.id)} />
-                                            </IconButton>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    )}
+                    <tbody>
+                        {data?.map((e, i) => {
+                            return (
+                                <tr key={i}>
+                                    <td>{e.name}</td>
+
+                                    <td>{new Date(e.created_date).toUTCString()}</td>
+                                    <td>{e.status}</td>
+                                    <td>
+                                        <IconButton>
+                                            <VisibilityIcon color="primary" onClick={() => handleNavigate(e.id)} />
+                                        </IconButton>
+                                        <IconButton>
+                                            <ContentCopyIcon color="primary" onClick={() => handleCopyModal(e)} />
+                                        </IconButton>
+                                        <IconButton>
+                                            <DeleteIcon color="error" onClick={() => handleDeleteGroup(e.id)} />
+                                        </IconButton>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
                 </table>
+                {loader && <h4 style={{ textAlign: 'center' }}>Loading...</h4>}
+                {data?.length < 1 && <h5 style={{ textAlign: 'center' }}>No Data Found</h5>}
             </MainCard>
 
             <Modal open={copyModal} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">

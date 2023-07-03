@@ -14,13 +14,13 @@ const AuthFooter = () => {
                 spacing={2}
                 textAlign={matchDownSM ? 'center' : 'inherit'}
             >
-                <Typography variant="subtitle2" color="secondary" component="span">
+                {/* <Typography variant="subtitle2" color="secondary" component="span">
                     Copyright &copy; &nbsp;
                     <Typography component={Link} variant="subtitle2" href="https://codedthemes.com" target="_blank" underline="hover">
-                        Commtel
+                        
                     </Typography>
                     &nbsp;2022
-                </Typography>
+                </Typography> */}
 
                 {/* <Stack
                     direction={matchDownSM ? 'column' : 'row'}

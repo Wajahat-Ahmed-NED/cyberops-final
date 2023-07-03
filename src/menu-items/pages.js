@@ -12,16 +12,22 @@ const icons = {
 
 const pages = {
     id: 'authentication',
-    title: 'Authentication',
+    title: 'Portal Management',
     type: 'group',
     children: [
         {
             id: 'login1',
-            title: 'Logout',
+            title: 'User ',
             type: 'item',
-            url: '/login',
-            icon: icons.LogoutOutlined,
-            target: true
+            url: '/user-mgt',
+            icon: icons.ProfileOutlined
+        },
+        {
+            id: 'billing',
+            title: 'Billing ',
+            type: 'item',
+            url: '/billing-mgt',
+            icon: icons.ProfileOutlined
         }
     ]
 };

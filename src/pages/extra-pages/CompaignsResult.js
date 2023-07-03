@@ -88,6 +88,7 @@ export default function CompaignsResult() {
     const [summary, setSummary] = React.useState({});
     const [result, setResult] = React.useState([]);
     const [newModal, setNewModal] = React.useState(false);
+    const [eve, setEvents] = React.useState({});
 
     console.log(result);
     const handleOpen = () => {
@@ -242,6 +243,8 @@ export default function CompaignsResult() {
     };
     const handleNewModal = (i) => {
         setNewModal(true);
+        setEvents(result?.results[i]);
+        console.log(result?.results[i]);
     };
     const navigate = useNavigate();
 
@@ -271,6 +274,17 @@ export default function CompaignsResult() {
             }
         });
     };
+
+    function findLastOccurrence(array, searchValue) {
+        for (let i = array.length - 1; i >= 0; i--) {
+            const values = Object.values(array[i]);
+            if (values.includes(searchValue)) {
+                console.log(array[i]);
+                return array[i];
+            }
+        }
+        return null;
+    }
 
     useEffect(() => {
         fetchUser();
@@ -325,7 +339,7 @@ export default function CompaignsResult() {
                             showTotal={false}
                             items={[
                                 {
-                                    value: `${summary.stats?.sent}`,
+                                    value: `${summary.stats?.sent} `,
                                     label: 'Email Sent'
                                 }
                             ]}
@@ -653,7 +667,7 @@ export default function CompaignsResult() {
                         {result?.results?.map((e, i) => {
                             return (
                                 <>
-                                    <tr key={i} onClick={() => handleNewModal(i)}>
+                                    <tr key={i} onClick={() => handleNewModal(i)} style={{ cursor: 'pointer' }}>
                                         <td>{e.first_name}</td>
                                         <td>{e.last_name}</td>
                                         <td>{e.email}</td>
@@ -671,12 +685,12 @@ export default function CompaignsResult() {
                                     >
                                         <Box sx={style}>
                                             <Typography id="modal-modal-title" variant="h4" component="h2">
-                                                Timeline for {e.first_name} {e.last_name}
+                                                Timeline for {eve.first_name} {eve.last_name}
                                             </Typography>
                                             <Typography id="modal-modal-description" sx={{ mt: 2 }} className="my-2">
-                                                Email: {e.email}
+                                                Email: {eve?.email && eve?.email}
                                                 <br />
-                                                Result ID: {e.id}
+                                                Result ID: {eve.id}
                                             </Typography>
                                             {result?.timeline[0].message === 'Campaign Created' ? (
                                                 <>
@@ -694,16 +708,21 @@ export default function CompaignsResult() {
                                                     Time : {new Date(result?.timeline[0].time).toLocaleString()}
                                                 </>
                                             )}
-                                            {e?.status === 'Scheduled' ? (
-                                                <p> Send Date : {new Date(e?.send_date).toLocaleString()}</p>
+                                            {eve?.status === 'Scheduled' ? (
+                                                <p> Send Date : {new Date(eve?.send_date).toLocaleString()}</p>
                                             ) : (
                                                 // e?.status === 'Error' && (
                                                 <p>
-                                                    {e?.status === 'Error' && <CancelIcon color="error" size="large" />}
+                                                    {eve?.status === 'Error' && <CancelIcon color="error" size="large" />}
                                                     <br />
-                                                    <h5> Details </h5>
-                                                    <p>{result?.timeline[result?.timeline.length - 1]?.details}</p>
-                                                    {result?.timeline[result?.timeline.length - 1]?.details && (
+                                                    <h5> Raw Data About Events </h5>
+                                                    {findLastOccurrence(result?.timeline, eve?.email)?.details.length > 0
+                                                        ? findLastOccurrence(result?.timeline, eve?.email)?.details
+                                                        : 'No Events Occur'}
+                                                    <br />
+                                                    <br />
+                                                    {/* <p>{findLastOccurrence(result?.timeline, eve?.email)??.details}</p> */}
+                                                    {findLastOccurrence(result?.timeline, eve?.email)?.details && (
                                                         <table className="table text-white">
                                                             <tr>
                                                                 <th>RID </th>
@@ -713,23 +732,26 @@ export default function CompaignsResult() {
                                                             <tr>
                                                                 <td className="px-2">
                                                                     {
-                                                                        JSON.parse(result?.timeline[result?.timeline.length - 1].details)
-                                                                            ?.payload?.rid
+                                                                        JSON.parse(
+                                                                            findLastOccurrence(result?.timeline, eve?.email)?.details
+                                                                        )?.payload?.rid
                                                                     }{' '}
                                                                     <br />
                                                                 </td>
 
                                                                 <td className="px-2">
                                                                     {
-                                                                        JSON.parse(result?.timeline[result?.timeline.length - 1].details)
-                                                                            ?.browser?.address
+                                                                        JSON.parse(
+                                                                            findLastOccurrence(result?.timeline, eve?.email)?.details
+                                                                        )?.browser?.address
                                                                     }{' '}
                                                                     <br />
                                                                 </td>
                                                                 <td className="px-2">
                                                                     {
-                                                                        JSON.parse(result?.timeline[result?.timeline.length - 1].details)
-                                                                            ?.browser?.['user-agent']
+                                                                        JSON.parse(
+                                                                            findLastOccurrence(result?.timeline, eve?.email)?.details
+                                                                        )?.browser?.['user-agent']
                                                                     }{' '}
                                                                     <br />
                                                                 </td>
@@ -737,7 +759,7 @@ export default function CompaignsResult() {
                                                         </table>
                                                     )}
                                                     Recent Action Time :{' '}
-                                                    {new Date(result?.timeline[result?.timeline.length - 1].time).toLocaleString()}
+                                                    {new Date(findLastOccurrence(result?.timeline, eve?.email)?.time).toLocaleString()}
                                                 </p>
                                                 // )
                                             )}
