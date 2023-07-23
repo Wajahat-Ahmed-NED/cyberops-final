@@ -56,11 +56,11 @@ const MainRoutes = {
         },
         {
             path: 'Phishing',
-            element: <GoPhish />
+            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <GoPhish /> : <Compaigns />
         },
         {
             path: '/user-page',
-            element: <UsersAndGroups />
+            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <UsersAndGroups /> : <Compaigns />
         },
         {
             path: '/templates',
@@ -90,10 +90,10 @@ const MainRoutes = {
             path: '/compaign/:id',
             element: <CompaignsResult />
         },
-        {
-            path: 'siem',
-            element: <ReportPage />
-        },
+        // {
+        //     path: 'siem',
+        //     element: <ReportPage />
+        // },
         {
             path: 'shadow',
             element: <Shadow />

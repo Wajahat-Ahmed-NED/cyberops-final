@@ -1,28 +1,190 @@
 // project import
 import MainCard from 'components/MainCard';
 import { useEffect, useState } from 'react';
-import { Typography, Button, Modal, Box, TextField, Select, MenuItem, IconButton } from '@mui/material';
+import { Typography, Button, Box, TextField, Select, MenuItem, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import { EditOutlined, ProfileOutlined, LogoutOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
+import { Modal, Checkbox } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import axios from 'axios';
+
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const User = () => {
     const [data, setData] = useState([]);
     useEffect(() => {
-        setData(JSON.parse(localStorage.getItem('Users')));
-        console.log(JSON.parse(localStorage.getItem('Users')));
+        // setData(JSON.parse(localStorage.getItem('Users')));
+        // console.log(JSON.parse(localStorage.getItem('Users')));
+        axios
+            .get('http://192.168.2.104:1338/getUser')
+            .then((res) => {
+                console.log(res.data.users);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }, []);
+    const [modal, setModal] = useState(false);
+    const handleListItemClick = (event, index) => {
+        setSelectedIndex(index);
+    };
+    const handleModal = () => {
+        setModal(!modal);
+    };
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmpassword, setCPassword] = useState('');
 
+    const [name, setName] = useState('');
+    const [wazuhChecked, setWazuhChecked] = useState(false);
+    const [gophishChecked, setGophishChecked] = useState(false);
+
+    //   const handleOpen = () => {
+    //     setOpen(true);
+    //   };
+
+    //   const handleClose = () => {
+    //     setOpen(false);
+    //   };
+
+    const handleNameChange = (event) => {
+        setName(event.target.value);
+    };
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+    const handleCPasswordChange = (event) => {
+        setCPassword(event.target.value);
+    };
+
+    const handleWazuhChange = (event) => {
+        setWazuhChecked(event.target.checked);
+    };
+
+    const handleGophishChange = (event) => {
+        setGophishChecked(event.target.checked);
+    };
+
+    const handleCreateUser = () => {
+        if (!email || !password || !name || !confirmpassword) {
+            window.alert('Please fill all the details');
+        } else {
+            if (password == confirmpassword) {
+                const user = {
+                    email,
+                    password,
+                    name,
+                    wazuh: wazuhChecked,
+                    gophish: gophishChecked,
+                    type: 'user'
+                };
+                // let existingUsers = JSON.parse(localStorage.getItem('Users'));
+                // existingUsers ? existingUsers.push(user) : (existingUsers = [user]);
+                // localStorage.setItem('Users', JSON.stringify(existingUsers));
+                // console.log(user);
+                // setModal(false);
+
+                axios
+                    .post('http://192.168.2.104:1338/createPortalUser', {
+                        userdetails: user
+                    })
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else {
+                window.alert('Password and Confirm Password must be same');
+            }
+        }
+    };
     return (
         <>
             <MainCard title="User Management">
-                {/* <Typography variant="body2" style={{ color: 'black ' }}>
-            Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif
-            ad minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in
-            reprehended in voltage veil esse colum doolie eu fujian bulla parian. Exceptive sin ocean cuspidate non president, sunk in culpa
-            qui officiate descent molls anim id est labours.
-        </Typography> */}
+                <Button variant="contained" onClick={handleModal}>
+                    Create User
+                </Button>
+                <Modal open={modal} onClose={handleModal}>
+                    <div
+                        style={{
+                            height: '500px'
+                        }}
+                        className="modal-container"
+                    >
+                        <Typography variant="h4" component="h2" className="my-2">
+                            Create User
+                        </Typography>
+                        <TextField
+                            label="Name"
+                            value={name}
+                            inputProps={{ style: { color: 'black' } }}
+                            onChange={handleNameChange}
+                            fullWidth
+                        />
+                        <br />
+                        <TextField
+                            label="Email"
+                            value={email}
+                            inputProps={{ style: { color: 'black' } }}
+                            onChange={handleEmailChange}
+                            fullWidth
+                        />
+                        <br />
+                        <TextField
+                            type="Password"
+                            label="Password"
+                            value={password}
+                            inputProps={{ style: { color: 'black' } }}
+                            onChange={handlePasswordChange}
+                            fullWidth
+                        />
+                        <br />
+                        <TextField
+                            type="Password"
+                            label="Confirm Password"
+                            value={confirmpassword}
+                            inputProps={{ style: { color: 'black' } }}
+                            onChange={handleCPasswordChange}
+                            fullWidth
+                        />
+                        <br />
+
+                        <Typography variant="h4" component="h2" className="my-2">
+                            Select Services
+                        </Typography>
+                        <div>
+                            <Checkbox checked={wazuhChecked} onChange={handleWazuhChange} name="wazuh" />
+                            Wazuh
+                            <Checkbox checked={gophishChecked} onChange={handleGophishChange} name="gophish" />
+                            Gophish
+                        </div>
+                        <br />
+                        <Button fullWidth variant="contained" onClick={handleCreateUser}>
+                            Create User
+                        </Button>
+                    </div>
+                </Modal>
+
+                <style jsx>{`
+                    .modal-container {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: start;
+                        justify-content: center;
+                        background-color: #fff;
+                        color: black;
+                        padding: 20px;
+                        width: 500px;
+                        height: 300px;
+                        margin: 20px auto;
+                        outline: none;
+                        border-radius: 5px;
+                    }
+                `}</style>
                 <table className="table table-hover mt-4">
                     <thead className="thead-dark">
                         <tr>

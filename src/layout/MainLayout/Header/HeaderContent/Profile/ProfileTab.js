@@ -92,56 +92,7 @@ const ProfileTab = ({ handleLogout }) => {
                     </ListItemIcon>
                     <ListItemText primary="Logout" />
                 </ListItemButton>
-                {JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' && (
-                    <ListItemButton selected={selectedIndex === 3} onClick={handleModal}>
-                        <ListItemIcon>
-                            {/* <LogoutOutlined /> */}
-                            <AddCircleOutlineIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Create User" />
-                    </ListItemButton>
-                )}
             </List>
-
-            <Modal open={modal} onClose={handleModal}>
-                <div className="modal-container">
-                    <Typography variant="h4" component="h2" className="my-2">
-                        Create User
-                    </Typography>
-                    <TextField label="Name" value={name} inputProps={{ style: { color: 'black' } }} onChange={handleNameChange} fullWidth />
-
-                    <div>
-                        <Checkbox checked={wazuhChecked} onChange={handleWazuhChange} name="wazuh" />
-                        Wazuh
-                    </div>
-
-                    <div>
-                        <Checkbox checked={gophishChecked} onChange={handleGophishChange} name="gophish" />
-                        Gophish
-                    </div>
-
-                    <Button variant="contained" onClick={handleCreateUser}>
-                        Create User
-                    </Button>
-                </div>
-            </Modal>
-
-            <style jsx>{`
-                .modal-container {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: start;
-                    justify-content: center;
-                    background-color: #fff;
-                    color: black;
-                    padding: 20px;
-                    width: 500px;
-                    height: 300px;
-                    margin: 20px auto;
-                    outline: none;
-                    border-radius: 5px;
-                }
-            `}</style>
         </>
     );
 };
