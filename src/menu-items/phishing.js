@@ -2,6 +2,10 @@
 import { LoginOutlined, ProfileOutlined, LogoutOutlined } from '@ant-design/icons';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PhishingOutlineIcon from '@mui/icons-material/Phishing';
+import ArticleOutlineIcon from '@mui/icons-material/Article';
+import DescriptionOutlineIcon from '@mui/icons-material/Description';
+import AccountBoxOulineIcon from '@mui/icons-material/AccountBox';
 
 // icons
 const icons = {
@@ -22,7 +26,7 @@ const phishing = {
             title: 'Phishing',
             type: 'item',
             url: '/phishing',
-            icon: PersonOutlineIcon,
+            icon: PhishingOutlineIcon,
             color: '#ffffff',
             children: []
         },
@@ -39,7 +43,7 @@ const phishing = {
             title: 'Templates',
             type: 'item',
             url: '/templates',
-            icon: PersonOutlineIcon,
+            icon: ArticleOutlineIcon,
             color: '#ffffff'
         },
         {
@@ -47,7 +51,7 @@ const phishing = {
             title: 'Landing Page',
             type: 'item',
             url: '/landing-page',
-            icon: PersonOutlineIcon,
+            icon: DescriptionOutlineIcon,
             color: '#ffffff'
         },
         {
@@ -55,7 +59,7 @@ const phishing = {
             title: 'Sending Profile',
             type: 'item',
             url: '/sending-profile',
-            icon: PersonOutlineIcon,
+            icon: AccountBoxOulineIcon,
             color: '#ffffff'
         },
         {
