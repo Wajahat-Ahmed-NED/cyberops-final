@@ -7,7 +7,7 @@ import { EditOutlined, ProfileOutlined, LogoutOutlined, UserOutlined, WalletOutl
 import { Modal, Checkbox } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const User = () => {
@@ -16,12 +16,12 @@ const User = () => {
         // setData(JSON.parse(localStorage.getItem('Users')));
         // console.log(JSON.parse(localStorage.getItem('Users')));
         axios
-            .get('http://192.168.2.104:1338/getUser')
+            .get('http://192.168.1.120:1338/getUser')
             .then((res) => {
                 console.log(res.data.users);
             })
             .catch((err) => {
-                console.log(err);
+                window.alert('Something went wrong');
             });
     }, []);
     const [modal, setModal] = useState(false);
@@ -88,14 +88,22 @@ const User = () => {
                 // setModal(false);
 
                 axios
-                    .post('http://192.168.2.104:1338/createPortalUser', {
+                    .post('http://192.168.1.120:1338/createPortalUser', {
                         userdetails: user
                     })
                     .then((res) => {
-                        console.log(res);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'User Created successfully!',
+                            showConfirmButton: true
+                        });
+                        setModal(!modal);
+                        // Swal.fire(res.data, 'Fill all fields!', 'error');
                     })
                     .catch((error) => {
-                        console.log(error);
+                        //console.log('error', error.response.data);
+                        Swal.fire('Oops', error.response.data, 'error');
                     });
             } else {
                 window.alert('Password and Confirm Password must be same');
