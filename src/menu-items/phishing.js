@@ -2,6 +2,10 @@
 import { LoginOutlined, ProfileOutlined, LogoutOutlined } from '@ant-design/icons';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PhishingOutlineIcon from '@mui/icons-material/Phishing';
+import ArticleOutlineIcon from '@mui/icons-material/Article';
+import DescriptionOutlineIcon from '@mui/icons-material/Description';
+import AccountBoxOulineIcon from '@mui/icons-material/AccountBox';
 
 // icons
 const icons = {
@@ -17,6 +21,7 @@ const phishing = {
     title: 'Phishing Simulation',
     type: 'group',
     children: [
+<<<<<<< HEAD
         // {
         //     id: 'Admin-page',
         //     title: 'Phishing',
@@ -26,6 +31,17 @@ const phishing = {
         //     color: '#ffffff',
         //     children: []
         // },
+=======
+        {
+            id: 'Admin-page',
+            title: 'Phishing',
+            type: 'item',
+            url: '/phishing',
+            icon: PhishingOutlineIcon,
+            color: '#ffffff',
+            children: []
+        },
+>>>>>>> 0a4daf088baa8d8dc89f6ab708868fad5271b761
         {
             id: 'user-page',
             title: 'Users And Groups',
@@ -39,7 +55,7 @@ const phishing = {
             title: 'Templates',
             type: 'item',
             url: '/templates',
-            icon: PersonOutlineIcon,
+            icon: ArticleOutlineIcon,
             color: '#ffffff'
         },
         {
@@ -47,7 +63,7 @@ const phishing = {
             title: 'Landing Page',
             type: 'item',
             url: '/landing-page',
-            icon: PersonOutlineIcon,
+            icon: DescriptionOutlineIcon,
             color: '#ffffff'
         },
         {
@@ -55,7 +71,7 @@ const phishing = {
             title: 'Sending Profile',
             type: 'item',
             url: '/sending-profile',
-            icon: PersonOutlineIcon,
+            icon: AccountBoxOulineIcon,
             color: '#ffffff'
         },
         {
