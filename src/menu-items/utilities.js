@@ -5,7 +5,8 @@ import {
     BarcodeOutlined,
     BgColorsOutlined,
     FontSizeOutlined,
-    LoadingOutlined
+    LoadingOutlined,
+    ProfileOutlined
 } from '@ant-design/icons';
 
 // icons
@@ -15,7 +16,8 @@ const icons = {
     BarcodeOutlined,
     AntDesignOutlined,
     LoadingOutlined,
-    AppstoreAddOutlined
+    AppstoreAddOutlined,
+    ProfileOutlined
 };
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
@@ -26,34 +28,41 @@ const utilities = {
     type: 'group',
     children: [
         {
-            id: 'util-typography',
-            title: 'Typography',
+            id: 'billing',
+            title: 'Billing ',
             type: 'item',
-            url: '/typography',
-            icon: icons.FontSizeOutlined
-        },
-        {
-            id: 'util-color',
-            title: 'Color',
-            type: 'item',
-            url: '/color',
-            icon: icons.BgColorsOutlined
-        },
-        {
-            id: 'util-shadow',
-            title: 'Shadow',
-            type: 'item',
-            url: '/shadow',
-            icon: icons.BarcodeOutlined
-        },
-        {
-            id: 'ant-icons',
-            title: 'Ant Icons',
-            type: 'item',
-            url: '/icons/ant',
-            icon: icons.AntDesignOutlined,
-            breadcrumbs: false
+            url: '/billing-mgt',
+            icon: icons.ProfileOutlined
         }
+        // {
+        //     id: 'util-typography',
+        //     title: 'Typography',
+        //     type: 'item',
+        //     url: '/typography',
+        //     icon: icons.FontSizeOutlined
+        // },
+        // {
+        //     id: 'util-color',
+        //     title: 'Color',
+        //     type: 'item',
+        //     url: '/color',
+        //     icon: icons.BgColorsOutlined
+        // },
+        // {
+        //     id: 'util-shadow',
+        //     title: 'Shadow',
+        //     type: 'item',
+        //     url: '/shadow',
+        //     icon: icons.BarcodeOutlined
+        // },
+        // {
+        //     id: 'ant-icons',
+        //     title: 'Ant Icons',
+        //     type: 'item',
+        //     url: '/icons/ant',
+        //     icon: icons.AntDesignOutlined,
+        //     breadcrumbs: false
+        // }
     ]
 };
 

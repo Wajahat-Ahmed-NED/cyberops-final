@@ -18,7 +18,23 @@ const User = () => {
         // setData(JSON.parse(localStorage.getItem('Users')));
         // console.log(JSON.parse(localStorage.getItem('Users')));
         axios
-            .get('http://192.168.1.120:1338/getUser')
+            .get('http://192.168.0.105:1338/getUser')
+            .then((res) => {
+                // setData(res.data.users);
+                // console.log(userData);
+                console.log(res.data.users);
+                const user = JSON.parse(localStorage.getItem('userdata'));
+                console.log(user);
+                // setName(user.username);
+                const result = res.data.users?.filter((e) => e.name === user.username);
+                // setData(result)
+                console.log(result);
+                localStorage.setItem('gophishapikey', result?.[0]?.gophishapikey);
+            })
+            .catch((err) => console.log(err));
+        const key = localStorage.getItem('gophishapikey');
+        axios
+            .get(`http://192.168.0.105:1338/getUser/${key}`)
             .then((res) => {
                 setData(res.data.users);
                 // console.log(userData);
@@ -93,7 +109,7 @@ const User = () => {
                 // setModal(false);
 
                 axios
-                    .post('http://192.168.1.120:1338/createPortalUser', {
+                    .post('http://192.168.0.105:1338/createPortalUser', {
                         userdetails: user
                     })
                     .then((res) => {

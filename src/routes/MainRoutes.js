@@ -60,7 +60,7 @@ const MainRoutes = {
         },
         {
             path: '/user-page',
-            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <UsersAndGroups /> : <Compaigns />
+            element: <UsersAndGroups />
         },
         {
             path: '/templates',
@@ -72,7 +72,7 @@ const MainRoutes = {
         },
         {
             path: '/billing-mgt',
-            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <BillingMgt /> : <DashboardDefault />
+            element: <BillingMgt />
         },
         {
             path: '/landing-page',

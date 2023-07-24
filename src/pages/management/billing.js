@@ -3,7 +3,7 @@ import MainCard from 'components/MainCard';
 import { useEffect, useState } from 'react';
 import { Typography, Button, Modal, Box, TextField, Select, MenuItem, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
 // ==============================|| SAMPLE PAGE ||============================== //
 const style = {
@@ -25,9 +25,38 @@ const style = {
 const User = () => {
     const [data, setData] = useState([]);
     const [editCost, setEditCost] = useState(false);
+    const [name, setName] = useState('');
     useEffect(() => {
-        setData(JSON.parse(localStorage.getItem('Users')));
-        console.log(JSON.parse(localStorage.getItem('Users')));
+        axios
+            .get('http://192.168.0.105:1338/getUser')
+            .then((res) => {
+                // setData(res.data.users);
+                // console.log(userData);
+                console.log(res.data.users);
+                const user = JSON.parse(localStorage.getItem('userdata'));
+                console.log(user);
+                setName(user.username);
+                const result = res.data.users?.filter((e) => e.name === user.username);
+                // setData(result)
+                console.log(result);
+                axios
+                    .get(`http://192.168.0.105:1338/getCompaigns/${result?.[0]?.gophishapikey}`, {
+                        gophishapikey: result?.[0]?.gophishapikey
+                    })
+
+                    .then((res) => {
+                        setData(res.data);
+                        console.log(res.data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            })
+            .catch((err) => {
+                window.alert('Something went wrong');
+            });
+        // setData(JSON.parse(localStorage.getItem('userdata')));
+        // console.log(JSON.parse(localStorage.getItem('Users')));
     }, []);
 
     return (
@@ -87,9 +116,9 @@ const User = () => {
                         <tr>
                             <td>S.No</td>
                             <td>User Name</td>
-                            <td>Start Date</td>
+                            {/* <td>Start Date</td>
                             <td>Last Paid Date</td>
-                            <td>Total Agents</td>
+                            <td>Total Agents</td> */}
                             <td>Total Compaigns</td>
                             <td>Total Cost (Last 30 Days)</td>
                         </tr>
@@ -100,11 +129,8 @@ const User = () => {
                                 return (
                                     <tr key={i}>
                                         <td>{i + 1}</td>
-                                        <td>{e.name}</td>
-                                        <td>{i % 2 === 0 ? '12/05/23' : '14/04/23'}</td>
-                                        <td>{i % 2 === 0 ? '11/06/23' : '13/06/23'}</td>
+                                        <td>{name}</td>
 
-                                        <td>{i % 2 === 0 ? 2 : '-'}</td>
                                         <td>{i % 2 !== 0 ? 4 : '-'}</td>
                                         <td>{i % 2 === 0 ? '$' + 2 * 12 : '$' + 4 * 15}</td>
                                     </tr>

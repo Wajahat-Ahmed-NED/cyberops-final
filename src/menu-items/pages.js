@@ -21,13 +21,6 @@ const pages = {
             type: 'item',
             url: '/user-mgt',
             icon: icons.ProfileOutlined
-        },
-        {
-            id: 'billing',
-            title: 'Billing ',
-            type: 'item',
-            url: '/billing-mgt',
-            icon: icons.ProfileOutlined
         }
     ]
 };
