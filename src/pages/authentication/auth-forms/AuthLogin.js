@@ -36,7 +36,6 @@ const AuthLogin = () => {
 
     const navigate = useNavigate();
     const handleLogin = async (values) => {
-        console.log(values);
         setUsername(values.email);
         setPassword(values.password);
         setLoader(true);
@@ -46,7 +45,7 @@ const AuthLogin = () => {
                 setLoader(false);
                 localStorage.setItem('siemToken', '-----');
                 localStorage.setItem('userdata', JSON.stringify(res.data));
-                console.log('Success');
+                // console.log('Success');
                 console.log(res.data);
                 setRes(res);
                 // navigate('/');
@@ -56,7 +55,7 @@ const AuthLogin = () => {
                 setOpen(true);
                 setNotify(true);
                 setLoader(false);
-                console.log(err);
+                // console.log(err);
             });
     };
     console.log(res);
@@ -102,7 +101,7 @@ const AuthLogin = () => {
                         setStatus({ success: false });
                         setSubmitting(false);
                         setVal(values);
-                        console.log(values);
+                        // console.log(values);
                         handleLogin(values);
                     } catch (err) {
                         setStatus({ success: false });
@@ -116,7 +115,7 @@ const AuthLogin = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="email-login">Username</InputLabel>
+                                    <InputLabel htmlFor="email-login">Username/Email</InputLabel>
                                     <OutlinedInput
                                         id="email-login"
                                         type="email"

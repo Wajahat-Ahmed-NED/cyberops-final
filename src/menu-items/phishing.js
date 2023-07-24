@@ -14,7 +14,7 @@ const icons = {
 
 const phishing = {
     id: 'phishing',
-    title: 'Phishing',
+    title: 'Phishing Simulation',
     type: 'group',
     children: [
         {
