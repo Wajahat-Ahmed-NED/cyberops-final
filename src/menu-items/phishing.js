@@ -21,7 +21,6 @@ const phishing = {
     title: 'Phishing Simulation',
     type: 'group',
     children: [
-<<<<<<< HEAD
         // {
         //     id: 'Admin-page',
         //     title: 'Phishing',
@@ -31,17 +30,6 @@ const phishing = {
         //     color: '#ffffff',
         //     children: []
         // },
-=======
-        {
-            id: 'Admin-page',
-            title: 'Phishing',
-            type: 'item',
-            url: '/phishing',
-            icon: PhishingOutlineIcon,
-            color: '#ffffff',
-            children: []
-        },
->>>>>>> 0a4daf088baa8d8dc89f6ab708868fad5271b761
         {
             id: 'user-page',
             title: 'Users And Groups',
