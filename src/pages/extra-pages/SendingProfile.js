@@ -79,7 +79,8 @@ export default function SendingProfile() {
                 username: userName,
                 password: password,
                 interface_type: 'SMTP',
-                ignore_cert_errors: ignoreError
+                ignore_cert_errors: ignoreError,
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
             };
 
             createSendingProfile(obj)
@@ -118,7 +119,8 @@ export default function SendingProfile() {
                 username: userName,
                 password: password,
                 interface_type: 'SMTP',
-                ignore_cert_errors: ignoreError
+                ignore_cert_errors: ignoreError,
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
             };
 
             editSendingProfile(obj, editData?.id)
@@ -167,8 +169,8 @@ export default function SendingProfile() {
                 console.log(err);
             });
     };
-    const handleDeleteGroup = (i) => {
-        deleteSendingProfile(i)
+    const handleDeleteGroup = (i, auth) => {
+        deleteSendingProfile(i, auth)
             .then((res) => {
                 console.log(res);
 
@@ -429,7 +431,11 @@ export default function SendingProfile() {
                                             <EditIcon color="success" />
                                             {/* <DeleteIcon color="error" /> */}
                                         </IconButton>
-                                        <IconButton onClick={() => handleDeleteGroup(e?.id)}>
+                                        <IconButton
+                                            onClick={() =>
+                                                handleDeleteGroup(e?.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
+                                            }
+                                        >
                                             <DeleteIcon color="error" />
                                         </IconButton>
                                     </td>

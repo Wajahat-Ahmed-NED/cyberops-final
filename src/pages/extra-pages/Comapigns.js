@@ -123,7 +123,8 @@ export default function Compaigns() {
                 smtp: { name: sendProfile },
                 launch_date: utcDate?.toISOString(),
                 // send_by_date: sendDate && sendDate.toISOString(),
-                groups: [{ name: group }]
+                groups: [{ name: group }],
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
             };
             if (sendEmails) {
                 obj['send_by_date'] = sendDate.toISOString();

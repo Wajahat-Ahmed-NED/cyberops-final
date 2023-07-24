@@ -18,7 +18,7 @@ const User = () => {
         // setData(JSON.parse(localStorage.getItem('Users')));
         // console.log(JSON.parse(localStorage.getItem('Users')));
         axios
-            .get('http://192.168.1.120:1338/getUser')
+            .get('http://192.168.2.104:1338/getUser')
             .then((res) => {
                 setData(res.data.users);
                 // console.log(userData);
@@ -93,7 +93,7 @@ const User = () => {
                 // setModal(false);
 
                 axios
-                    .post('http://192.168.1.120:1338/createPortalUser', {
+                    .post('http://192.168.2.104:1338/createPortalUser', {
                         userdetails: user
                     })
                     .then((res) => {

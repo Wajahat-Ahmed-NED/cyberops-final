@@ -105,7 +105,8 @@ export default function UsersAndGroups() {
         } else {
             let obj = {
                 name: name,
-                targets: [...todos, ...(excelData || [])]
+                targets: [...todos, ...(excelData || [])],
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
             };
             console.log(obj);
             createGroup(obj)
@@ -160,8 +161,8 @@ export default function UsersAndGroups() {
             })
             .catch((err) => console.log(err));
     };
-    const handleDeleteGroup = (i) => {
-        deleteGroup(i)
+    const handleDeleteGroup = (i, auth) => {
+        deleteGroup(i, auth)
             .then((res) => {
                 console.log(res);
 
@@ -197,7 +198,8 @@ export default function UsersAndGroups() {
             let obj = {
                 id: id,
                 name: name,
-                targets: [...todos, ...(excelData || [])]
+                targets: [...todos, ...(excelData || [])],
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
                 // ...editData
             };
             console.log(obj);
@@ -438,7 +440,11 @@ export default function UsersAndGroups() {
                                             <EditIcon color="success" />
                                             {/* <DeleteIcon color="error" /> */}
                                         </IconButton>
-                                        <IconButton onClick={() => handleDeleteGroup(e?.id)}>
+                                        <IconButton
+                                            onClick={() =>
+                                                handleDeleteGroup(e?.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
+                                            }
+                                        >
                                             {/* <EditIcon color="success" /> */}
                                             <DeleteIcon color="error" />
                                             {/* <DeleteIcon color="error" /> */}

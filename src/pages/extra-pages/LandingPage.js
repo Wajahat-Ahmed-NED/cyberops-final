@@ -85,7 +85,8 @@ export default function LandingPage() {
                 html: text,
                 capture_credentials: captureData ? true : false,
                 capture_passwords: captureData ? true : false,
-                redirect_url: redirectURL
+                redirect_url: redirectURL,
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
             };
             console.log(obj);
             console.log(typeof id);
@@ -122,7 +123,8 @@ export default function LandingPage() {
                 text: text,
                 capture_credentials: captureData ? true : false,
                 capture_passwords: captureData ? true : false,
-                redirect_url: redirectURL
+                redirect_url: redirectURL,
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
             };
             console.log(obj);
             createPage(obj)
@@ -161,7 +163,8 @@ export default function LandingPage() {
         }
         let obj = {
             include_resources: false,
-            url: textUrl
+            url: textUrl,
+            auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
         };
         importSite(obj)
             .then((res) => {
@@ -200,8 +203,8 @@ export default function LandingPage() {
                 console.log(err);
             });
     };
-    const handleDeleteGroup = (i) => {
-        deletePage(i)
+    const handleDeleteGroup = (i, auth) => {
+        deletePage(i, auth)
             .then((res) => {
                 console.log(res);
 
@@ -299,6 +302,7 @@ export default function LandingPage() {
                                             value={textUrl}
                                             onChange={(e) => setTextUrl(e.target.value)}
                                         />
+                                        <br />
                                         <Button variant="contained" color="success" onClick={() => handleImportSite()}>
                                             Save{' '}
                                         </Button>
@@ -400,7 +404,12 @@ export default function LandingPage() {
                                         <IconButton onClick={() => handleEditModal(e, 'copy')}>
                                             <ContentCopyIcon color="primary" />
                                         </IconButton>
-                                        <IconButton onClick={() => handleDeleteGroup(e?.id)}>
+
+                                        <IconButton
+                                            onClick={() =>
+                                                handleDeleteGroup(e?.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
+                                            }
+                                        >
                                             <DeleteIcon color="error" />
                                         </IconButton>
                                     </td>

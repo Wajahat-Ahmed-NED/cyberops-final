@@ -60,7 +60,7 @@ const MainRoutes = {
         },
         {
             path: '/user-page',
-            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <UsersAndGroups /> : <Compaigns />
+            element: <UsersAndGroups />
         },
         {
             path: '/templates',

@@ -87,7 +87,8 @@ export default function Templates() {
                 subject: subject,
                 text: text,
                 envelope_sender: envelopSender,
-                html: trackingImage ? html + ' ' + '<html><body><p>{{.Tracker}}</p></body></html>' : html
+                html: trackingImage ? html + ' ' + '<html><body><p>{{.Tracker}}</p></body></html>' : html,
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
                 // ...editData
             };
             editTemplate(obj)
@@ -122,7 +123,8 @@ export default function Templates() {
                 subject: subject,
                 text: text,
                 envelope_sender: envelopSender,
-                html: trackingImage ? html + ' ' + '<html><body><p>{{.Tracker}}</p></body></html>' : html
+                html: trackingImage ? html + ' ' + '<html><body><p>{{.Tracker}}</p></body></html>' : html,
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
                 // trackingImage,
             };
             console.log(trackingImage);
@@ -172,8 +174,8 @@ export default function Templates() {
                 console.log(err);
             });
     };
-    const handleDeleteGroup = (i) => {
-        deleteTemplate(i)
+    const handleDeleteGroup = (i, auth) => {
+        deleteTemplate(i, auth)
             .then((res) => {
                 console.log(res);
 
@@ -200,7 +202,8 @@ export default function Templates() {
         }
         let obj = {
             convert_links: convertLinks,
-            content: emailSource
+            content: emailSource,
+            auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
         };
         importEmail(obj)
             .then((res) => {
@@ -444,7 +447,11 @@ export default function Templates() {
                                         <IconButton onClick={() => handleEditModal(e, 'copy')}>
                                             <ContentCopyIcon color="primary" />
                                         </IconButton>
-                                        <IconButton onClick={() => handleDeleteGroup(e?.id)}>
+                                        <IconButton
+                                            onClick={() =>
+                                                handleDeleteGroup(e?.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
+                                            }
+                                        >
                                             <DeleteIcon color="error" />
                                         </IconButton>
                                     </td>
