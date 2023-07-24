@@ -9,8 +9,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 // ==============================|| SAMPLE PAGE ||============================== //
-
+//const [userData, setUserData] = useState([]);
 const User = () => {
+    //const [userData, setUserData] = useState([]);
+
     const [data, setData] = useState([]);
     useEffect(() => {
         // setData(JSON.parse(localStorage.getItem('Users')));
@@ -18,11 +20,14 @@ const User = () => {
         axios
             .get('http://192.168.1.120:1338/getUser')
             .then((res) => {
+                setData(res.data.users);
+                // console.log(userData);
                 console.log(res.data.users);
             })
             .catch((err) => {
                 window.alert('Something went wrong');
             });
+        console.log(data);
     }, []);
     const [modal, setModal] = useState(false);
     const handleListItemClick = (event, index) => {
@@ -198,8 +203,9 @@ const User = () => {
                         <tr>
                             <td>S.No</td>
                             <td>Name</td>
+                            <td>Username/Email</td>
                             <td>Resources</td>
-                            <td>Action</td>
+                            <td>GoPhish API Key</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -209,20 +215,22 @@ const User = () => {
                                     <tr key={i}>
                                         <td>{i + 1}</td>
                                         <td>{e.name}</td>
+                                        <td>{e.username}</td>
                                         <td>
                                             <ul>
-                                                {e.wazuh && <li>Wazuh</li>}
+                                                {/* {e.wazuh && <li>Wazuh</li>} */}
                                                 {e.gophish && <li>Gophish</li>}
                                             </ul>
                                         </td>
-                                        <td>
+                                        <td>{e.gophishapikey}</td>
+                                        {/* <td>
                                             <IconButton onClick={() => alert('Edited Successfully But No Backend')}>
                                                 <EditIcon color="success" />
                                             </IconButton>
                                             <IconButton onClick={() => alert('Deleted Successfully But No Backend')}>
                                                 <DeleteIcon color="error" />
                                             </IconButton>
-                                        </td>
+                                        </td> */}
                                     </tr>
                                 );
                             })}
