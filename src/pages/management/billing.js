@@ -3,8 +3,9 @@ import MainCard from 'components/MainCard';
 import { useEffect, useState } from 'react';
 import { Typography, Button, Modal, Box, TextField, Select, MenuItem, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import axios from 'axios';
 import EditIcon from '@mui/icons-material/Edit';
+import { getCompaigns } from 'api/api';
 // ==============================|| SAMPLE PAGE ||============================== //
 const style = {
     position: 'absolute',
@@ -24,10 +25,42 @@ const style = {
 };
 const User = () => {
     const [data, setData] = useState([]);
+    const [totalCompaign, setTotal] = useState('');
     const [editCost, setEditCost] = useState(false);
+    const [name, setName] = useState('');
     useEffect(() => {
-        setData(JSON.parse(localStorage.getItem('Users')));
-        console.log(JSON.parse(localStorage.getItem('Users')));
+        getCompaigns()
+            .then((res) => {
+                setData(res.data);
+                setTotal(res.data.length);
+                console.log('Compaign', res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        // axios
+        //     .get('http://192.168.1.99:1338/getUser')
+        //     .then((res) => {
+        //         // setData(res.data.users);
+        //         // console.log(userData);
+        //         console.log(res.data.users);
+        //         const user = JSON.parse(localStorage.getItem('userdata'));
+        //         console.log(user);
+        //         setName(user.username);
+        //         const result = res.data.users?.filter((e) => e.name === user.username);
+        //         // setData(result)
+        //         console.log(result);
+        //         // axios
+        //         //     .get(`http://192.168.1.99:1338/getCompaign/${JSON.parse(localStorage.getItem('userdata'))?.gophishkey}`, {
+        //         //         gophishapikey: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
+        //         //     })
+
+        //     })
+        //     .catch((err) => {
+        //         window.alert('Something went wrong');
+        //     });
+        // setData(JSON.parse(localStorage.getItem('userdata')));
+        // console.log(JSON.parse(localStorage.getItem('Users')));
     }, []);
 
     return (
@@ -87,29 +120,30 @@ const User = () => {
                         <tr>
                             <td>S.No</td>
                             <td>User Name</td>
-                            <td>Start Date</td>
+                            {/* <td>Start Date</td>
                             <td>Last Paid Date</td>
-                            <td>Total Agents</td>
-                            <td>Total Compaigns</td>
+                            <td>Total Agents</td> */}
+                            <td>Total Compaign</td>
                             <td>Total Cost (Last 30 Days)</td>
                         </tr>
                     </thead>
                     <tbody>
-                        {data?.length > 0 &&
+                        <td>1</td>
+                        <td>{JSON.parse(localStorage.getItem('userdata'))?.username}</td>
+                        <td>{totalCompaign}</td>
+                        <td>${totalCompaign * 15}</td>
+                        {/* {data?.length > 0 &&
                             data?.map((e, i) => {
                                 return (
                                     <tr key={i}>
                                         <td>{i + 1}</td>
-                                        <td>{e.name}</td>
-                                        <td>{i % 2 === 0 ? '12/05/23' : '14/04/23'}</td>
-                                        <td>{i % 2 === 0 ? '11/06/23' : '13/06/23'}</td>
+                                        <td>{JSON.parse(localStorage.getItem('userdata'))?.username}</td>
 
-                                        <td>{i % 2 === 0 ? 2 : '-'}</td>
-                                        <td>{i % 2 !== 0 ? 4 : '-'}</td>
-                                        <td>{i % 2 === 0 ? '$' + 2 * 12 : '$' + 4 * 15}</td>
+                                        <td>{data?.length}</td>
+                                        <td>{data?.length * 15}$</td> 
                                     </tr>
                                 );
-                            })}
+                            })}*/}
                     </tbody>
                 </table>
             </MainCard>

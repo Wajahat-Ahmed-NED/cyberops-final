@@ -2,6 +2,7 @@
 import pages from './pages';
 import dashboard from './dashboard';
 import support from './support';
+import utilities from './utilities';
 import phishing from './phishing';
 
 //have to add support page for SIEM after its integration
@@ -10,5 +11,6 @@ import phishing from './phishing';
 const menuItems = {
     items: [phishing]
 };
+//utilities
 JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' && menuItems.items.unshift(pages);
 export default menuItems;

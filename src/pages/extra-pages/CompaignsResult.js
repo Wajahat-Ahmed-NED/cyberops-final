@@ -60,7 +60,7 @@ const style = {
     // minHeight: "400px",
     maxHeight: '600px'
 };
-export default function CompaignsResult() {
+export default function CompaignResult() {
     const [open, setOpen] = React.useState(false);
     const [testEmailopen, setTestEmailopen] = React.useState(false);
     const [name, setName] = React.useState('');
@@ -122,7 +122,8 @@ export default function CompaignsResult() {
                 smtp: { name: sendProfile },
                 launch_date: utcDate.toISOString(),
                 send_by_date: sendDate.toISOString(),
-                groups: [{ name: group }]
+                groups: [{ name: group }],
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
             };
             console.log(obj);
             createCompaign(obj)
@@ -132,7 +133,7 @@ export default function CompaignsResult() {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
-                        text: 'Compaign created successfully!',
+                        text: 'Campaign created successfully!',
                         showConfirmButton: true,
                         timer: 2000
                     });
@@ -162,6 +163,7 @@ export default function CompaignsResult() {
         setTodos(todos.filter((todo, index) => index !== i));
     }
     const { id } = useParams();
+    const auth = JSON.parse(localStorage.getItem('userdata'))?.gophishkey;
     const fetchUser = () => {
         getCompaignResult(id)
             .then((res) => {
@@ -223,14 +225,14 @@ export default function CompaignsResult() {
             });
     };
     const handleDeleteGroup = () => {
-        deleteCompaign(id)
+        deleteCompaign(id, auth)
             .then((res) => {
                 console.log(res);
 
                 Swal.fire({
                     icon: 'success',
                     title: 'Success!',
-                    text: 'Compaign deleted successfully!',
+                    text: 'Campaign deleted successfully!',
                     showConfirmButton: true,
                     timer: 2000
                 });
@@ -264,7 +266,7 @@ export default function CompaignsResult() {
             if (result.isConfirmed) {
                 getCompleteCompaign(id)
                     .then((res) => {
-                        Swal.fire('Completed!', 'Your Campaign has been Completed.', 'success');
+                        Swal.fire('Completed!', 'Your Compaign has been Completed.', 'success');
                         console.log(res);
                         navigate(-1);
                     })
@@ -315,9 +317,13 @@ export default function CompaignsResult() {
 
                 <Card sx={{ maxWidth: 275 }} className="mb-3" style={{ color: 'black' }}>
                     <CardContent>
-                        <Typography variant="h4" style={{ color: 'black' }} gutterBottom>
-                            {result?.name} Compaign Result Summary
+                        <Typography variant="h2" style={{ color: 'black' }} gutterBottom>
+                            {result?.name}
                         </Typography>
+                        <Typography variant="h5" style={{ color: 'black' }} gutterBottom>
+                            Campaign Result Summary
+                        </Typography>
+
                         <Typography variant="h5" component="div" color="text.secondary">
                             Total Victims : {summary?.stats?.total}
                         </Typography>
@@ -692,7 +698,7 @@ export default function CompaignsResult() {
                                                 <br />
                                                 Result ID: {eve.id}
                                             </Typography>
-                                            {result?.timeline[0].message === 'Campaign Created' ? (
+                                            {result?.timeline[0].message === 'Compaign Created' ? (
                                                 <>
                                                     <CheckCircleIcon color="success" size="large" />
                                                     {result?.timeline[0].message}

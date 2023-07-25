@@ -21,18 +21,18 @@ const phishing = {
     title: 'Phishing Simulation',
     type: 'group',
     children: [
-        {
-            id: 'Admin-page',
-            title: 'Phishing',
-            type: 'item',
-            url: '/phishing',
-            icon: PhishingOutlineIcon,
-            color: '#ffffff',
-            children: []
-        },
+        // {
+        //     id: 'Admin-page',
+        //     title: 'Phishing',
+        //     type: 'item',
+        //     url: '/user-page',
+        //     icon: PersonOutlineIcon,
+        //     color: '#ffffff',
+        //     children: []
+        // },
         {
             id: 'user-page',
-            title: 'Users And Groups',
+            title: 'Target Users',
             type: 'item',
             url: '/user-page',
             icon: PersonOutlineIcon,
@@ -63,10 +63,10 @@ const phishing = {
             color: '#ffffff'
         },
         {
-            id: 'Compaigns-page',
-            title: 'Compaign',
+            id: 'Compaign-page',
+            title: 'Campaign',
             type: 'item',
-            url: '/compaigns',
+            url: '/Campaign',
             icon: AddBusinessIcon,
             color: '#ffffff'
         }

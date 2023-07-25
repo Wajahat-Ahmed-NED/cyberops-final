@@ -16,7 +16,7 @@ const dashboard = {
             id: 'dashboard',
             title: 'Dashboard',
             type: 'item',
-            url: '/phishing',
+            url: '/user-page',
             icon: GridViewIcon,
             breadcrumbs: false
         }

@@ -3,7 +3,7 @@ import { lazy } from 'react';
 // project import
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
-import Compaigns from 'pages/extra-pages/Comapigns';
+import Compaign from 'pages/extra-pages/Comapigns';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -14,7 +14,7 @@ const GoPhish = Loadable(lazy(() => import('pages/extra-pages/GoPhish')));
 const UsersAndGroups = Loadable(lazy(() => import('pages/extra-pages/UsersAndGroups')));
 const LandingPage = Loadable(lazy(() => import('pages/extra-pages/LandingPage')));
 const Templates = Loadable(lazy(() => import('pages/extra-pages/Templates')));
-const CompaignsResult = Loadable(lazy(() => import('pages/extra-pages/CompaignsResult')));
+const CompaignResult = Loadable(lazy(() => import('pages/extra-pages/CompaignsResult')));
 const SendingProfile = Loadable(lazy(() => import('pages/extra-pages/SendingProfile')));
 const ReportPage = Loadable(lazy(() => import('pages/extra-pages/report')));
 const UserMgt = Loadable(lazy(() => import('pages/management/user')));
@@ -56,7 +56,7 @@ const MainRoutes = {
         },
         {
             path: 'Phishing',
-            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <GoPhish /> : <Compaigns />
+            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <GoPhish /> : <Compaign />
         },
         {
             path: '/user-page',
@@ -72,7 +72,7 @@ const MainRoutes = {
         },
         {
             path: '/billing-mgt',
-            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <BillingMgt /> : <DashboardDefault />
+            element: <BillingMgt />
         },
         {
             path: '/landing-page',
@@ -83,12 +83,12 @@ const MainRoutes = {
             element: <SendingProfile />
         },
         {
-            path: '/compaigns',
-            element: <Compaigns />
+            path: '/Campaign',
+            element: <Compaign />
         },
         {
-            path: '/compaign/:id',
-            element: <CompaignsResult />
+            path: '/Campaign/:id',
+            element: <CompaignResult />
         },
         // {
         //     path: 'siem',

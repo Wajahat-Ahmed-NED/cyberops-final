@@ -6,14 +6,28 @@ const https = require('https');
 // const goPhishApi = 'http://localhost:1338/';
 // const api2 = 'http://172.168.10.55:1338/';
 // const token = '5b9df0f4e8295a7ba7a9a6031fb9c503d018b51e41bc60fbca14f53f929c9afc';
-const api = 'http://192.168.2.104:1338/'; //127.0.0.1
-const goPhishApi = 'http://192.168.2.104:1338/'; //20.63.81.190:1338
-const api2 = 'http://192.168.2.104:1338/';
+
+const api = 'http://192.168.1.99:1338/'; //127.0.0.1
+const goPhishApi = 'http://192.168.1.99:1338/'; //20.63.81.190:1338
+const api2 = 'http://192.168.1.99:1338/';
+
 const token = 'fd8bc15c96d3809f1b44d852936cb71394836bbf411b4d67321a3508d02862f6';
 
 async function createUser(obj) {
     console.log(obj);
     return await axios.post(`${goPhishApi}createUser`, { ...obj });
+}
+async function createPortalUser(userDetails) {
+    return await axios.post(`${api}createPortalUser`, { ...userDetails });
+}
+async function getPortalUsers() {
+    return await axios.get(`${api}getPortalUsers`);
+}
+async function deletePortalUser(id, auth) {
+    return await axios.post(`${api}deletePortalUser`, {
+        id,
+        auth
+    });
 }
 async function createTemplate(obj) {
     console.log(obj);
@@ -67,9 +81,11 @@ async function deleteGroup(i, auth) {
     console.log(i, 'delete', auth);
     return await axios.post(`${goPhishApi}deleteGroup`, { i, auth });
 }
-async function deleteCompaign(i) {
-    console.log(i);
-    return await axios.delete(`${goPhishApi}deleteCompaign/${i}`);
+async function deleteCompaign(id, auth) {
+    return await axios.post(`${goPhishApi}deleteCompaign`, {
+        id,
+        auth
+    });
 }
 //doing work
 async function deleteTemplate(id, auth) {
@@ -138,7 +154,7 @@ async function getCompaignResult(id) {
     });
 }
 async function getCompaignSummary(id) {
-    return await axios.post(`${goPhishApi}getCompaignSummary/${id}`, {
+    return await axios.post(`${goPhishApi}getCompaigSnummary/${id}`, {
         Authorization: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
     });
 }
@@ -191,5 +207,8 @@ export {
     deleteTemplate,
     deletePage,
     deleteSendingProfile,
-    deleteUser
+    deleteUser,
+    createPortalUser,
+    getPortalUsers,
+    deletePortalUser
 };

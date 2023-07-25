@@ -8,27 +8,32 @@ import { Modal, Checkbox } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { createPortalUser, getPortalUsers, deletePortalUser } from 'api/api';
 // ==============================|| SAMPLE PAGE ||============================== //
 //const [userData, setUserData] = useState([]);
 const User = () => {
     //const [userData, setUserData] = useState([]);
 
     const [data, setData] = useState([]);
-    useEffect(() => {
-        // setData(JSON.parse(localStorage.getItem('Users')));
-        // console.log(JSON.parse(localStorage.getItem('Users')));
-        axios
-            .get('http://192.168.2.104:1338/getUser')
+    const getUsers = () => {
+        getPortalUsers()
             .then((res) => {
+                // console.log(res.data)
                 setData(res.data.users);
                 // console.log(userData);
-                console.log(res.data.users);
             })
             .catch((err) => {
                 window.alert('Something went wrong');
             });
         console.log(data);
+    };
+    useEffect(() => {
+        // setData(JSON.parse(localStorage.getItem('Users')));
+        // console.log(JSON.parse(localStorage.getItem('Users')));
+        //3fa328ea61533b6be5d27a92ba7880548db0fd84 -- comit log
+        getUsers();
     }, []);
+
     const [modal, setModal] = useState(false);
     const handleListItemClick = (event, index) => {
         setSelectedIndex(index);
@@ -43,14 +48,6 @@ const User = () => {
     const [name, setName] = useState('');
     const [wazuhChecked, setWazuhChecked] = useState(false);
     const [gophishChecked, setGophishChecked] = useState(false);
-
-    //   const handleOpen = () => {
-    //     setOpen(true);
-    //   };
-
-    //   const handleClose = () => {
-    //     setOpen(false);
-    //   };
 
     const handleNameChange = (event) => {
         setName(event.target.value);
@@ -72,9 +69,25 @@ const User = () => {
     const handleGophishChange = (event) => {
         setGophishChecked(event.target.checked);
     };
+    const handleDeleteUser = (uname, auther) => {
+        console.log(uname, auther);
+        deletePortalUser(uname, auther)
+            .then((res) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'User Deleted successfully!',
+                    showConfirmButton: true
+                });
+                getUsers();
+            })
+            .catch((error) => {
+                Swal.fire('Oops', 'Something went wrong', 'error');
+            });
+    };
 
     const handleCreateUser = () => {
-        if (!email || !password || !name || !confirmpassword) {
+        if (!email || !password || !name || !confirmpassword || (!wazuhChecked && !gophishChecked)) {
             window.alert('Please fill all the details');
         } else {
             if (password == confirmpassword) {
@@ -84,18 +97,10 @@ const User = () => {
                     name,
                     wazuh: wazuhChecked,
                     gophish: gophishChecked,
-                    type: 'user'
+                    type: 'user',
+                    auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
                 };
-                // let existingUsers = JSON.parse(localStorage.getItem('Users'));
-                // existingUsers ? existingUsers.push(user) : (existingUsers = [user]);
-                // localStorage.setItem('Users', JSON.stringify(existingUsers));
-                // console.log(user);
-                // setModal(false);
-
-                axios
-                    .post('http://192.168.2.104:1338/createPortalUser', {
-                        userdetails: user
-                    })
+                createPortalUser(user)
                     .then((res) => {
                         Swal.fire({
                             icon: 'success',
@@ -103,11 +108,10 @@ const User = () => {
                             text: 'User Created successfully!',
                             showConfirmButton: true
                         });
+                        getUsers();
                         setModal(!modal);
-                        // Swal.fire(res.data, 'Fill all fields!', 'error');
                     })
                     .catch((error) => {
-                        //console.log('error', error.response.data);
                         Swal.fire('Oops', error.response.data, 'error');
                     });
             } else {
@@ -205,7 +209,9 @@ const User = () => {
                             <td>Name</td>
                             <td>Username/Email</td>
                             <td>Resources</td>
+                            <td>Gophish Id</td>
                             <td>GoPhish API Key</td>
+                            <td>Action</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -217,20 +223,23 @@ const User = () => {
                                         <td>{e.name}</td>
                                         <td>{e.username}</td>
                                         <td>
-                                            <ul>
-                                                {/* {e.wazuh && <li>Wazuh</li>} */}
-                                                {e.gophish && <li>Gophish</li>}
-                                            </ul>
+                                            {/* {e.wazuh && <li>Wazuh</li>} */}
+                                            {e.gophish && <li>Gophish</li>}
                                         </td>
+                                        <td>{e.gophishId}</td>
                                         <td>{e.gophishapikey}</td>
-                                        {/* <td>
-                                            <IconButton onClick={() => alert('Edited Successfully But No Backend')}>
+                                        <td>
+                                            {/* <IconButton onClick={() => alert('Edited Successfully But No Backend')}>
                                                 <EditIcon color="success" />
-                                            </IconButton>
-                                            <IconButton onClick={() => alert('Deleted Successfully But No Backend')}>
+                                            </IconButton> */}
+                                            <IconButton
+                                                onClick={() =>
+                                                    handleDeleteUser(e?.gophishId, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
+                                                }
+                                            >
                                                 <DeleteIcon color="error" />
                                             </IconButton>
-                                        </td> */}
+                                        </td>
                                     </tr>
                                 );
                             })}

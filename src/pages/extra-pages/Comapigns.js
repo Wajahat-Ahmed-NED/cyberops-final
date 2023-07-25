@@ -53,7 +53,7 @@ const style = {
     // minHeight: "400px",
     maxHeight: '600px'
 };
-export default function Compaigns() {
+export default function Compaign() {
     const [open, setOpen] = React.useState(false);
     const [copyModal, setCopyModal] = React.useState(false);
     const [testEmailopen, setTestEmailopen] = React.useState(false);
@@ -124,12 +124,12 @@ export default function Compaigns() {
                 launch_date: utcDate?.toISOString(),
                 // send_by_date: sendDate && sendDate.toISOString(),
                 groups: [{ name: group }],
-                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey,
+                username: JSON.parse(localStorage.getItem('userdata'))?.username
             };
             if (sendEmails) {
                 obj['send_by_date'] = sendDate.toISOString();
             }
-            console.log(obj);
             createCompaign(obj)
                 .then((res) => {
                     console.log(res);
@@ -225,15 +225,15 @@ export default function Compaigns() {
             });
         setLoader(false);
     };
-    const handleDeleteGroup = (i) => {
-        deleteCompaign(i)
+    const handleDeleteGroup = (i, auth) => {
+        deleteCompaign(i, auth)
             .then((res) => {
                 console.log(res);
 
                 Swal.fire({
                     icon: 'success',
                     title: 'Success!',
-                    text: 'Compaign deleted successfully!',
+                    text: 'Campaign deleted successfully!',
                     showConfirmButton: true,
                     timer: 2000
                 });
@@ -247,7 +247,7 @@ export default function Compaigns() {
 
     const navigate = useNavigate();
     const handleNavigate = (id) => {
-        navigate(`/compaign/${id}`);
+        navigate(`/Campaign/${id}`);
     };
     useEffect(() => {
         fetchUser();
@@ -263,15 +263,15 @@ export default function Compaigns() {
                 <Card sx={{ maxWidth: 275 }} className="mb-3" style={{ color: 'black' }}>
                     <CardContent>
                         <Typography variant="h4" style={{ color: 'black' }} gutterBottom>
-                            Compaign Summary
+                            Campaign Summary
                         </Typography>
                         <Typography variant="h5" component="div" color="text.secondary">
-                            Total Compaign : {data?.length}
+                            Total Campaign : {data?.length}
                         </Typography>
                     </CardContent>
                 </Card>
                 <Button variant="contained" className="mb-3" onClick={handleOpen}>
-                    New Compaign
+                    New Campaign
                 </Button>
 
                 <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
@@ -531,7 +531,12 @@ export default function Compaigns() {
                                             <ContentCopyIcon color="primary" onClick={() => handleCopyModal(e)} />
                                         </IconButton>
                                         <IconButton>
-                                            <DeleteIcon color="error" onClick={() => handleDeleteGroup(e.id)} />
+                                            <DeleteIcon
+                                                color="error"
+                                                onClick={() =>
+                                                    handleDeleteGroup(e.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
+                                                }
+                                            />
                                         </IconButton>
                                     </td>
                                 </tr>
