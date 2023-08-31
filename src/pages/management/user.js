@@ -208,8 +208,20 @@ const User = () => {
                             <td>S.No</td>
                             <td>Name</td>
                             <td>Username/Email</td>
-                            <td>Resources</td>
-                            <td>Gophish Id</td>
+                            <td
+                                style={{
+                                    minWidth: '100px'
+                                }}
+                            >
+                                Resources
+                            </td>
+                            <td
+                                style={{
+                                    minWidth: '100px'
+                                }}
+                            >
+                                Gophish Id
+                            </td>
                             <td>GoPhish API Key</td>
                             <td>Action</td>
                         </tr>
@@ -223,11 +235,20 @@ const User = () => {
                                         <td>{e.name}</td>
                                         <td>{e.username}</td>
                                         <td>
-                                            {/* {e.wazuh && <li>Wazuh</li>} */}
-                                            {e.gophish && <li>Gophish</li>}
+                                            <ui>
+                                                {e.wazuh && <li>Wazuh</li>}
+                                                {e.gophish && <li>Gophish</li>}
+                                            </ui>
                                         </td>
                                         <td>{e.gophishId}</td>
-                                        <td>{e.gophishapikey}</td>
+                                        <td
+                                            style={{
+                                                maxWidth: '570px',
+                                                overflowX: 'hidden'
+                                            }}
+                                        >
+                                            {e.gophishapikey}
+                                        </td>
                                         <td>
                                             {/* <IconButton onClick={() => alert('Edited Successfully But No Backend')}>
                                                 <EditIcon color="success" />

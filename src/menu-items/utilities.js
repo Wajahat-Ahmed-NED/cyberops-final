@@ -24,14 +24,14 @@ const icons = {
 
 const utilities = {
     id: 'utilities',
-    title: 'Utilities',
+    title: 'Billing',
     type: 'group',
     children: [
         {
             id: 'billing',
-            title: 'Billing ',
+            title: 'Invoice ',
             type: 'item',
-            url: '/billing-mgt',
+            url: '/invoice',
             icon: AttachMoneyOutlineIcon
         }
         // {

@@ -137,7 +137,7 @@ export default function Compaign() {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
-                        text: 'Compaign created successfully!',
+                        text: 'Campaign created successfully!',
                         showConfirmButton: true,
                         timer: 2000
                     });
@@ -289,7 +289,7 @@ export default function Compaign() {
                             </Typography>
                             <TextField
                                 id="outlined-basic"
-                                label="Compaign Name"
+                                label="Campaign Name"
                                 variant="outlined"
                                 style={{ color: 'black' }}
                                 color="primary"
@@ -498,7 +498,7 @@ export default function Compaign() {
                                 onClick={handleAdd}
                                 fullWidth
                             >
-                                Create Template
+                                Create Campaign
                             </Button>
                         </Box>
                     </Box>
@@ -508,8 +508,7 @@ export default function Compaign() {
                     <thead class="thead-dark">
                         <tr>
                             <td>Name</td>
-
-                            <td>Created Date</td>
+                            <td>Creation Date</td>
                             <td>Status</td>
                             <td>Actions</td>
                         </tr>
@@ -563,7 +562,7 @@ export default function Compaign() {
                         </Typography>
                         <TextField
                             id="outlined-basic"
-                            label="Compaign Name"
+                            label="Campaign Name"
                             variant="outlined"
                             style={{ color: 'black' }}
                             color="primary"

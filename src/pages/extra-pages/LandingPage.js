@@ -295,7 +295,7 @@ export default function LandingPage() {
                                         <textarea
                                             type="email"
                                             class="form-control"
-                                            placeholder="http://google.com"
+                                            placeholder="https://google.com"
                                             id="url"
                                             required
                                             rows={1}
@@ -304,7 +304,7 @@ export default function LandingPage() {
                                         />
                                         <br />
                                         <Button variant="contained" color="success" onClick={() => handleImportSite()}>
-                                            Save{' '}
+                                            Import{' '}
                                         </Button>
                                     </div>
                                 </>

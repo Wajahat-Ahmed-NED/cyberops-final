@@ -260,7 +260,7 @@ export default function SendingProfile() {
                                 <input
                                     type="email"
                                     class="form-control"
-                                    placeholder="Host"
+                                    placeholder="sample.smtp.com:25"
                                     id="email"
                                     required
                                     value={host}

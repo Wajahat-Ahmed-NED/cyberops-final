@@ -9,8 +9,8 @@ import phishing from './phishing';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-    items: [phishing]
+    items: [phishing, utilities]
 };
-//utilities
+//utilities support
 JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' && menuItems.items.unshift(pages);
 export default menuItems;

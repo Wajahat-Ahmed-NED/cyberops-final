@@ -115,7 +115,9 @@ const AuthLogin = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="email-login">Username/Email</InputLabel>
+                                    <InputLabel htmlFor="email-login" sx={{ color: 'white' }}>
+                                        Username/Email
+                                    </InputLabel>
                                     <OutlinedInput
                                         id="email-login"
                                         type="email"
@@ -125,7 +127,7 @@ const AuthLogin = () => {
                                         onChange={handleChange}
                                         placeholder="Enter username"
                                         fullWidth
-                                        style={{ color: 'black' }}
+                                        style={{ color: 'black', backgroundColor: 'transparent' }}
                                         error={Boolean(touched.email && errors.email)}
                                     />
                                     {touched.email && errors.email && (
@@ -137,7 +139,9 @@ const AuthLogin = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="password-login">Password</InputLabel>
+                                    <InputLabel htmlFor="password-login" sx={{ color: 'white' }}>
+                                        Password
+                                    </InputLabel>
                                     <OutlinedInput
                                         fullWidth
                                         error={Boolean(touched.password && errors.password)}
@@ -146,7 +150,7 @@ const AuthLogin = () => {
                                         value={values.password}
                                         name="password"
                                         onBlur={handleBlur}
-                                        style={{ color: 'black' }}
+                                        style={{ color: 'black', backgroundColor: 'transparent' }}
                                         onChange={handleChange}
                                         endAdornment={
                                             <InputAdornment position="end">
@@ -172,12 +176,12 @@ const AuthLogin = () => {
                             </Grid>
 
                             <Grid item xs={12} sx={{ mt: -1 }}>
-                                <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
-                                    {/* <FormControlLabel /> */}
+                                {/* <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
+                                     <FormControlLabel /> 
                                     <Link variant="h6" component={RouterLink} to="" color="text.primary">
                                         Forgot Password?
                                     </Link>
-                                </Stack>
+                                </Stack> */}
                             </Grid>
                             {errors.submit && (
                                 <Grid item xs={12}>
@@ -193,7 +197,13 @@ const AuthLogin = () => {
                                         size="large"
                                         type="submit"
                                         variant="contained"
-                                        color="primary"
+                                        sx={{
+                                            backgroundColor: '#093e4a',
+                                            ':hover': {
+                                                bgcolor: '#0f6376',
+                                                color: 'white'
+                                            }
+                                        }}
                                     >
                                         Login
                                     </Button>

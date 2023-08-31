@@ -14,7 +14,7 @@ import AuthBackground from 'assets/images/auth/AuthBackground';
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 
 const AuthWrapper = ({ children }) => (
-    <Box sx={{ minHeight: '100vh' }}>
+    <Box sx={{ minHeight: '100vh' }} className="main-page">
         <AuthBackground />
         <Grid
             container
@@ -37,13 +37,13 @@ const AuthWrapper = ({ children }) => (
                     sx={{ minHeight: { xs: 'calc(100vh - 134px)', md: 'calc(100vh - 112px)' } }}
                 >
                     <Grid item>
-                        <AuthCard>{children}</AuthCard>
+                        <AuthCard className="auth-glass">{children}</AuthCard>
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
+            {/* <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
                 <AuthFooter />
-            </Grid>
+            </Grid> */}
         </Grid>
     </Box>
 );

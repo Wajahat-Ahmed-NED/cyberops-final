@@ -113,7 +113,7 @@ export default function Templates() {
         }
     };
     const handleAdd = () => {
-        setOpen(false);
+        //setOpen(false);
         if (name === '' || subject === '') {
             Swal.fire('Invalid Data', 'Fill all fields!', 'error');
             setOpen(true);

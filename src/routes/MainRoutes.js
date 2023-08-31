@@ -71,7 +71,7 @@ const MainRoutes = {
             element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <UserMgt /> : <DashboardDefault />
         },
         {
-            path: '/billing-mgt',
+            path: '/invoice',
             element: <BillingMgt />
         },
         {
