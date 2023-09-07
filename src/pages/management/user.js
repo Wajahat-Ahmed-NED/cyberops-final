@@ -5,12 +5,100 @@ import { Typography, Button, Box, TextField, Select, MenuItem, IconButton } from
 import DeleteIcon from '@mui/icons-material/Delete';
 import { EditOutlined, ProfileOutlined, LogoutOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
 import { Modal, Checkbox } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import { createPortalUser, getPortalUsers, deletePortalUser } from 'api/api';
+
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 // ==============================|| SAMPLE PAGE ||============================== //
 //const [userData, setUserData] = useState([]);
+import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+// ==============================|| SAMPLE PAGE ||============================== //
+const theme = createTheme({
+    palette: {
+        mode: 'dark',
+        background: {
+            default: '#333333',
+            paper: '#000000'
+        },
+        primary: {
+            main: '#1890FF'
+        },
+        text: {
+            primary: '#ffffff'
+        }
+    },
+    components: {
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& input': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        },
+        MuiSelect: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiSelect-icon': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        }
+    }
+});
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+        fontSize: 16
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+        color: theme.palette.common.black,
+        maxWidth: '100px',
+        overflow: 'auto'
+    }
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0
+    }
+}));
 const User = () => {
     //const [userData, setUserData] = useState([]);
 
@@ -121,65 +209,73 @@ const User = () => {
     };
     return (
         <>
-            <MainCard title="User Management">
+            <MainCard title="User Management" style={{ width: '100%' }}>
                 <Button variant="contained" onClick={handleModal}>
                     Create User
                 </Button>
                 <Modal open={modal} onClose={handleModal}>
                     <div
                         style={{
-                            height: '500px'
+                            height: '600px'
                         }}
                         className="modal-container"
                     >
-                        <Typography variant="h4" component="h2" className="my-2">
-                            Create User
-                        </Typography>
-                        <TextField
-                            label="Name"
-                            value={name}
-                            inputProps={{ style: { color: 'black' } }}
-                            onChange={handleNameChange}
-                            fullWidth
-                        />
-                        <br />
-                        <TextField
-                            label="Email"
-                            value={email}
-                            inputProps={{ style: { color: 'black' } }}
-                            onChange={handleEmailChange}
-                            fullWidth
-                        />
-                        <br />
-                        <TextField
-                            type="Password"
-                            label="Password"
-                            value={password}
-                            inputProps={{ style: { color: 'black' } }}
-                            onChange={handlePasswordChange}
-                            fullWidth
-                        />
-                        <br />
-                        <TextField
-                            type="Password"
-                            label="Confirm Password"
-                            value={confirmpassword}
-                            inputProps={{ style: { color: 'black' } }}
-                            onChange={handleCPasswordChange}
-                            fullWidth
-                        />
+                        <ThemeProvider theme={theme}>
+                            <Typography variant="h4" component="h4" className="my-2" style={{ textAlign: 'center' }}>
+                                Create User
+                            </Typography>
+                            <br />
+                            <TextField
+                                label="Name"
+                                value={name}
+                                inputProps={{ style: { color: 'white' } }}
+                                onChange={handleNameChange}
+                                fullWidth
+                                size="small"
+                            />
+                            <br />
+                            <TextField
+                                label="Email"
+                                value={email}
+                                inputProps={{ style: { color: 'white' } }}
+                                onChange={handleEmailChange}
+                                fullWidth
+                                size="small"
+                            />
+                            <br />
+                            <TextField
+                                type="Password"
+                                label="Password"
+                                value={password}
+                                inputProps={{ style: { color: 'white' } }}
+                                onChange={handlePasswordChange}
+                                fullWidth
+                                size="small"
+                            />
+                            <br />
+                            <TextField
+                                type="Password"
+                                label="Confirm Password"
+                                value={confirmpassword}
+                                inputProps={{ style: { color: 'white' } }}
+                                onChange={handleCPasswordChange}
+                                fullWidth
+                                size="small"
+                            />
+                            <br />
+
+                            <Typography variant="h6" component="h4" className="my-2">
+                                Select Services
+                            </Typography>
+                            <div>
+                                <Checkbox checked={wazuhChecked} onChange={handleWazuhChange} name="wazuh" />
+                                Wazuh
+                                <Checkbox checked={gophishChecked} onChange={handleGophishChange} name="gophish" />
+                                Gophish
+                            </div>
+                        </ThemeProvider>
                         <br />
 
-                        <Typography variant="h4" component="h2" className="my-2">
-                            Select Services
-                        </Typography>
-                        <div>
-                            <Checkbox checked={wazuhChecked} onChange={handleWazuhChange} name="wazuh" />
-                            Wazuh
-                            <Checkbox checked={gophishChecked} onChange={handleGophishChange} name="gophish" />
-                            Gophish
-                        </div>
-                        <br />
                         <Button fullWidth variant="contained" onClick={handleCreateUser}>
                             Create User
                         </Button>
@@ -192,8 +288,8 @@ const User = () => {
                         flex-direction: column;
                         align-items: start;
                         justify-content: center;
-                        background-color: #fff;
-                        color: black;
+                        background-color: #000;
+                        color: white;
                         padding: 20px;
                         width: 500px;
                         height: 300px;
@@ -202,57 +298,42 @@ const User = () => {
                         border-radius: 5px;
                     }
                 `}</style>
-                <table className="table table-hover mt-4">
-                    <thead className="thead-dark">
-                        <tr>
-                            <td>S.No</td>
-                            <td>Name</td>
-                            <td>Username/Email</td>
-                            <td
-                                style={{
-                                    minWidth: '100px'
-                                }}
-                            >
-                                Resources
-                            </td>
-                            <td
-                                style={{
-                                    minWidth: '100px'
-                                }}
-                            >
-                                Gophish Id
-                            </td>
-                            <td>GoPhish API Key</td>
-                            <td>Action</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data?.length > 0 &&
-                            data?.map((e, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{i + 1}</td>
-                                        <td>{e.name}</td>
-                                        <td>{e.username}</td>
-                                        <td>
+
+                <br />
+                <br />
+                <br />
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell>S.No</StyledTableCell>
+                                <StyledTableCell align="left">Name</StyledTableCell>
+                                <StyledTableCell align="left">Username/Email</StyledTableCell>
+                                <StyledTableCell align="left">Resources</StyledTableCell>
+                                <StyledTableCell align="left">GophishID</StyledTableCell>
+                                <StyledTableCell align="left">Gophish API Key</StyledTableCell>
+                                <StyledTableCell align="left">Action</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {data?.length > 0 &&
+                                data?.map((e, i) => (
+                                    <StyledTableRow key={i}>
+                                        <StyledTableCell component="th" scope="row">
+                                            {i + 1}
+                                        </StyledTableCell>
+                                        <StyledTableCell align="left">{e?.name}</StyledTableCell>
+                                        <StyledTableCell align="left">{e?.username}</StyledTableCell>
+                                        <StyledTableCell align="left">
+                                            {' '}
                                             <ui>
                                                 {e.wazuh && <li>Wazuh</li>}
                                                 {e.gophish && <li>Gophish</li>}
                                             </ui>
-                                        </td>
-                                        <td>{e.gophishId}</td>
-                                        <td
-                                            style={{
-                                                maxWidth: '570px',
-                                                overflowX: 'hidden'
-                                            }}
-                                        >
-                                            {e.gophishapikey}
-                                        </td>
-                                        <td>
-                                            {/* <IconButton onClick={() => alert('Edited Successfully But No Backend')}>
-                                                <EditIcon color="success" />
-                                            </IconButton> */}
+                                        </StyledTableCell>
+                                        <StyledTableCell align="left">{e?.gophishId}</StyledTableCell>
+                                        <StyledTableCell align="left">{e.gophishapikey}</StyledTableCell>
+                                        <StyledTableCell align="left">
                                             <IconButton
                                                 onClick={() =>
                                                     handleDeleteUser(e?.gophishId, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
@@ -260,12 +341,14 @@ const User = () => {
                                             >
                                                 <DeleteIcon color="error" />
                                             </IconButton>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                    </tbody>
-                </table>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <br />
+                {data?.length <= 0 && <h5 style={{ textAlign: 'center' }}>Fetching Data ...</h5>}
             </MainCard>
         </>
     );

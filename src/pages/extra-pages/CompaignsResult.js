@@ -123,7 +123,8 @@ export default function CompaignResult() {
                 launch_date: utcDate.toISOString(),
                 send_by_date: sendDate.toISOString(),
                 groups: [{ name: group }],
-                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
+                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey,
+                username: JSON.parse(localStorage.getItem('userdata'))?.username
             };
             console.log(obj);
             createCompaign(obj)

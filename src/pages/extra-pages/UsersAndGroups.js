@@ -8,6 +8,93 @@ import MainCard from 'components/MainCard';
 import { createGroup, deleteGroup, editGroup, getGroups, getGroupsSummary } from 'api/api';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+// ==============================|| SAMPLE PAGE ||============================== //
+const theme = createTheme({
+    palette: {
+        mode: 'dark',
+        background: {
+            default: '#333333',
+            paper: '#000000'
+        },
+        primary: {
+            main: '#1890FF'
+        },
+        text: {
+            primary: '#ffffff'
+        }
+    },
+    components: {
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& input': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        },
+        MuiSelect: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiSelect-icon': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        }
+    }
+});
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+        fontSize: 16
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+        color: theme.palette.common.black,
+        maxWidth: '100px',
+        overflow: 'auto'
+    }
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0
+    }
+}));
 
 const style = {
     position: 'absolute',
@@ -265,6 +352,7 @@ export default function UsersAndGroups() {
                             noValidate
                             autoComplete="off"
                         >
+                            {/* <ThemeProvider theme={theme}> */}
                             <Typography id="modal-modal-title" variant="h4" component="h2">
                                 Name
                             </Typography>
@@ -415,47 +503,52 @@ export default function UsersAndGroups() {
                             >
                                 Create Group
                             </Button>
+                            {/* </ThemeProvider> */}
                         </Box>
                     </Box>
                 </Modal>
 
-                <table className="table table-hover mt-4">
-                    <thead class="thead-dark">
-                        <tr>
-                            <td>Name</td>
-                            <td># of Members</td>
-                            <td>Modified Date</td>
-                            <td>Actions</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data?.map((e, i) => {
-                            return (
-                                <tr key={i}>
-                                    <td>{e.name}</td>
-                                    <td>{e.targets.length}</td>
-                                    <td>{new Date(e.modified_date).toUTCString()}</td>
-                                    <td>
-                                        <IconButton onClick={() => handleEditModal(e)}>
-                                            <EditIcon color="success" />
-                                            {/* <DeleteIcon color="error" /> */}
-                                        </IconButton>
-                                        <IconButton
-                                            onClick={() =>
-                                                handleDeleteGroup(e?.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
-                                            }
-                                        >
-                                            {/* <EditIcon color="success" /> */}
-                                            <DeleteIcon color="error" />
-                                            {/* <DeleteIcon color="error" /> */}
-                                        </IconButton>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell>Name</StyledTableCell>
+                                <StyledTableCell align="left"># of Members</StyledTableCell>
+                                <StyledTableCell align="left">Modified Date</StyledTableCell>
+                                <StyledTableCell align="left">Actions</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {data?.length > 0 &&
+                                data?.map((e, i) => (
+                                    <StyledTableRow key={i}>
+                                        <StyledTableCell component="th" scope="row">
+                                            {e?.name}
+                                        </StyledTableCell>
+                                        <StyledTableCell align="left">{e?.targets.length}</StyledTableCell>
+                                        <StyledTableCell align="left">{new Date(e.modified_date).toUTCString()}</StyledTableCell>
+                                        <StyledTableCell align="left">
+                                            <IconButton onClick={() => handleEditModal(e)}>
+                                                <EditIcon color="success" />
+                                                {/* <DeleteIcon color="error" /> */}
+                                            </IconButton>
+                                            <IconButton
+                                                onClick={() =>
+                                                    handleDeleteGroup(e?.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
+                                                }
+                                            >
+                                                {/* <EditIcon color="success" /> */}
+                                                <DeleteIcon color="error" />
+                                                {/* <DeleteIcon color="error" /> */}
+                                            </IconButton>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <br />
+                {data?.length <= 0 && <h5 style={{ textAlign: 'center' }}>Fetching Data ...</h5>}
                 <Modal
                     open={editModal}
                     onClose={handleClose}
@@ -471,6 +564,7 @@ export default function UsersAndGroups() {
                             noValidate
                             autoComplete="off"
                         >
+                            {/* <ThemeProvider theme={theme}> */}
                             <Typography id="modal-modal-title" variant="h4" component="h2">
                                 Name
                             </Typography>
@@ -623,6 +717,7 @@ export default function UsersAndGroups() {
                             >
                                 Edit Group
                             </Button>
+                            {/* </ThemeProvider> */}
                         </Box>
                     </Box>
                 </Modal>

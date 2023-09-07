@@ -7,9 +7,9 @@ const https = require('https');
 // const api2 = 'http://172.168.10.55:1338/';
 // const token = '5b9df0f4e8295a7ba7a9a6031fb9c503d018b51e41bc60fbca14f53f929c9afc';
 
-const api = 'http://192.168.2.106:1338/'; //127.0.0.1
-const goPhishApi = 'http://192.168.2.106:1338/'; //20.63.81.190:1338
-const api2 = 'http://192.168.1.108:1338/';
+const api = 'http://localhost:1338/'; //127.0.0.1
+const goPhishApi = 'http://localhost:1338/'; //20.63.81.190:1338
+const api2 = 'http://localhost:1338/';
 
 const token = 'fd8bc15c96d3809f1b44d852936cb71394836bbf411b4d67321a3508d02862f6';
 
@@ -20,8 +20,20 @@ async function createUser(obj) {
 async function createPortalUser(userDetails) {
     return await axios.post(`${api}createPortalUser`, { ...userDetails });
 }
+async function editCost(userDetails) {
+    return await axios.put(`${api}editCost`, { ...userDetails });
+}
 async function getPortalUsers() {
     return await axios.get(`${api}getPortalUsers`);
+}
+async function getCost() {
+    return await axios.get(`${api}getCost`);
+}
+async function getCampaignCostByName() {
+    return await axios.get(`${api}getCampaignCostByName`);
+}
+async function getCampaignCost(username) {
+    return await axios.get(`${api}getCampaignCost/${username}`);
 }
 async function deletePortalUser(id, auth) {
     return await axios.post(`${api}deletePortalUser`, {
@@ -178,6 +190,10 @@ async function WazuhIntegration() {
 
 export {
     WazuhIntegration,
+    getCampaignCostByName,
+    getCost,
+    getCampaignCost,
+    editCost,
     importSite,
     importEmail,
     Login,

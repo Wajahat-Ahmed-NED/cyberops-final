@@ -24,6 +24,38 @@ import {
     getTemplates
 } from 'api/api';
 import Swal from 'sweetalert2';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+        fontSize: 16
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+        color: theme.palette.common.black,
+        maxWidth: '100px',
+        overflow: 'auto'
+    }
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0
+    }
+}));
 
 const newstyle = {
     position: 'absolute',
@@ -105,6 +137,14 @@ export default function Compaign() {
             Swal.fire('Invalid Data', 'Fill all fields!', 'error');
             setOpen(true);
         } else {
+            // setOpen(true);
+            Swal.fire({
+                icon: 'question',
+                title: 'Processing!',
+                text: 'Wait Please ...'
+                // showConfirmButton: true,
+                // timer: 2000
+            });
             const date = new Date(lDate);
             if (sendEmails) {
                 var send_by_date = new Date(sendEmails);
@@ -132,7 +172,7 @@ export default function Compaign() {
             }
             createCompaign(obj)
                 .then((res) => {
-                    console.log(res);
+                    console.log(res.data);
 
                     Swal.fire({
                         icon: 'success',
@@ -504,45 +544,49 @@ export default function Compaign() {
                     </Box>
                 </Modal>
 
-                <table className="table table-hover mt-4">
-                    <thead class="thead-dark">
-                        <tr>
-                            <td>Name</td>
-                            <td>Creation Date</td>
-                            <td>Status</td>
-                            <td>Actions</td>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {data?.map((e, i) => {
-                            return (
-                                <tr key={i}>
-                                    <td>{e.name}</td>
-
-                                    <td>{new Date(e.created_date).toUTCString()}</td>
-                                    <td>{e.status}</td>
-                                    <td>
-                                        <IconButton>
-                                            <VisibilityIcon color="primary" onClick={() => handleNavigate(e.id)} />
-                                        </IconButton>
-                                        <IconButton>
-                                            <ContentCopyIcon color="primary" onClick={() => handleCopyModal(e)} />
-                                        </IconButton>
-                                        <IconButton>
-                                            <DeleteIcon
-                                                color="error"
-                                                onClick={() =>
-                                                    handleDeleteGroup(e.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
-                                                }
-                                            />
-                                        </IconButton>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableCell>ID</StyledTableCell>
+                                <StyledTableCell>Name</StyledTableCell>
+                                <StyledTableCell align="left">Creation Date</StyledTableCell>
+                                <StyledTableCell align="left">Status</StyledTableCell>
+                                <StyledTableCell align="left">Actions</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {data?.length > 0 &&
+                                data?.map((e, i) => (
+                                    <StyledTableRow key={i}>
+                                        <StyledTableCell component="th" scope="row">
+                                            {e?.id}
+                                        </StyledTableCell>
+                                        <StyledTableCell align="left">{e?.name}</StyledTableCell>
+                                        <StyledTableCell align="left">{new Date(e.created_date).toUTCString()}</StyledTableCell>
+                                        <StyledTableCell align="left">{e?.status}</StyledTableCell>
+                                        <StyledTableCell align="left">
+                                            <IconButton>
+                                                <VisibilityIcon color="primary" onClick={() => handleNavigate(e.id)} />
+                                            </IconButton>
+                                            <IconButton>
+                                                <ContentCopyIcon color="primary" onClick={() => handleCopyModal(e)} />
+                                            </IconButton>
+                                            <IconButton>
+                                                <DeleteIcon
+                                                    color="error"
+                                                    onClick={() =>
+                                                        handleDeleteGroup(e.id, JSON.parse(localStorage.getItem('userdata'))?.gophishkey)
+                                                    }
+                                                />
+                                            </IconButton>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <br />
                 {loader && <h4 style={{ textAlign: 'center' }}>Loading...</h4>}
                 {data?.length < 1 && <h5 style={{ textAlign: 'center' }}>No Data Found</h5>}
             </MainCard>
