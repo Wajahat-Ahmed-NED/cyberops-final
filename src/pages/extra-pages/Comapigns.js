@@ -32,6 +32,62 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+// ==============================|| SAMPLE PAGE ||============================== //
+const theme = createTheme({
+    palette: {
+        mode: 'dark',
+        background: {
+            default: '#333333',
+            paper: '#000000'
+        },
+        primary: {
+            main: '#1890FF'
+        },
+        text: {
+            primary: '#ffffff'
+        }
+    },
+    components: {
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& input': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        },
+        MuiSelect: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiSelect-icon': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        }
+    }
+});
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -310,7 +366,7 @@ export default function Compaign() {
                         </Typography>
                     </CardContent>
                 </Card>
-                <Button variant="contained" className="mb-3" onClick={handleOpen}>
+                <Button variant="contained" style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }} className="mb-3" onClick={handleOpen}>
                     New Campaign
                 </Button>
 
@@ -324,198 +380,199 @@ export default function Compaign() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Name
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Campaign Name"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Email Template
-                            </Typography>
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Campaign Name"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Email Template
+                                </Typography>
 
-                            <div class="col-sm-3">
-                                <select
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Select Email Template"
-                                    id="firstName"
-                                    onBlur={(e) => setEmailTemplate(e.target.value)}
-                                >
-                                    <option value="" disabled selected>
-                                        Select Email Template
-                                    </option>
-                                    {templates?.map((e, i) => (
-                                        <option key={i} value={e.name}>
-                                            {e.name}
+                                <div class="col-sm-3">
+                                    <select
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Select Email Template"
+                                        id="firstName"
+                                        onBlur={(e) => setEmailTemplate(e.target.value)}
+                                    >
+                                        <option value="" disabled selected>
+                                            Select Email Template
                                         </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Landing Page
-                            </Typography>
-                            <div class="col-sm-3">
-                                <select
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Select Landing Page"
-                                    id="firstName"
-                                    onBlur={(e) => setLPage(e.target.value)}
-                                >
-                                    <option value="" disabled selected>
-                                        Select Landing Page
-                                    </option>
-                                    {pages?.map((e, i) => (
-                                        <option key={i} value={e.name}>
-                                            {e.name}
+                                        {templates?.map((e, i) => (
+                                            <option key={i} value={e.name}>
+                                                {e.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Landing Page
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <select
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Select Landing Page"
+                                        id="firstName"
+                                        onBlur={(e) => setLPage(e.target.value)}
+                                    >
+                                        <option value="" disabled selected>
+                                            Select Landing Page
                                         </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                URL
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="http://192.168.1.1"
-                                    id="ip"
-                                    required
-                                    value={url}
-                                    onChange={(e) => setURL(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Launch Date
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="datetime-local"
-                                    class="form-control"
-                                    placeholder="Select Launch Date"
-                                    id="ip"
-                                    required
-                                    value={lDate}
-                                    onChange={(e) => setLDate(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Send Emails By (Optional)
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="datetime-local"
-                                    class="form-control"
-                                    placeholder="Select Launch Date"
-                                    id="ip"
-                                    value={sendEmails}
-                                    onChange={(e) => setSendEmails(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Sending Profile
-                            </Typography>
-                            <div class="col-sm-3">
-                                <select
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Select Landing Page"
-                                    id="firstName"
-                                    onBlur={(e) => setSendProfile(e.target.value)}
-                                >
-                                    <option value="" disabled selected>
-                                        Select Sending Profile
-                                    </option>
-                                    {sendingProfile?.map((e, i) => (
-                                        <option key={i} value={e.name}>
-                                            {e.name}
+                                        {pages?.map((e, i) => (
+                                            <option key={i} value={e.name}>
+                                                {e.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    URL
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="http://192.168.1.1"
+                                        id="ip"
+                                        required
+                                        value={url}
+                                        onChange={(e) => setURL(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Launch Date
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="datetime-local"
+                                        class="form-control"
+                                        placeholder="Select Launch Date"
+                                        id="ip"
+                                        required
+                                        value={lDate}
+                                        onChange={(e) => setLDate(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Send Emails By (Optional)
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="datetime-local"
+                                        class="form-control"
+                                        placeholder="Select Launch Date"
+                                        id="ip"
+                                        value={sendEmails}
+                                        onChange={(e) => setSendEmails(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Sending Profile
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <select
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Select Landing Page"
+                                        id="firstName"
+                                        onBlur={(e) => setSendProfile(e.target.value)}
+                                    >
+                                        <option value="" disabled selected>
+                                            Select Sending Profile
                                         </option>
-                                    ))}
-                                </select>
-                            </div>
-                            {/* <Button variant="contained" color="error" onClick={() => setTestEmailopen(true)}>
+                                        {sendingProfile?.map((e, i) => (
+                                            <option key={i} value={e.name}>
+                                                {e.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                {/* <Button variant="contained" color="error" onClick={() => setTestEmailopen(true)}>
                                 Send Test Email{' '}
                             </Button> */}
-                            <Modal
-                                open={testEmailopen}
-                                onClose={() => setTestEmailopen(false)}
-                                aria-labelledby="modal-modal-title"
-                                aria-describedby="modal-modal-description"
-                            >
-                                <Box sx={newstyle}>
-                                    <Typography id="modal-modal-title" variant="h4" component="h2">
-                                        Send Test Email
-                                    </Typography>
-                                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                        Send Test Email to:
-                                        <div className="container my-2">
-                                            <div className="row">
-                                                <div className="col-md-3">
-                                                    <input
-                                                        placeholder="First Name"
-                                                        className="form-control"
-                                                        onChange={(e) => setFname(e.target.value)}
-                                                    />
-                                                </div>
-                                                <div className="col-md-3">
-                                                    <input
-                                                        placeholder="Last Name"
-                                                        className="form-control"
-                                                        onChange={(e) => setLname(e.target.value)}
-                                                    />
-                                                </div>
-                                                <div className="col-md-3">
-                                                    <input
-                                                        placeholder="Email"
-                                                        className="form-control"
-                                                        onChange={(e) => setEmail(e.target.value)}
-                                                    />
-                                                </div>
-                                                <div className="col-md-3">
-                                                    <input
-                                                        placeholder="Position"
-                                                        className="form-control"
-                                                        onChange={(e) => setPosition(e.target.value)}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <Button variant="contained" className="mt-2">
-                                                Send
-                                            </Button>
-                                        </div>
-                                    </Typography>
-                                </Box>
-                            </Modal>
-                            <Typography id="modal-modal-title" variant="h5" component="h2">
-                                Groups
-                            </Typography>
-                            <div class="col-sm-3">
-                                <select
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Select Landing Page"
-                                    id="firstName"
-                                    onBlur={(e) => setGroup(e.target.value)}
+                                <Modal
+                                    open={testEmailopen}
+                                    onClose={() => setTestEmailopen(false)}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
                                 >
-                                    <option value="" disabled selected>
-                                        Select Group
-                                    </option>
-                                    {groups?.map((e, i) => (
-                                        <option key={i} value={e.name}>
-                                            {e.name}
+                                    <Box sx={newstyle}>
+                                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                                            Send Test Email
+                                        </Typography>
+                                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                            Send Test Email to:
+                                            <div className="container my-2">
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        <input
+                                                            placeholder="First Name"
+                                                            className="form-control"
+                                                            onChange={(e) => setFname(e.target.value)}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        <input
+                                                            placeholder="Last Name"
+                                                            className="form-control"
+                                                            onChange={(e) => setLname(e.target.value)}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        <input
+                                                            placeholder="Email"
+                                                            className="form-control"
+                                                            onChange={(e) => setEmail(e.target.value)}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        <input
+                                                            placeholder="Position"
+                                                            className="form-control"
+                                                            onChange={(e) => setPosition(e.target.value)}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <Button variant="contained" className="mt-2">
+                                                    Send
+                                                </Button>
+                                            </div>
+                                        </Typography>
+                                    </Box>
+                                </Modal>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Groups
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <select
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Select Landing Page"
+                                        id="firstName"
+                                        onBlur={(e) => setGroup(e.target.value)}
+                                    >
+                                        <option value="" disabled selected>
+                                            Select Group
                                         </option>
-                                    ))}
-                                </select>
-                            </div>
-                            {/* <div class="col-sm-3">
+                                        {groups?.map((e, i) => (
+                                            <option key={i} value={e.name}>
+                                                {e.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                                {/* <div class="col-sm-3">
                                 <input
                                     type="text"
                                     class="form-control"
@@ -525,21 +582,21 @@ export default function Compaign() {
                                     onChange={(e) => setPosition(e.target.value)}
                                 />
                             </div> */}
-                            {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
+                                {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
                                 <AddIcon fontSize="small" /> Add
                             </Button> */}
-
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd'
-                                    // color: "black"
-                                }}
-                                onClick={handleAdd}
-                                fullWidth
-                            >
-                                Create Campaign
-                            </Button>
+                                <br />
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleAdd}
+                                        fullWidth
+                                    >
+                                        Create Campaign
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>
@@ -601,203 +658,204 @@ export default function Compaign() {
                         noValidate
                         autoComplete="off"
                     >
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Name
-                        </Typography>
-                        <TextField
-                            id="outlined-basic"
-                            label="Campaign Name"
-                            variant="outlined"
-                            style={{ color: 'black' }}
-                            color="primary"
-                            size="small"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Email Template
-                        </Typography>
+                        <ThemeProvider theme={theme}>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Name
+                            </Typography>
+                            <TextField
+                                id="outlined-basic"
+                                label="Campaign Name"
+                                variant="outlined"
+                                style={{ color: 'black' }}
+                                color="primary"
+                                size="small"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Email Template
+                            </Typography>
 
-                        <div class="col-sm-3">
-                            <select
-                                type="text"
-                                class="form-control"
-                                placeholder="Select Email Template"
-                                id="firstName"
-                                value={emailTemplate}
-                                onBlur={(e) => setEmailTemplate(e.target.value)}
-                            >
-                                <option value="" disabled selected>
-                                    Select Email Template
-                                </option>
-                                {templates?.map((e, i) => (
-                                    <option key={i} value={e.name}>
-                                        {e.name}
+                            <div class="col-sm-3">
+                                <select
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Select Email Template"
+                                    id="firstName"
+                                    value={emailTemplate}
+                                    onBlur={(e) => setEmailTemplate(e.target.value)}
+                                >
+                                    <option value="" disabled selected>
+                                        Select Email Template
                                     </option>
-                                ))}
-                            </select>
-                        </div>
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Landing Page
-                        </Typography>
-                        <div class="col-sm-3">
-                            <select
-                                type="text"
-                                class="form-control"
-                                placeholder="Select Landing Page"
-                                id="firstName"
-                                value={lPage}
-                                onBlur={(e) => setLPage(e.target.value)}
-                            >
-                                <option value="" disabled selected>
-                                    Select Landing Page
-                                </option>
-                                {pages?.map((e, i) => (
-                                    <option key={i} value={e.name}>
-                                        {e.name}
+                                    {templates?.map((e, i) => (
+                                        <option key={i} value={e.name}>
+                                            {e.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Landing Page
+                            </Typography>
+                            <div class="col-sm-3">
+                                <select
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Select Landing Page"
+                                    id="firstName"
+                                    value={lPage}
+                                    onBlur={(e) => setLPage(e.target.value)}
+                                >
+                                    <option value="" disabled selected>
+                                        Select Landing Page
                                     </option>
-                                ))}
-                            </select>
-                        </div>
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            URL
-                        </Typography>
-                        <div class="col-sm-3">
-                            <input
-                                type="email"
-                                class="form-control"
-                                placeholder="http://192.168.1.1"
-                                id="ip"
-                                required
-                                value={url}
-                                onChange={(e) => setURL(e.target.value)}
-                            />
-                        </div>
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Launch Date
-                        </Typography>
-                        <div class="col-sm-3">
-                            <input
-                                type="datetime-local"
-                                class="form-control"
-                                placeholder="Select Launch Date"
-                                id="ip"
-                                required
-                                value={lDate}
-                                onChange={(e) => setLDate(e.target.value)}
-                            />
-                        </div>
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Send Emails By (Optional)
-                        </Typography>
-                        <div class="col-sm-3">
-                            <input
-                                type="datetime-local"
-                                class="form-control"
-                                placeholder="Select Launch Date"
-                                id="ip"
-                                value={sendEmails}
-                                onChange={(e) => setSendEmails(e.target.value)}
-                            />
-                        </div>
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Sending Profile
-                        </Typography>
-                        <div class="col-sm-3">
-                            <select
-                                type="text"
-                                class="form-control"
-                                placeholder="Select Landing Page"
-                                id="firstName"
-                                value={sendProfile}
-                                onBlur={(e) => setSendProfile(e.target.value)}
-                            >
-                                <option value="" disabled selected>
-                                    Select Sending Profile
-                                </option>
-                                {sendingProfile?.map((e, i) => (
-                                    <option key={i} value={e.name}>
-                                        {e.name}
+                                    {pages?.map((e, i) => (
+                                        <option key={i} value={e.name}>
+                                            {e.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                URL
+                            </Typography>
+                            <div class="col-sm-3">
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    placeholder="http://192.168.1.1"
+                                    id="ip"
+                                    required
+                                    value={url}
+                                    onChange={(e) => setURL(e.target.value)}
+                                />
+                            </div>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Launch Date
+                            </Typography>
+                            <div class="col-sm-3">
+                                <input
+                                    type="datetime-local"
+                                    class="form-control"
+                                    placeholder="Select Launch Date"
+                                    id="ip"
+                                    required
+                                    value={lDate}
+                                    onChange={(e) => setLDate(e.target.value)}
+                                />
+                            </div>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Send Emails By (Optional)
+                            </Typography>
+                            <div class="col-sm-3">
+                                <input
+                                    type="datetime-local"
+                                    class="form-control"
+                                    placeholder="Select Launch Date"
+                                    id="ip"
+                                    value={sendEmails}
+                                    onChange={(e) => setSendEmails(e.target.value)}
+                                />
+                            </div>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Sending Profile
+                            </Typography>
+                            <div class="col-sm-3">
+                                <select
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Select Landing Page"
+                                    id="firstName"
+                                    value={sendProfile}
+                                    onBlur={(e) => setSendProfile(e.target.value)}
+                                >
+                                    <option value="" disabled selected>
+                                        Select Sending Profile
                                     </option>
-                                ))}
-                            </select>
-                        </div>
-                        {/* <Button variant="contained" color="error" onClick={() => setTestEmailopen(true)}>
+                                    {sendingProfile?.map((e, i) => (
+                                        <option key={i} value={e.name}>
+                                            {e.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            {/* <Button variant="contained" color="error" onClick={() => setTestEmailopen(true)}>
                                 Send Test Email{' '}
                             </Button> */}
-                        <Modal
-                            open={testEmailopen}
-                            onClose={() => setTestEmailopen(false)}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <Box sx={newstyle}>
-                                <Typography id="modal-modal-title" variant="h4" component="h2">
-                                    Send Test Email
-                                </Typography>
-                                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                    Send Test Email to:
-                                    <div className="container my-2">
-                                        <div className="row">
-                                            <div className="col-md-3">
-                                                <input
-                                                    placeholder="First Name"
-                                                    className="form-control"
-                                                    onChange={(e) => setFname(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="col-md-3">
-                                                <input
-                                                    placeholder="Last Name"
-                                                    className="form-control"
-                                                    onChange={(e) => setLname(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="col-md-3">
-                                                <input
-                                                    placeholder="Email"
-                                                    className="form-control"
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                />
-                                            </div>
-                                            <div className="col-md-3">
-                                                <input
-                                                    placeholder="Position"
-                                                    className="form-control"
-                                                    onChange={(e) => setPosition(e.target.value)}
-                                                />
-                                            </div>
-                                        </div>
-                                        <Button variant="contained" className="mt-2">
-                                            Send
-                                        </Button>
-                                    </div>
-                                </Typography>
-                            </Box>
-                        </Modal>
-                        <Typography id="modal-modal-title" variant="h5" component="h2">
-                            Groups
-                        </Typography>
-                        <div class="col-sm-3">
-                            <select
-                                type="text"
-                                class="form-control"
-                                placeholder="Select Landing Page"
-                                id="firstName"
-                                value={group}
-                                onBlur={(e) => setGroup(e.target.value)}
+                            <Modal
+                                open={testEmailopen}
+                                onClose={() => setTestEmailopen(false)}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
                             >
-                                <option value="" disabled selected>
-                                    Select Group
-                                </option>
-                                {groups?.map((e, i) => (
-                                    <option key={i} value={e.name}>
-                                        {e.name}
+                                <Box sx={newstyle}>
+                                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                                        Send Test Email
+                                    </Typography>
+                                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                        Send Test Email to:
+                                        <div className="container my-2">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <input
+                                                        placeholder="First Name"
+                                                        className="form-control"
+                                                        onChange={(e) => setFname(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <input
+                                                        placeholder="Last Name"
+                                                        className="form-control"
+                                                        onChange={(e) => setLname(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <input
+                                                        placeholder="Email"
+                                                        className="form-control"
+                                                        onChange={(e) => setEmail(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <input
+                                                        placeholder="Position"
+                                                        className="form-control"
+                                                        onChange={(e) => setPosition(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <Button variant="contained" className="mt-2">
+                                                Send
+                                            </Button>
+                                        </div>
+                                    </Typography>
+                                </Box>
+                            </Modal>
+                            <Typography id="modal-modal-title" variant="h6" component="h2">
+                                Groups
+                            </Typography>
+                            <div class="col-sm-3">
+                                <select
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Select Landing Page"
+                                    id="firstName"
+                                    value={group}
+                                    onBlur={(e) => setGroup(e.target.value)}
+                                >
+                                    <option value="" disabled selected>
+                                        Select Group
                                     </option>
-                                ))}
-                            </select>
-                        </div>
-                        {/* <div class="col-sm-3">
+                                    {groups?.map((e, i) => (
+                                        <option key={i} value={e.name}>
+                                            {e.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            {/* <div class="col-sm-3">
                                 <input
                                     type="text"
                                     class="form-control"
@@ -807,21 +865,21 @@ export default function Compaign() {
                                     onChange={(e) => setPosition(e.target.value)}
                                 />
                             </div> */}
-                        {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
+                            {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
                                 <AddIcon fontSize="small" /> Add
                             </Button> */}
-
-                        <Button
-                            variant="contained"
-                            style={{
-                                backgroundColor: '#70d8bd'
-                                // color: "black"
-                            }}
-                            onClick={handleAdd}
-                            fullWidth
-                        >
-                            Create Template
-                        </Button>
+                            <br />
+                            <div className="container d-flex">
+                                <Button
+                                    variant="contained"
+                                    style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                    onClick={handleAdd}
+                                    fullWidth
+                                >
+                                    Create Campaign
+                                </Button>
+                            </div>
+                        </ThemeProvider>
                     </Box>
                 </Box>
             </Modal>

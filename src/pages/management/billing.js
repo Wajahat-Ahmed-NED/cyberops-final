@@ -238,15 +238,18 @@ const User = () => {
                     </>
                 )}
                 {JSON.parse(localStorage.getItem('userdata')).username === 'Troy' ? (
-                    <Button style={{ float: 'right' }} variant="outlined" onClick={() => setEditCost(true)}>
+                    <Button
+                        style={{ float: 'right', backgroundColor: '#e1f1f5', color: '#58adc6' }}
+                        variant="outlined"
+                        onClick={() => setEditCost(true)}
+                    >
                         Edit Cost
                     </Button>
                 ) : (
                     <>
                         <Button
-                            style={{ float: 'right', fontWeight: 'bold' }}
+                            style={{ float: 'right', fontWeight: 'bold', backgroundColor: '#58adc6', color: '#e1f1f5' }}
                             variant="outlined"
-                            color="primary"
                             onClick={handleDownloadInvoice}
                         >
                             ${compaignByName.length * cost?.campaigns || 0} - Download Invoice
@@ -293,7 +296,12 @@ const User = () => {
                             />
                             <br />
                         </ThemeProvider>
-                        <Button variant="contained" fullWidth onClick={handleEditCost}>
+                        <Button
+                            variant="contained"
+                            style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                            fullWidth
+                            onClick={handleEditCost}
+                        >
                             Update Cost
                         </Button>
                     </Box>

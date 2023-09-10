@@ -338,7 +338,7 @@ export default function UsersAndGroups() {
                         </Typography> */}
                     </CardContent>
                 </Card>
-                <Button variant="contained" className="mb-3" onClick={handleOpen}>
+                <Button variant="contained" className="mb-3" style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }} onClick={handleOpen}>
                     New Group
                 </Button>
 
@@ -352,158 +352,156 @@ export default function UsersAndGroups() {
                             noValidate
                             autoComplete="off"
                         >
-                            {/* <ThemeProvider theme={theme}> */}
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name
-                            </Typography>
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
 
-                            <div className="container">
-                                {/* upload file section */}
-                                <div className="form">
-                                    <form className="form-group" autoComplete="off">
-                                        <label htmlFor="bulk">
-                                            <h5>Bulk Import</h5>
-                                        </label>
-                                        <br></br>
-                                        <input type="file" className="form-control" onChange={handleFile} required></input>
-                                        {excelFileError && (
-                                            <div className="text-danger" style={{ marginTop: 5 + 'px' }}>
-                                                {excelFileError}
-                                            </div>
-                                        )}
-                                        <Button
-                                            onClick={(e) => {
-                                                excelFile && handleExcelSubmit(e);
-                                            }}
-                                            fontSize="small"
-                                            color="success"
-                                            style={{ marginTop: 5 + 'px' }}
-                                        >
-                                            {excelData ? 'Uploaded' : 'Upload'}
-                                        </Button>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <TextField
-                                id="outlined-basic"
-                                label="Group Name"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Users
-                            </Typography>
-
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="First Name"
-                                    id="firstName"
-                                    value={fname}
-                                    onChange={(e) => setFname(e.target.value)}
-                                />
-                            </div>
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Last Name"
-                                    id="lastName"
-                                    value={lname}
-                                    onChange={(e) => setLname(e.target.value)}
-                                />
-                            </div>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Email"
-                                    id="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Position"
-                                    id="position"
-                                    value={position}
-                                    onChange={(e) => setPosition(e.target.value)}
-                                />
-                            </div>
-                            <Button variant="text" color="error" size="small" onClick={handleSubmit}>
-                                <AddIcon fontSize="small" /> Add
-                            </Button>
-
-                            {todos?.map((e, index) => (
-                                <div class="accordion accordion-flush border rounded" key={index} id="accordionFlushExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingOne">
-                                            <button
-                                                class="accordion-button collapsed"
-                                                type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target={`#flush-collapse${index}`}
-                                                aria-expanded="false"
-                                                aria-controls={`flush-collapse${index}`}
-                                            >
-                                                <div className="d-flex justify-content-between " style={{ width: '100%' }}>
-                                                    <>
-                                                        <span className="mt-3">{index + 1}</span>
-                                                        <p style={{ fontWeight: 'bold' }} className="mt-3">
-                                                            {e.first_name + ' ' + e.last_name}
-                                                        </p>
-                                                        {/* <p className="mt-3">{}</p> */}
-                                                    </>
-                                                    {/* <p className="mt-3">{e.cvss || e.cvss_score}</p> */}
-                                                    <Button
-                                                        variant="text"
-                                                        color="error"
-                                                        className="m-2"
-                                                        onClick={() => handleDelete(index)}
-                                                    >
-                                                        Delete
-                                                    </Button>
+                                <div className="container">
+                                    {/* upload file section */}
+                                    <div className="form">
+                                        <form className="form-group" autoComplete="off">
+                                            <label htmlFor="bulk">
+                                                <h5>Bulk Import</h5>
+                                            </label>
+                                            <br></br>
+                                            <input type="file" className="form-control" onChange={handleFile} required></input>
+                                            {excelFileError && (
+                                                <div className="text-danger" style={{ marginTop: 5 + 'px' }}>
+                                                    {excelFileError}
                                                 </div>
-                                            </button>
-                                        </h2>
-                                        <div
-                                            id={`flush-collapse${index}`}
-                                            class="accordion-collapse collapse"
-                                            aria-labelledby="flush-headingOne"
-                                            data-bs-parent="#accordionFlushExample"
-                                        >
-                                            <div class="accordion-body">{e.email + ' ' + e.position}</div>
-                                        </div>
+                                            )}
+                                            <Button
+                                                onClick={(e) => {
+                                                    excelFile && handleExcelSubmit(e);
+                                                }}
+                                                fontSize="small"
+                                                color="success"
+                                                style={{ marginTop: 5 + 'px' }}
+                                            >
+                                                {excelData ? 'Uploaded' : 'Upload'}
+                                            </Button>
+                                        </form>
                                     </div>
                                 </div>
-                                // <li key={index}>
-                                //     {fname} {lname} {email} {position}
 
-                                //     <button onClick={() => handleDelete(index)}>Delete</button>
-                                // </li>
-                            ))}
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Group Name"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Users
+                                </Typography>
 
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd'
-                                    // color: "black"
-                                }}
-                                onClick={handleAdd}
-                                fullWidth
-                            >
-                                Create Group
-                            </Button>
-                            {/* </ThemeProvider> */}
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="First Name"
+                                        id="firstName"
+                                        value={fname}
+                                        onChange={(e) => setFname(e.target.value)}
+                                    />
+                                </div>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Last Name"
+                                        id="lastName"
+                                        value={lname}
+                                        onChange={(e) => setLname(e.target.value)}
+                                    />
+                                </div>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Email"
+                                        id="email"
+                                        required
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Position"
+                                        id="position"
+                                        value={position}
+                                        onChange={(e) => setPosition(e.target.value)}
+                                    />
+                                </div>
+                                <Button variant="text" color="error" size="small" onClick={handleSubmit}>
+                                    <AddIcon fontSize="small" /> Add
+                                </Button>
+
+                                {todos?.map((e, index) => (
+                                    <div class="accordion accordion-flush border rounded" key={index} id="accordionFlushExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingOne">
+                                                <button
+                                                    class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target={`#flush-collapse${index}`}
+                                                    aria-expanded="false"
+                                                    aria-controls={`flush-collapse${index}`}
+                                                >
+                                                    <div className="d-flex justify-content-between " style={{ width: '100%' }}>
+                                                        <>
+                                                            <span className="mt-3">{index + 1}</span>
+                                                            <p style={{ fontWeight: 'bold' }} className="mt-3">
+                                                                {e.first_name + ' ' + e.last_name}
+                                                            </p>
+                                                            {/* <p className="mt-3">{}</p> */}
+                                                        </>
+                                                        {/* <p className="mt-3">{e.cvss || e.cvss_score}</p> */}
+                                                        <Button
+                                                            variant="text"
+                                                            color="error"
+                                                            className="m-2"
+                                                            onClick={() => handleDelete(index)}
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div
+                                                id={`flush-collapse${index}`}
+                                                class="accordion-collapse collapse"
+                                                aria-labelledby="flush-headingOne"
+                                                data-bs-parent="#accordionFlushExample"
+                                            >
+                                                <div class="accordion-body">{e.email + ' ' + e.position}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    // <li key={index}>
+                                    //     {fname} {lname} {email} {position}
+
+                                    //     <button onClick={() => handleDelete(index)}>Delete</button>
+                                    // </li>
+                                ))}
+                                <div className="container  d-flex ">
+                                    <Button
+                                        variant="contained"
+                                        style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleAdd}
+                                        fullWidth
+                                    >
+                                        Create Group
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>
@@ -564,160 +562,159 @@ export default function UsersAndGroups() {
                             noValidate
                             autoComplete="off"
                         >
-                            {/* <ThemeProvider theme={theme}> */}
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name
-                            </Typography>
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
 
-                            <TextField
-                                id="outlined-basic"
-                                label="Group Name"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-
-                            <div className="container">
-                                {/* upload file section */}
-                                <div className="form">
-                                    <form className="form-group" autoComplete="off">
-                                        <label htmlFor="bulk">
-                                            <h5>Bulk Import</h5>
-                                        </label>
-                                        <br></br>
-                                        <input type="file" className="form-control" onChange={handleFile} required></input>
-                                        {excelFileError && (
-                                            <div className="text-danger" style={{ marginTop: 5 + 'px' }}>
-                                                {excelFileError}
-                                            </div>
-                                        )}
-                                        <Button
-                                            onClick={(e) => {
-                                                excelFile && handleExcelSubmit(e);
-                                            }}
-                                            fontSize="small"
-                                            color="success"
-                                            style={{ marginTop: 5 + 'px' }}
-                                        >
-                                            {excelData ? 'Uploaded' : 'Upload'}
-                                        </Button>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Users
-                            </Typography>
-
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="First Name"
-                                    id="firstName"
-                                    value={fname}
-                                    onChange={(e) => setFname(e.target.value)}
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Group Name"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
                                 />
-                            </div>
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Last Name"
-                                    id="lastName"
-                                    value={lname}
-                                    onChange={(e) => setLname(e.target.value)}
-                                />
-                            </div>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Email"
-                                    id="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Position"
-                                    id="position"
-                                    value={position}
-                                    onChange={(e) => setPosition(e.target.value)}
-                                />
-                            </div>
-                            <Button variant="text" color="error" size="small" onClick={handleSubmit}>
-                                <AddIcon fontSize="small" /> Add
-                            </Button>
 
-                            {todos.map((e, index) => (
-                                <div class="accordion accordion-flush border rounded" key={index} id="accordionFlushExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-headingOne">
-                                            <button
-                                                class="accordion-button collapsed"
-                                                type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target={`#flush-collapse${index}`}
-                                                aria-expanded="false"
-                                                aria-controls={`flush-collapse${index}`}
-                                            >
-                                                <div className="d-flex justify-content-between " style={{ width: '100%' }}>
-                                                    <>
-                                                        <span className="mt-3">{index + 1}</span>
-                                                        <p style={{ fontWeight: 'bold' }} className="mt-3">
-                                                            {e.first_name + ' ' + e.last_name}
-                                                        </p>
-                                                        {/* <p className="mt-3">{}</p> */}
-                                                    </>
-                                                    {/* <p className="mt-3">{e.cvss || e.cvss_score}</p> */}
-                                                    <Button
-                                                        variant="text"
-                                                        color="error"
-                                                        className="m-2"
-                                                        onClick={() => handleDelete(index)}
-                                                    >
-                                                        Delete
-                                                    </Button>
+                                <div className="container">
+                                    {/* upload file section */}
+                                    <div className="form">
+                                        <form className="form-group" autoComplete="off">
+                                            <label htmlFor="bulk">
+                                                <h5>Bulk Import</h5>
+                                            </label>
+                                            <br></br>
+                                            <input type="file" className="form-control" onChange={handleFile} required></input>
+                                            {excelFileError && (
+                                                <div className="text-danger" style={{ marginTop: 5 + 'px' }}>
+                                                    {excelFileError}
                                                 </div>
-                                            </button>
-                                        </h2>
-                                        <div
-                                            id={`flush-collapse${index}`}
-                                            class="accordion-collapse collapse"
-                                            aria-labelledby="flush-headingOne"
-                                            data-bs-parent="#accordionFlushExample"
-                                        >
-                                            <div class="accordion-body">{e.email + ' ' + e.position}</div>
-                                        </div>
+                                            )}
+                                            <Button
+                                                onClick={(e) => {
+                                                    excelFile && handleExcelSubmit(e);
+                                                }}
+                                                fontSize="small"
+                                                color="success"
+                                                style={{ marginTop: 5 + 'px' }}
+                                            >
+                                                {excelData ? 'Uploaded' : 'Upload'}
+                                            </Button>
+                                        </form>
                                     </div>
                                 </div>
-                                // <li key={index}>
-                                //     {fname} {lname} {email} {position}
 
-                                //     <button onClick={() => handleDelete(index)}>Delete</button>
-                                // </li>
-                            ))}
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Users
+                                </Typography>
 
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd'
-                                    // color: "black"
-                                }}
-                                onClick={handleEdit}
-                                fullWidth
-                            >
-                                Edit Group
-                            </Button>
-                            {/* </ThemeProvider> */}
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="First Name"
+                                        id="firstName"
+                                        value={fname}
+                                        onChange={(e) => setFname(e.target.value)}
+                                    />
+                                </div>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Last Name"
+                                        id="lastName"
+                                        value={lname}
+                                        onChange={(e) => setLname(e.target.value)}
+                                    />
+                                </div>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Email"
+                                        id="email"
+                                        required
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Position"
+                                        id="position"
+                                        value={position}
+                                        onChange={(e) => setPosition(e.target.value)}
+                                    />
+                                </div>
+                                <Button variant="text" color="error" size="small" onClick={handleSubmit}>
+                                    <AddIcon fontSize="small" /> Add
+                                </Button>
+
+                                {todos.map((e, index) => (
+                                    <div class="accordion accordion-flush border rounded" key={index} id="accordionFlushExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-headingOne">
+                                                <button
+                                                    class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target={`#flush-collapse${index}`}
+                                                    aria-expanded="false"
+                                                    aria-controls={`flush-collapse${index}`}
+                                                >
+                                                    <div className="d-flex justify-content-between " style={{ width: '100%' }}>
+                                                        <>
+                                                            <span className="mt-3">{index + 1}</span>
+                                                            <p style={{ fontWeight: 'bold' }} className="mt-3">
+                                                                {e.first_name + ' ' + e.last_name}
+                                                            </p>
+                                                            {/* <p className="mt-3">{}</p> */}
+                                                        </>
+                                                        {/* <p className="mt-3">{e.cvss || e.cvss_score}</p> */}
+                                                        <Button
+                                                            variant="text"
+                                                            color="error"
+                                                            className="m-2"
+                                                            onClick={() => handleDelete(index)}
+                                                        >
+                                                            Delete
+                                                        </Button>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div
+                                                id={`flush-collapse${index}`}
+                                                class="accordion-collapse collapse"
+                                                aria-labelledby="flush-headingOne"
+                                                data-bs-parent="#accordionFlushExample"
+                                            >
+                                                <div class="accordion-body">{e.email + ' ' + e.position}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    // <li key={index}>
+                                    //     {fname} {lname} {email} {position}
+
+                                    //     <button onClick={() => handleDelete(index)}>Delete</button>
+                                    // </li>
+                                ))}
+                                <br />
+                                <div className="container  d-flex ">
+                                    <Button
+                                        variant="contained"
+                                        style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleEdit}
+                                        fullWidth
+                                    >
+                                        Edit Group
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>

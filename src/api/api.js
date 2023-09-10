@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from '../../node_modules/axios/index';
 const https = require('https');
-
+import { isJwtExpired } from 'jwt-check-expiration';
 // const api = 'http://20.63.81.190:1338/';
 // const goPhishApi = 'http://localhost:1338/';
 // const api2 = 'http://172.168.10.55:1338/';
@@ -11,35 +11,104 @@ const api = 'http://localhost:1338/'; //127.0.0.1
 const goPhishApi = 'http://localhost:1338/'; //20.63.81.190:1338
 const api2 = 'http://localhost:1338/';
 
-const token = 'fd8bc15c96d3809f1b44d852936cb71394836bbf411b4d67321a3508d02862f6';
+let token = '';
+
+//var type;
+
+const getToken = () => {
+    let data = JSON.parse(localStorage.getItem('userdata'));
+    token = data?.token;
+
+    if (isJwtExpired(token)) {
+        localStorage.removeItem('userdata');
+        window.location.replace('/login');
+        return true;
+    } else {
+        return false;
+    }
+};
 
 async function createUser(obj) {
     console.log(obj);
     return await axios.post(`${goPhishApi}createUser`, { ...obj });
 }
 async function createPortalUser(userDetails) {
-    return await axios.post(`${api}createPortalUser`, { ...userDetails });
+    if (getToken() !== true) {
+        return await axios.post(
+            `${api}createPortalUser`,
+            { ...userDetails },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+    }
 }
 async function editCost(userDetails) {
-    return await axios.put(`${api}editCost`, { ...userDetails });
+    if (getToken() !== true) {
+        return await axios.put(
+            `${api}editCost`,
+            { ...userDetails },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+    }
 }
 async function getPortalUsers() {
-    return await axios.get(`${api}getPortalUsers`);
+    if (getToken() !== true) {
+        return await axios.get(`${api}getPortalUsers`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }
 }
 async function getCost() {
-    return await axios.get(`${api}getCost`);
+    if (getToken() !== true) {
+        return await axios.get(`${api}getCost`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }
 }
 async function getCampaignCostByName() {
-    return await axios.get(`${api}getCampaignCostByName`);
+    if (getToken() !== true) {
+        return await axios.get(`${api}getCampaignCostByName`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }
 }
 async function getCampaignCost(username) {
-    return await axios.get(`${api}getCampaignCost/${username}`);
+    if (getToken() !== true) {
+        return await axios.get(`${api}getCampaignCost/${username}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }
 }
 async function deletePortalUser(id, auth) {
-    return await axios.post(`${api}deletePortalUser`, {
-        id,
-        auth
-    });
+    if (getToken() !== true) {
+        return await axios.post(
+            `${api}deletePortalUser`,
+            {
+                id,
+                auth
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+    }
 }
 async function createTemplate(obj) {
     console.log(obj);

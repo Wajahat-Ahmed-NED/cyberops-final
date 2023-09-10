@@ -347,7 +347,7 @@ export default function Templates() {
                         </Typography>
                     </CardContent>
                 </Card>
-                <Button variant="contained" className="mb-3" onClick={handleOpen}>
+                <Button variant="contained" className="mb-3" onClick={handleOpen} style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }}>
                     New Template
                 </Button>
 
@@ -361,116 +361,117 @@ export default function Templates() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Template Name"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                onChange={(e) => setName(e.target.value)}
-                            />
-
-                            <Button variant="contained" color="error" onClick={() => setImports(!imports)}>
-                                Import Email
-                            </Button>
-
-                            {imports && (
-                                <>
-                                    {' '}
-                                    <Typography id="modal-modal-title" variant="h4" component="h2">
-                                        Email Content
-                                    </Typography>
-                                    <div class="col-sm-3">
-                                        <textarea
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Raw Email Source"
-                                            id="emailSource"
-                                            value={emailSource}
-                                            rows="7"
-                                            onChange={(e) => setEmailSource(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="form-check">
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            checked={convertLinks}
-                                            id="flexCheckChecked"
-                                            onChange={(e) => setConvertLinks(!convertLinks)}
-                                        />
-                                        <label className="form-check-label" htmlFor="flexCheckChecked">
-                                            Change Links to Point to Landing Page
-                                        </label>
-                                    </div>
-                                    <Button variant="contained" color="success" onClick={() => handleImportSite()}>
-                                        Save{' '}
-                                    </Button>
-                                </>
-                            )}
-
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Envelope Sender
-                            </Typography>
-
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Email Address"
-                                    id="firstName"
-                                    value={envelopSender}
-                                    onChange={(e) => setEnvelopSender(e.target.value)}
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Template Name"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    onChange={(e) => setName(e.target.value)}
                                 />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Subject
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Email Subject"
-                                    id="lastName"
-                                    value={subject}
-                                    onChange={(e) => setSubject(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                HTML
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Plain Text"
-                                    id="email"
-                                    required
-                                    rows={7}
-                                    value={html}
-                                    onChange={(e) => setHtml(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Text
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Plain Text"
-                                    id="email"
-                                    rows={7}
-                                    required
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
-                                />
-                            </div>
-                            {/* <div class="col-sm-3">
+
+                                <Button variant="contained" color="error" onClick={() => setImports(!imports)}>
+                                    Import Email
+                                </Button>
+
+                                {imports && (
+                                    <>
+                                        {' '}
+                                        <Typography id="modal-modal-title" variant="h4" component="h2">
+                                            Email Content
+                                        </Typography>
+                                        <div class="col-sm-3">
+                                            <textarea
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="Raw Email Source"
+                                                id="emailSource"
+                                                value={emailSource}
+                                                rows="7"
+                                                onChange={(e) => setEmailSource(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                checked={convertLinks}
+                                                id="flexCheckChecked"
+                                                onChange={(e) => setConvertLinks(!convertLinks)}
+                                            />
+                                            <label className="form-check-label" htmlFor="flexCheckChecked">
+                                                Change Links to Point to Landing Page
+                                            </label>
+                                        </div>
+                                        <Button variant="contained" color="success" onClick={() => handleImportSite()}>
+                                            Save{' '}
+                                        </Button>
+                                    </>
+                                )}
+
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Envelope Sender
+                                </Typography>
+
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Email Address"
+                                        id="firstName"
+                                        value={envelopSender}
+                                        onChange={(e) => setEnvelopSender(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Subject
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Email Subject"
+                                        id="lastName"
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    HTML
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Plain Text"
+                                        id="email"
+                                        required
+                                        rows={7}
+                                        value={html}
+                                        onChange={(e) => setHtml(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Text
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Plain Text"
+                                        id="email"
+                                        rows={7}
+                                        required
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                    />
+                                </div>
+                                {/* <div class="col-sm-3">
                                 <input
                                     type="text"
                                     class="form-control"
@@ -480,32 +481,32 @@ export default function Templates() {
                                     onChange={(e) => setPosition(e.target.value)}
                                 />
                             </div> */}
-                            {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
+                                {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
                                 <AddIcon fontSize="small" /> Add
                             </Button> */}
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={trackingImage}
-                                    id="flexCheckChecked"
-                                    onChange={(e) => setTrackingImage(!trackingImage)}
-                                />
-                                <label className="form-check-label" htmlFor="flexCheckChecked">
-                                    Add Tracking Image
-                                </label>
-                            </div>
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd'
-                                    // color: "black"
-                                }}
-                                onClick={handleAdd}
-                                fullWidth
-                            >
-                                Create Template
-                            </Button>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        checked={trackingImage}
+                                        id="flexCheckChecked"
+                                        onChange={(e) => setTrackingImage(!trackingImage)}
+                                    />
+                                    <label className="form-check-label" htmlFor="flexCheckChecked">
+                                        Add Tracking Image
+                                    </label>
+                                </div>
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleAdd}
+                                        fullWidth
+                                    >
+                                        Create Template
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>
@@ -525,120 +526,121 @@ export default function Templates() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Template Name"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={name}
-                                onChange={(e) => {
-                                    console.log(e.target.value);
-                                    setName(e.target.value);
-                                }}
-                            />
-
-                            <Button variant="contained" color="error" onClick={() => setImports(!imports)}>
-                                Import Email
-                            </Button>
-
-                            {imports && (
-                                <>
-                                    {' '}
-                                    <Typography id="modal-modal-title" variant="h4" component="h2">
-                                        Email Content
-                                    </Typography>
-                                    <div class="col-sm-3">
-                                        <textarea
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Raw Email Source"
-                                            id="emailSource"
-                                            value={emailSource}
-                                            rows="7"
-                                            onChange={(e) => setEmailSource(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="form-check">
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            value={convertLinks}
-                                            id="flexCheckChecked"
-                                            onChange={(e) => setConvertLinks(e.target.checked)}
-                                        />
-                                        <label className="form-check-label" htmlFor="flexCheckChecked">
-                                            Change Links to Point to Landing Page
-                                        </label>
-                                    </div>
-                                    <Button variant="contained" color="success" onClick={() => handleImportSite()}>
-                                        Save{' '}
-                                    </Button>
-                                </>
-                            )}
-
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Envelope Sender
-                            </Typography>
-
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Email Address"
-                                    id="firstName"
-                                    value={envelopSender}
-                                    onChange={(e) => setEnvelopSender(e.target.value)}
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Template Name"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={name}
+                                    onChange={(e) => {
+                                        console.log(e.target.value);
+                                        setName(e.target.value);
+                                    }}
                                 />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Subject
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Email Subject"
-                                    id="lastName"
-                                    value={subject}
-                                    onChange={(e) => setSubject(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                HTML
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Plain Text"
-                                    id="email"
-                                    required
-                                    rows={7}
-                                    value={html}
-                                    onChange={(e) => setHtml(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Text
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Plain Text"
-                                    id="email"
-                                    rows={7}
-                                    required
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
-                                />
-                            </div>
-                            {/* <div class="col-sm-3">
+
+                                <Button variant="contained" color="error" onClick={() => setImports(!imports)}>
+                                    Import Email
+                                </Button>
+
+                                {imports && (
+                                    <>
+                                        {' '}
+                                        <Typography id="modal-modal-title" variant="h4" component="h2">
+                                            Email Content
+                                        </Typography>
+                                        <div class="col-sm-3">
+                                            <textarea
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="Raw Email Source"
+                                                id="emailSource"
+                                                value={emailSource}
+                                                rows="7"
+                                                onChange={(e) => setEmailSource(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                value={convertLinks}
+                                                id="flexCheckChecked"
+                                                onChange={(e) => setConvertLinks(e.target.checked)}
+                                            />
+                                            <label className="form-check-label" htmlFor="flexCheckChecked">
+                                                Change Links to Point to Landing Page
+                                            </label>
+                                        </div>
+                                        <Button variant="contained" color="success" onClick={() => handleImportSite()}>
+                                            Save{' '}
+                                        </Button>
+                                    </>
+                                )}
+
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Envelope Sender
+                                </Typography>
+
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Email Address"
+                                        id="firstName"
+                                        value={envelopSender}
+                                        onChange={(e) => setEnvelopSender(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Subject
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Email Subject"
+                                        id="lastName"
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    HTML
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Plain Text"
+                                        id="email"
+                                        required
+                                        rows={7}
+                                        value={html}
+                                        onChange={(e) => setHtml(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Text
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Plain Text"
+                                        id="email"
+                                        rows={7}
+                                        required
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                    />
+                                </div>
+                                {/* <div class="col-sm-3">
                                 <input
                                     type="text"
                                     class="form-control"
@@ -648,10 +650,10 @@ export default function Templates() {
                                     onChange={(e) => setPosition(e.target.value)}
                                 />
                             </div> */}
-                            {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
+                                {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
                                 <AddIcon fontSize="small" /> Add
                             </Button> */}
-                            {/* <div className="form-check">
+                                {/* <div className="form-check">
                                 <input
                                     className="form-check-input"
                                     type="checkbox"
@@ -663,18 +665,18 @@ export default function Templates() {
                                     Add Tracking Image
                                 </label>
                             </div> */}
-
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd'
-                                    // color: "black"
-                                }}
-                                onClick={handleEdit}
-                                fullWidth
-                            >
-                                Update Template
-                            </Button>
+                                <br />
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleEdit}
+                                        fullWidth
+                                    >
+                                        Update Template
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>
@@ -696,120 +698,121 @@ export default function Templates() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Template Name"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={name}
-                                onChange={(e) => {
-                                    console.log(e.target.value);
-                                    setName(e.target.value);
-                                }}
-                            />
-
-                            <Button variant="contained" color="error" onClick={() => setImports(!imports)}>
-                                Import Email
-                            </Button>
-
-                            {imports && (
-                                <>
-                                    {' '}
-                                    <Typography id="modal-modal-title" variant="h4" component="h2">
-                                        Email Content
-                                    </Typography>
-                                    <div class="col-sm-3">
-                                        <textarea
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Raw Email Source"
-                                            id="emailSource"
-                                            value={emailSource}
-                                            rows="7"
-                                            onChange={(e) => setEmailSource(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="form-check">
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            value={convertLinks}
-                                            id="flexCheckChecked"
-                                            onChange={(e) => setConvertLinks(e.target.checked)}
-                                        />
-                                        <label className="form-check-label" htmlFor="flexCheckChecked">
-                                            Change Links to Point to Landing Page
-                                        </label>
-                                    </div>
-                                    <Button variant="contained" color="success" onClick={() => handleImportSite()}>
-                                        Save{' '}
-                                    </Button>
-                                </>
-                            )}
-
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Envelope Sender
-                            </Typography>
-
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Email Address"
-                                    id="firstName"
-                                    value={envelopSender}
-                                    onChange={(e) => setEnvelopSender(e.target.value)}
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Template Name"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={name}
+                                    onChange={(e) => {
+                                        console.log(e.target.value);
+                                        setName(e.target.value);
+                                    }}
                                 />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Subject
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="Email Subject"
-                                    id="lastName"
-                                    value={subject}
-                                    onChange={(e) => setSubject(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                HTML
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Plain Text"
-                                    id="email"
-                                    required
-                                    rows={7}
-                                    value={html}
-                                    onChange={(e) => setHtml(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Text
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Plain Text"
-                                    id="email"
-                                    rows={7}
-                                    required
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
-                                />
-                            </div>
-                            {/* <div class="col-sm-3">
+
+                                <Button variant="contained" color="error" onClick={() => setImports(!imports)}>
+                                    Import Email
+                                </Button>
+
+                                {imports && (
+                                    <>
+                                        {' '}
+                                        <Typography id="modal-modal-title" variant="h4" component="h2">
+                                            Email Content
+                                        </Typography>
+                                        <div class="col-sm-3">
+                                            <textarea
+                                                type="text"
+                                                class="form-control"
+                                                placeholder="Raw Email Source"
+                                                id="emailSource"
+                                                value={emailSource}
+                                                rows="7"
+                                                onChange={(e) => setEmailSource(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                value={convertLinks}
+                                                id="flexCheckChecked"
+                                                onChange={(e) => setConvertLinks(e.target.checked)}
+                                            />
+                                            <label className="form-check-label" htmlFor="flexCheckChecked">
+                                                Change Links to Point to Landing Page
+                                            </label>
+                                        </div>
+                                        <Button variant="contained" color="success" onClick={() => handleImportSite()}>
+                                            Save{' '}
+                                        </Button>
+                                    </>
+                                )}
+
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Envelope Sender
+                                </Typography>
+
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Email Address"
+                                        id="firstName"
+                                        value={envelopSender}
+                                        onChange={(e) => setEnvelopSender(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Subject
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Email Subject"
+                                        id="lastName"
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    HTML
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Plain Text"
+                                        id="email"
+                                        required
+                                        rows={7}
+                                        value={html}
+                                        onChange={(e) => setHtml(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Text
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Plain Text"
+                                        id="email"
+                                        rows={7}
+                                        required
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                    />
+                                </div>
+                                {/* <div class="col-sm-3">
                                 <input
                                     type="text"
                                     class="form-control"
@@ -819,33 +822,32 @@ export default function Templates() {
                                     onChange={(e) => setPosition(e.target.value)}
                                 />
                             </div> */}
-                            {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
+                                {/* <Button variant="text" color="error" size="small" onClick={handleSubmit}>
                                 <AddIcon fontSize="small" /> Add
                             </Button> */}
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    value={trackingImage}
-                                    id="flexCheckChecked"
-                                    onChange={(e) => setTrackingImage(e.target.checked)}
-                                />
-                                <label className="form-check-label" htmlFor="flexCheckChecked">
-                                    Add Tracking Image
-                                </label>
-                            </div>
-
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd'
-                                    // color: "black"
-                                }}
-                                onClick={handleAdd}
-                                fullWidth
-                            >
-                                Create Template
-                            </Button>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        value={trackingImage}
+                                        id="flexCheckChecked"
+                                        onChange={(e) => setTrackingImage(e.target.checked)}
+                                    />
+                                    <label className="form-check-label" htmlFor="flexCheckChecked">
+                                        Add Tracking Image
+                                    </label>
+                                </div>
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleAdd}
+                                        fullWidth
+                                    >
+                                        Create Template
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>

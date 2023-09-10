@@ -210,7 +210,7 @@ const User = () => {
     return (
         <>
             <MainCard title="User Management" style={{ width: '100%' }}>
-                <Button variant="contained" onClick={handleModal}>
+                <Button variant="contained" onClick={handleModal} style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }}>
                     Create User
                 </Button>
                 <Modal open={modal} onClose={handleModal}>

@@ -31,7 +31,62 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+// ==============================|| SAMPLE PAGE ||============================== //
+const theme = createTheme({
+    palette: {
+        mode: 'dark',
+        background: {
+            default: '#333333',
+            paper: '#000000'
+        },
+        primary: {
+            main: '#1890FF'
+        },
+        text: {
+            primary: '#ffffff'
+        }
+    },
+    components: {
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& input': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        },
+        MuiSelect: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiSelect-icon': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        }
+    }
+});
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -289,7 +344,7 @@ export default function LandingPage() {
                         </Typography>
                     </CardContent>
                 </Card>
-                <Button variant="contained" className="mb-3" onClick={handleOpen}>
+                <Button variant="contained" style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }} className="mb-3" onClick={handleOpen}>
                     New Page
                 </Button>
 
@@ -303,107 +358,108 @@ export default function LandingPage() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Landing Page"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <Button variant="contained" color="error" onClick={() => setImport(!imports)}>
-                                Import Site
-                            </Button>
-
-                            {imports && (
-                                <>
-                                    <Typography id="modal-modal-title" variant="h4" component="h2">
-                                        Enter URL
-                                    </Typography>
-                                    <div class="col-sm-3">
-                                        <textarea
-                                            type="email"
-                                            class="form-control"
-                                            placeholder="https://google.com"
-                                            id="url"
-                                            required
-                                            rows={1}
-                                            value={textUrl}
-                                            onChange={(e) => setTextUrl(e.target.value)}
-                                        />
-                                        <br />
-                                        <Button variant="contained" color="success" onClick={() => handleImportSite()}>
-                                            Import{' '}
-                                        </Button>
-                                    </div>
-                                </>
-                            )}
-
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                HTML
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="HTML"
-                                    id="email"
-                                    required
-                                    rows={7}
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Landing Page"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    onChange={(e) => setName(e.target.value)}
                                 />
-                            </div>
+                                <Button variant="contained" color="error" onClick={() => setImport(!imports)}>
+                                    Import Site
+                                </Button>
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Rendered HTML
-                            </Typography>
-                            {text && stringToHtml(text)}
+                                {imports && (
+                                    <>
+                                        <Typography id="modal-modal-title" variant="h6" component="h2">
+                                            Enter URL
+                                        </Typography>
+                                        <div class="col-sm-3">
+                                            <textarea
+                                                type="email"
+                                                class="form-control"
+                                                placeholder="https://google.com"
+                                                id="url"
+                                                required
+                                                rows={1}
+                                                value={textUrl}
+                                                onChange={(e) => setTextUrl(e.target.value)}
+                                            />
+                                            <br />
+                                            <Button variant="contained" color="success" onClick={() => handleImportSite()}>
+                                                Import{' '}
+                                            </Button>
+                                        </div>
+                                    </>
+                                )}
 
-                            <br />
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Redirect URL
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Redirect URL"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={redirectURL}
-                                onChange={(e) => setRedirectURL(e.target.value)}
-                            />
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    HTML
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="HTML"
+                                        id="email"
+                                        required
+                                        rows={7}
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                    />
+                                </div>
 
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={captureData}
-                                    id="flexCheckChecked"
-                                    onChange={(e) => setCaptureData(!captureData)}
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Rendered HTML
+                                </Typography>
+                                {text && stringToHtml(text)}
+
+                                <br />
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Redirect URL
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Redirect URL"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={redirectURL}
+                                    onChange={(e) => setRedirectURL(e.target.value)}
                                 />
-                                <label className="form-check-label" htmlFor="flexCheckChecked">
-                                    Capture Submitted Data
-                                </label>
-                            </div>
 
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd',
-                                    // color: "black"
-                                    marginRight: '-20px'
-                                }}
-                                onClick={handleAdd}
-                                // fullWidth
-                            >
-                                Create Page
-                            </Button>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        checked={captureData}
+                                        id="flexCheckChecked"
+                                        onChange={(e) => setCaptureData(!captureData)}
+                                    />
+                                    <label className="form-check-label" htmlFor="flexCheckChecked">
+                                        Capture Submitted Data
+                                    </label>
+                                </div>
+
+                                <br />
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleAdd}
+                                        fullWidth
+                                    >
+                                        Create Page
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>
@@ -472,80 +528,80 @@ export default function LandingPage() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Landing Page"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                HTML
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="HTML"
-                                    id="email"
-                                    required
-                                    rows={7}
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Landing Page"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
                                 />
-                            </div>
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Rendered HTML
-                            </Typography>
-                            {text && stringToHtml(text)}
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    HTML
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="HTML"
+                                        id="email"
+                                        required
+                                        rows={7}
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                    />
+                                </div>
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Redirect URL
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Redirect URL"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={redirectURL || editData.redirect_url}
-                                onChange={(e) => setRedirectURL(e.target.value)}
-                            />
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Rendered HTML
+                                </Typography>
+                                {text && stringToHtml(text)}
 
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={editData.capture_credentials}
-                                    id="flexCheckChecked"
-                                    onChange={(e) => setCaptureData(!editData.capture_credentials)}
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Redirect URL
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Redirect URL"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={redirectURL || editData.redirect_url}
+                                    onChange={(e) => setRedirectURL(e.target.value)}
                                 />
-                                <label className="form-check-label" htmlFor="flexCheckChecked">
-                                    Capture Submitted Data
-                                </label>
-                            </div>
 
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd',
-                                    // color: "black"
-                                    marginRight: '-20px'
-                                }}
-                                onClick={handleEdit}
-                                // fullWidth
-                            >
-                                Update Page
-                            </Button>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        checked={editData.capture_credentials}
+                                        id="flexCheckChecked"
+                                        onChange={(e) => setCaptureData(!editData.capture_credentials)}
+                                    />
+                                    <label className="form-check-label" htmlFor="flexCheckChecked">
+                                        Capture Submitted Data
+                                    </label>
+                                </div>
+                                <br />
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleEdit}
+                                        fullWidth
+                                    >
+                                        Update Page
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>
@@ -567,80 +623,79 @@ export default function LandingPage() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Landing Page"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                HTML
-                            </Typography>
-                            <div class="col-sm-3">
-                                <textarea
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="HTML"
-                                    id="email"
-                                    required
-                                    rows={7}
-                                    value={text}
-                                    onChange={(e) => setText(e.target.value)}
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Landing Page"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
                                 />
-                            </div>
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Rendered HTML
-                            </Typography>
-                            {text && stringToHtml(text)}
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    HTML
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <textarea
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="HTML"
+                                        id="email"
+                                        required
+                                        rows={7}
+                                        value={text}
+                                        onChange={(e) => setText(e.target.value)}
+                                    />
+                                </div>
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Redirect URL
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Redirect URL"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={redirectURL || editData.redirect_url}
-                                onChange={(e) => setRedirectURL(e.target.value)}
-                            />
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Rendered HTML
+                                </Typography>
+                                {text && stringToHtml(text)}
 
-                            <div className="form-check">
-                                <input
-                                    className="form-check-input"
-                                    type="checkbox"
-                                    checked={editData.capture_credentials}
-                                    id="flexCheckChecked"
-                                    onChange={(e) => setCaptureData(!editData.capture_credentials)}
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Redirect URL
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Redirect URL"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={redirectURL || editData.redirect_url}
+                                    onChange={(e) => setRedirectURL(e.target.value)}
                                 />
-                                <label className="form-check-label" htmlFor="flexCheckChecked">
-                                    Capture Submitted Data
-                                </label>
-                            </div>
 
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd',
-                                    // color: "black"
-                                    marginRight: '-20px'
-                                }}
-                                onClick={handleAdd}
-                                // fullWidth
-                            >
-                                Create Page
-                            </Button>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        checked={editData.capture_credentials}
+                                        id="flexCheckChecked"
+                                        onChange={(e) => setCaptureData(!editData.capture_credentials)}
+                                    />
+                                    <label className="form-check-label" htmlFor="flexCheckChecked">
+                                        Capture Submitted Data
+                                    </label>
+                                </div>
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleAdd}
+                                        fullWidth
+                                    >
+                                        Create Page
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>

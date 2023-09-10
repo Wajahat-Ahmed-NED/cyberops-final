@@ -28,7 +28,62 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
+// ==============================|| SAMPLE PAGE ||============================== //
+const theme = createTheme({
+    palette: {
+        mode: 'dark',
+        background: {
+            default: '#333333',
+            paper: '#000000'
+        },
+        primary: {
+            main: '#1890FF'
+        },
+        text: {
+            primary: '#ffffff'
+        }
+    },
+    components: {
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& input': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        },
+        MuiSelect: {
+            styleOverrides: {
+                root: {
+                    '& label': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiSelect-icon': {
+                        color: '#ffffff'
+                    },
+                    '& .MuiInput-underline:before': {
+                        borderBottomColor: '#ffffff'
+                    },
+                    '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                        borderBottomColor: '#ffffff'
+                    }
+                }
+            }
+        }
+    }
+});
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -254,7 +309,7 @@ export default function SendingProfile() {
                         </Typography>
                     </CardContent>
                 </Card>
-                <Button variant="contained" className="mb-3" onClick={handleOpen}>
+                <Button variant="contained" style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }} className="mb-3" onClick={handleOpen}>
                     New Profile
                 </Button>
                 {/* <Typography variant="h6" component="div" color="text.secondary">
@@ -272,172 +327,173 @@ export default function SendingProfile() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name *
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Sending Profile Name"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                onChange={(e) => setName(e.target.value)}
-                            />
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name *
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Sending Profile Name"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    onChange={(e) => setName(e.target.value)}
+                                />
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Host *
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="sample.smtp.com:25"
-                                    id="email"
-                                    required
-                                    value={host}
-                                    onChange={(e) => setHost(e.target.value)}
-                                />
-                            </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Host *
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="sample.smtp.com:25"
+                                        id="email"
+                                        required
+                                        value={host}
+                                        onChange={(e) => setHost(e.target.value)}
+                                    />
+                                </div>
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                From address *
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="From Address"
-                                    id="email"
-                                    required
-                                    value={fromAddress}
-                                    onChange={(e) => setFromAddress(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Interface Type
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Interface Type"
-                                    id="email"
-                                    required
-                                    value="SMTP"
-                                    disabled
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                UserName
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Username"
-                                    id="email"
-                                    required
-                                    value={userName}
-                                    onChange={(e) => setUserName(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Password
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="Password"
-                                    id="email"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    From address *
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="From Address"
+                                        id="email"
+                                        required
+                                        value={fromAddress}
+                                        onChange={(e) => setFromAddress(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Interface Type
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Interface Type"
+                                        id="email"
+                                        required
+                                        value="SMTP"
+                                        disabled
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    UserName
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Username"
+                                        id="email"
+                                        required
+                                        value={userName}
+                                        onChange={(e) => setUserName(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Password
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        placeholder="Password"
+                                        id="email"
+                                        required
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </div>
 
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    id="flexCheckChecked"
-                                    value={ignoreError}
-                                    onChange={(e) => {
-                                        // console.log(ignoreError);
-                                        setIgnoreError(!ignoreError);
-                                    }}
-                                />
-                                <label class="form-check-label " htmlFor="flexCheckChecked">
-                                    Ignore Certificate Error
-                                </label>
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Email Headers
-                            </Typography>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm">
-                                        <input
-                                            className="form-control"
-                                            placeholder="X-Custom-Header"
-                                            value={key}
-                                            onChange={(e) => setKey(e.target.value)}
-                                        />
-                                    </div>
-                                    <div class="col-sm">
-                                        <input
-                                            className="form-control"
-                                            placeholder="{{.URL}}-gophish"
-                                            value={value}
-                                            onChange={(e) => setValue(e.target.value)}
-                                        />
-                                    </div>
-                                    <div class="col-sm">
-                                        <Button variant="contained" color="error" size="small" onClick={handleSubmit}>
-                                            Add Header
-                                        </Button>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        id="flexCheckChecked"
+                                        value={ignoreError}
+                                        onChange={(e) => {
+                                            // console.log(ignoreError);
+                                            setIgnoreError(!ignoreError);
+                                        }}
+                                    />
+                                    <label class="form-check-label " htmlFor="flexCheckChecked">
+                                        Ignore Certificate Error
+                                    </label>
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Email Headers
+                                </Typography>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <input
+                                                className="form-control"
+                                                placeholder="X-Custom-Header"
+                                                value={key}
+                                                onChange={(e) => setKey(e.target.value)}
+                                            />
+                                        </div>
+                                        <div class="col-sm">
+                                            <input
+                                                className="form-control"
+                                                placeholder="{{.URL}}-gophish"
+                                                value={value}
+                                                onChange={(e) => setValue(e.target.value)}
+                                            />
+                                        </div>
+                                        <div class="col-sm">
+                                            <Button variant="contained" color="error" fullWidth onClick={handleSubmit}>
+                                                Add
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <table className="table table-hover mt-4" style={{ color: 'white' }}>
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <td>Headers</td>
+                                <table className="table table-hover mt-4" style={{ color: 'white' }}>
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <td>Headers</td>
 
-                                        <td>Value</td>
-                                        <td>Actions</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {headers?.length > 0 &&
-                                        headers?.map((e, i) => {
-                                            return (
-                                                <tr key={i}>
-                                                    <td>{e.key}</td>
+                                            <td>Value</td>
+                                            <td>Actions</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {headers?.length > 0 &&
+                                            headers?.map((e, i) => {
+                                                return (
+                                                    <tr key={i}>
+                                                        <td>{e.key}</td>
 
-                                                    <td>{e.value}</td>
-                                                    <td>
-                                                        <DeleteIcon color="error" onClick={() => handleDelete(i)} />
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                </tbody>
-                            </table>
-                            {headers?.length < 1 && <p className="text-center">No data available in table</p>}
-
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd'
-                                    // color: "black"
-                                }}
-                                onClick={handleAdd}
-                                fullWidth
-                            >
-                                Create Sending Profile
-                            </Button>
+                                                        <td>{e.value}</td>
+                                                        <td>
+                                                            <DeleteIcon color="error" onClick={() => handleDelete(i)} />
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                    </tbody>
+                                </table>
+                                {headers?.length < 1 && <p className="text-center">No data available in table</p>}
+                                <br />
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleAdd}
+                                        fullWidth
+                                    >
+                                        Create Sending Profile
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>
@@ -495,173 +551,175 @@ export default function SendingProfile() {
                             noValidate
                             autoComplete="off"
                         >
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Name *
-                            </Typography>
-                            <TextField
-                                id="outlined-basic"
-                                label="Sending Profile Name"
-                                variant="outlined"
-                                style={{ color: 'black' }}
-                                color="primary"
-                                size="small"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
+                            <ThemeProvider theme={theme}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Name *
+                                </Typography>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Sending Profile Name"
+                                    variant="outlined"
+                                    style={{ color: 'black' }}
+                                    color="primary"
+                                    size="small"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Host *
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Host"
-                                    id="email"
-                                    required
-                                    value={host}
-                                    onChange={(e) => setHost(e.target.value)}
-                                />
-                            </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Host *
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Host"
+                                        id="email"
+                                        required
+                                        value={host}
+                                        onChange={(e) => setHost(e.target.value)}
+                                    />
+                                </div>
 
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                From address *
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="From Address"
-                                    id="email"
-                                    required
-                                    value={fromAddress}
-                                    onChange={(e) => setFromAddress(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Interface Type
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Interface Type"
-                                    id="email"
-                                    required
-                                    value="SMTP"
-                                    disabled
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                UserName
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    placeholder="Username"
-                                    id="email"
-                                    required
-                                    value={userName}
-                                    onChange={(e) => setUserName(e.target.value)}
-                                />
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Password
-                            </Typography>
-                            <div class="col-sm-3">
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="Password"
-                                    id="email"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    From address *
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="From Address"
+                                        id="email"
+                                        required
+                                        value={fromAddress}
+                                        onChange={(e) => setFromAddress(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Interface Type
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Interface Type"
+                                        id="email"
+                                        required
+                                        value="SMTP"
+                                        disabled
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    UserName
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="email"
+                                        class="form-control"
+                                        placeholder="Username"
+                                        id="email"
+                                        required
+                                        value={userName}
+                                        onChange={(e) => setUserName(e.target.value)}
+                                    />
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Password
+                                </Typography>
+                                <div class="col-sm-3">
+                                    <input
+                                        type="password"
+                                        class="form-control"
+                                        placeholder="Password"
+                                        id="email"
+                                        required
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                </div>
 
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    id="flexCheckChecked"
-                                    checked={ignoreError}
-                                    onChange={(e) => {
-                                        // console.log(ignoreError);
-                                        setIgnoreError(!ignoreError);
-                                    }}
-                                />
-                                <label class="form-check-label " htmlFor="flexCheckChecked">
-                                    Ignore Certificate Error
-                                </label>
-                            </div>
-                            <Typography id="modal-modal-title" variant="h4" component="h2">
-                                Email Headers
-                            </Typography>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm">
-                                        <input
-                                            className="form-control"
-                                            placeholder="X-Custom-Header"
-                                            value={key}
-                                            onChange={(e) => setKey(e.target.value)}
-                                        />
-                                    </div>
-                                    <div class="col-sm">
-                                        <input
-                                            className="form-control"
-                                            placeholder="{{.URL}}-gophish"
-                                            value={value}
-                                            onChange={(e) => setValue(e.target.value)}
-                                        />
-                                    </div>
-                                    <div class="col-sm">
-                                        <Button variant="contained" color="error" size="small" onClick={handleSubmit}>
-                                            Add Header
-                                        </Button>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        id="flexCheckChecked"
+                                        checked={ignoreError}
+                                        onChange={(e) => {
+                                            // console.log(ignoreError);
+                                            setIgnoreError(!ignoreError);
+                                        }}
+                                    />
+                                    <label class="form-check-label " htmlFor="flexCheckChecked">
+                                        Ignore Certificate Error
+                                    </label>
+                                </div>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Email Headers
+                                </Typography>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <input
+                                                className="form-control"
+                                                placeholder="X-Custom-Header"
+                                                value={key}
+                                                onChange={(e) => setKey(e.target.value)}
+                                            />
+                                        </div>
+                                        <div class="col-sm">
+                                            <input
+                                                className="form-control"
+                                                placeholder="{{.URL}}-gophish"
+                                                value={value}
+                                                onChange={(e) => setValue(e.target.value)}
+                                            />
+                                        </div>
+                                        <div class="col-sm">
+                                            <Button variant="contained" fullWidth color="error" onClick={handleSubmit}>
+                                                Add
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <table className="table table-hover mt-4" style={{ color: 'white' }}>
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <td>Headers</td>
+                                <table className="table table-hover mt-4" style={{ color: 'white' }}>
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <td>Headers</td>
 
-                                        <td>Value</td>
-                                        <td>Actions</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {headers?.length > 0 &&
-                                        headers?.map((e, i) => {
-                                            return (
-                                                <tr key={i}>
-                                                    <td>{e.key}</td>
+                                            <td>Value</td>
+                                            <td>Actions</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {headers?.length > 0 &&
+                                            headers?.map((e, i) => {
+                                                return (
+                                                    <tr key={i}>
+                                                        <td>{e.key}</td>
 
-                                                    <td>{e.value}</td>
-                                                    <td>
-                                                        <DeleteIcon color="error" onClick={() => handleDelete(i)} />
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                </tbody>
-                            </table>
-                            {headers?.length < 1 && <p className="text-center">No data available in table</p>}
+                                                        <td>{e.value}</td>
+                                                        <td>
+                                                            <DeleteIcon color="error" onClick={() => handleDelete(i)} />
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                    </tbody>
+                                </table>
+                                {headers?.length < 1 && <p className="text-center">No data available in table</p>}
 
-                            <Button
-                                variant="contained"
-                                style={{
-                                    backgroundColor: '#70d8bd'
-                                    // color: "black"
-                                }}
-                                onClick={handleEdit}
-                                fullWidth
-                            >
-                                Update Sending Profile
-                            </Button>
+                                <br />
+                                <div className="container d-flex">
+                                    <Button
+                                        variant="contained"
+                                        style={{ float: 'right', backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                        onClick={handleEdit}
+                                        fullWidth
+                                    >
+                                        Update Sending Profile
+                                    </Button>
+                                </div>
+                            </ThemeProvider>
                         </Box>
                     </Box>
                 </Modal>

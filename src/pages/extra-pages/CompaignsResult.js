@@ -60,7 +60,7 @@ const style = {
     // minHeight: "400px",
     maxHeight: '600px'
 };
-export default function CompaignResult() {
+export default function CompaignsResult() {
     const [open, setOpen] = React.useState(false);
     const [testEmailopen, setTestEmailopen] = React.useState(false);
     const [name, setName] = React.useState('');
@@ -122,9 +122,7 @@ export default function CompaignResult() {
                 smtp: { name: sendProfile },
                 launch_date: utcDate.toISOString(),
                 send_by_date: sendDate.toISOString(),
-                groups: [{ name: group }],
-                auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey,
-                username: JSON.parse(localStorage.getItem('userdata'))?.username
+                groups: [{ name: group }]
             };
             console.log(obj);
             createCompaign(obj)
@@ -134,7 +132,7 @@ export default function CompaignResult() {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
-                        text: 'Campaign created successfully!',
+                        text: 'Compaign created successfully!',
                         showConfirmButton: true,
                         timer: 2000
                     });
@@ -164,7 +162,6 @@ export default function CompaignResult() {
         setTodos(todos.filter((todo, index) => index !== i));
     }
     const { id } = useParams();
-    const auth = JSON.parse(localStorage.getItem('userdata'))?.gophishkey;
     const fetchUser = () => {
         getCompaignResult(id)
             .then((res) => {
@@ -226,14 +223,14 @@ export default function CompaignResult() {
             });
     };
     const handleDeleteGroup = () => {
-        deleteCompaign(id, auth)
+        deleteCompaign(id)
             .then((res) => {
                 console.log(res);
 
                 Swal.fire({
                     icon: 'success',
                     title: 'Success!',
-                    text: 'Campaign deleted successfully!',
+                    text: 'Compaign deleted successfully!',
                     showConfirmButton: true,
                     timer: 2000
                 });
@@ -267,7 +264,7 @@ export default function CompaignResult() {
             if (result.isConfirmed) {
                 getCompleteCompaign(id)
                     .then((res) => {
-                        Swal.fire('Completed!', 'Your Compaign has been Completed.', 'success');
+                        Swal.fire('Completed!', 'Your Campaign has been Completed.', 'success');
                         console.log(res);
                         navigate(-1);
                     })
@@ -318,13 +315,9 @@ export default function CompaignResult() {
 
                 <Card sx={{ maxWidth: 275 }} className="mb-3" style={{ color: 'black' }}>
                     <CardContent>
-                        <Typography variant="h2" style={{ color: 'black' }} gutterBottom>
-                            {result?.name}
+                        <Typography variant="h4" style={{ color: 'black' }} gutterBottom>
+                            {result?.name} Compaign Result Summary
                         </Typography>
-                        <Typography variant="h5" style={{ color: 'black' }} gutterBottom>
-                            Campaign Result Summary
-                        </Typography>
-
                         <Typography variant="h5" component="div" color="text.secondary">
                             Total Victims : {summary?.stats?.total}
                         </Typography>
@@ -497,7 +490,7 @@ export default function CompaignResult() {
                                 <input
                                     type="email"
                                     class="form-control"
-                                    placeholder="http://192.168.1.1"
+                                    placeholder="http://192.168.0.107"
                                     id="ip"
                                     required
                                     value={url}
@@ -699,7 +692,7 @@ export default function CompaignResult() {
                                                 <br />
                                                 Result ID: {eve.id}
                                             </Typography>
-                                            {result?.timeline[0].message === 'Compaign Created' ? (
+                                            {result?.timeline[0].message === 'Campaign Created' ? (
                                                 <>
                                                     <CheckCircleIcon color="success" size="large" />
                                                     {result?.timeline[0].message}
