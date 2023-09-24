@@ -326,7 +326,7 @@ export default function UsersAndGroups() {
                             Groups Summary
                         </Typography>
                         <Typography variant="h5" component="div" color="text.secondary">
-                            Total Groups : {groupSummary?.total}
+                            Total Groups : {data?.length}
                         </Typography>
                         {/* <Typography sx={{ mb: 1.5 }} color="text.secondary.dark">
                             adjective
@@ -439,7 +439,7 @@ export default function UsersAndGroups() {
                                         onChange={(e) => setPosition(e.target.value)}
                                     />
                                 </div>
-                                <Button variant="text" color="error" size="small" onClick={handleSubmit}>
+                                <Button variant="text" color="error" size="small" style={{ width: '50%' }} onClick={handleSubmit}>
                                     <AddIcon fontSize="small" /> Add
                                 </Button>
 
@@ -481,7 +481,18 @@ export default function UsersAndGroups() {
                                                 aria-labelledby="flush-headingOne"
                                                 data-bs-parent="#accordionFlushExample"
                                             >
-                                                <div class="accordion-body">{e.email + ' ' + e.position}</div>
+                                                <div className="accordion-body d-flex justify-content-around">
+                                                    <p style={{ width: '50%', overflowWrap: 'break-word' }}>
+                                                        <b>Email: </b>
+                                                        <br />
+                                                        {e.email}
+                                                    </p>
+                                                    <p style={{ width: '50%', overflowWrap: 'break-word', textAlign: 'right' }}>
+                                                        <b>Position: </b>
+                                                        <br />
+                                                        {e.position}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -491,6 +502,7 @@ export default function UsersAndGroups() {
                                     //     <button onClick={() => handleDelete(index)}>Delete</button>
                                     // </li>
                                 ))}
+                                <br />
                                 <div className="container  d-flex ">
                                     <Button
                                         variant="contained"
@@ -711,7 +723,7 @@ export default function UsersAndGroups() {
                                         onClick={handleEdit}
                                         fullWidth
                                     >
-                                        Edit Group
+                                        Update Group
                                     </Button>
                                 </div>
                             </ThemeProvider>

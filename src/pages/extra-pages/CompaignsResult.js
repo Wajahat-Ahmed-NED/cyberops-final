@@ -3,6 +3,7 @@ import { Typography, Button, Modal, Box, TextField, Card, CardContent, CardActio
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Tag } from 'antd';
+import { Doughnut } from 'react-chartjs-2';
 
 // import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
@@ -39,7 +40,7 @@ const newstyle = {
     transform: 'translate(-50%, -50%)',
     width: '700px',
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+
     boxShadow: 24,
     p: 4
 };
@@ -329,17 +330,36 @@ export default function CompaignsResult() {
 
                 <div className="d-flex justify-content-around align-items-center my-5">
                     <div className="d-flex align-items-between">
-                        <h6>Sent</h6>
+                        <div>
+                            <h6>Sent</h6>
+                        </div>
+                        {/* <Doughnut
+                            data={{
+                                labels: ['sent'],
+                                datasets: [
+                                    {
+                                        label: 'sent',
+                                        data: [2],
+                                        backgroundColor: ['blue'],
+                                        borderColor: ['green'],
+                                        borderWidth: 1
+                                    }
+                                ]
+                            }}
+                            height={20}
+                            width={20}
+                        /> */}
                         <DonutChart
                             trackColor="#cdcdcd"
                             size="130"
-                            totalFontSize="16px"
+                            totalFontSize="22px"
                             tooltipFontSize="16px"
                             roundedCaps={false}
-                            showTotal={false}
+                            showTotal={true}
+                            backgroundTooltipColor="#000000"
                             items={[
                                 {
-                                    value: `${summary.stats?.sent} `,
+                                    value: summary?.stats?.sent || 0,
                                     label: 'Email Sent'
                                 }
                             ]}
@@ -347,34 +367,42 @@ export default function CompaignsResult() {
                     </div>
 
                     <div className="d-flex align-items-between">
-                        <h6>Opened</h6>
+                        {/* <h6>Opened</h6> */}
+                        <div>
+                            <h6>Opened</h6>
+                        </div>
                         <DonutChart
                             trackColor="#cdcdcd"
-                            totalFontSize="16px"
+                            totalFontSize="22px"
                             tooltipFontSize="16px"
                             size="130"
                             roundedCaps={false}
-                            showTotal={false}
+                            showTotal={true}
+                            backgroundTooltipColor="#000000"
                             items={[
                                 {
-                                    value: `${summary.stats?.opened}`,
+                                    value: summary.stats?.opened || 0,
                                     label: 'Email Opened'
                                 }
                             ]}
                         />
                     </div>
                     <div className="d-flex align-items-between">
-                        <h6>Clicked</h6>
+                        {/* <h6>Clicked</h6> */}
+                        <div>
+                            <h6>Clicked</h6>
+                        </div>
                         <DonutChart
                             trackColor="#cdcdcd"
                             size="130"
-                            totalFontSize="16px"
+                            totalFontSize="22px"
                             tooltipFontSize="16px"
                             roundedCaps={false}
-                            showTotal={false}
+                            showTotal={true}
+                            backgroundTooltipColor="#000000"
                             items={[
                                 {
-                                    value: `${summary.stats?.clicked}`,
+                                    value: summary.stats?.clicked || 0,
                                     label: 'Clicked Link'
                                 }
                             ]}
@@ -382,17 +410,21 @@ export default function CompaignsResult() {
                     </div>
 
                     <div className="d-flex align-items-between">
-                        <h6>Submit</h6>
+                        {/* <h6>Submit</h6> */}
+                        <div>
+                            <h6>Submit</h6>
+                        </div>
                         <DonutChart
                             trackColor="#cdcdcd"
                             size="130"
-                            showTotal={false}
-                            totalFontSize="16px"
+                            showTotal={true}
+                            backgroundTooltipColor="#000000"
+                            totalFontSize="22px"
                             tooltipFontSize="16px"
                             roundedCaps={false}
                             items={[
                                 {
-                                    value: `${summary.stats?.submitted_data}`,
+                                    value: summary.stats?.submitted_data || 0,
                                     label: 'Submitted Data'
                                 }
                             ]}
@@ -400,17 +432,21 @@ export default function CompaignsResult() {
                     </div>
 
                     <div className="d-flex align-items-between">
-                        <h6>Reported</h6>
+                        {/* <h6>Reported</h6> */}
+                        <div>
+                            <h6>Reported</h6>
+                        </div>
                         <DonutChart
                             trackColor="#cdcdcd"
                             size="130"
-                            showTotal={false}
-                            totalFontSize="16px"
+                            showTotal={true}
+                            backgroundTooltipColor="#000000"
+                            totalFontSize="22px"
                             tooltipFontSize="16px"
                             roundedCaps={false}
                             items={[
                                 {
-                                    value: `${summary.stats?.email_reported}`,
+                                    value: summary.stats?.email_reported || 0,
                                     label: 'Email Reported'
                                 }
                             ]}

@@ -83,7 +83,7 @@ const DashboardDefault = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        navigate('/user-page');
+        navigate('/Campaign');
     }, []);
 
     return (

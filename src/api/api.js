@@ -19,7 +19,7 @@ const getToken = () => {
     let data = JSON.parse(localStorage.getItem('userdata'));
     token = data?.token;
 
-    if (isJwtExpired(token)) {
+    if (isJwtExpired(token) || !token) {
         localStorage.removeItem('userdata');
         window.location.replace('/login');
         return true;
@@ -56,6 +56,15 @@ async function editCost(userDetails) {
                 }
             }
         );
+    }
+}
+async function changePassword(obj) {
+    if (getToken() !== true) {
+        return await axios.post(`${api2}changePassword`, obj, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
     }
 }
 async function getPortalUsers() {
@@ -235,7 +244,7 @@ async function getCompaignResult(id) {
     });
 }
 async function getCompaignSummary(id) {
-    return await axios.post(`${goPhishApi}getCompaigSnummary/${id}`, {
+    return await axios.post(`${goPhishApi}getCompaignSummary/${id}`, {
         Authorization: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
     });
 }
@@ -259,6 +268,7 @@ async function WazuhIntegration() {
 
 export {
     WazuhIntegration,
+    changePassword,
     getCampaignCostByName,
     getCost,
     getCampaignCost,

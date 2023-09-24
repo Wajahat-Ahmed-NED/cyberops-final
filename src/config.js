@@ -1,7 +1,7 @@
 // ==============================|| THEME CONFIG  ||============================== //
 
 const config = {
-    defaultPath: '/Compaign',
+    defaultPath: '/Campaign',
     fontFamily: `'Public Sans', sans-serif`,
     i18n: 'en',
     miniDrawer: false,

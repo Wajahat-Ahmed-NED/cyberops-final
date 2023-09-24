@@ -3,6 +3,7 @@ import { Typography, Button, Modal, Box, TextField, Card, CardContent, CardActio
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
@@ -168,6 +169,7 @@ export default function Compaign() {
     const [groups, setGroups] = React.useState([]);
     const [sendingProfile, setSendingProfile] = React.useState([]);
     const [data, setData] = React.useState([]);
+    const [dataLoader, setDataLoader] = React.useState(false);
 
     const handleOpen = () => {
         setOpen(true);
@@ -281,6 +283,12 @@ export default function Compaign() {
             .then((res) => {
                 console.log(res);
                 setData(res.data);
+                if (res.data.length <= 0) {
+                    setDataLoader(true);
+                    setLoader(false);
+                } else {
+                    setDataLoader(false);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -290,7 +298,6 @@ export default function Compaign() {
             .then((res) => {
                 console.log(res);
                 setTemplates(res.data);
-                setLoader(false);
             })
             .catch((err) => {
                 console.log(err);
@@ -644,8 +651,8 @@ export default function Compaign() {
                     </Table>
                 </TableContainer>
                 <br />
-                {loader && <h4 style={{ textAlign: 'center' }}>Loading...</h4>}
-                {data?.length < 1 && <h5 style={{ textAlign: 'center' }}>No Data Found</h5>}
+                {loader && <CircularProgress style={{ textAlign: 'center' }} />}
+                {data?.length <= 0 && <h5 style={{ textAlign: 'center' }}>No Data Found</h5>}
             </MainCard>
 
             <Modal open={copyModal} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">

@@ -3,12 +3,15 @@ import { lazy } from 'react';
 // project import
 import Loadable from 'components/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
+// import AuthChangePassword from 'pages/authentication/ChangePassword';
 
 // render - login
 const AuthLogin = Loadable(lazy(() => import('pages/authentication/Login')));
+const AuthChangePassword = Loadable(lazy(() => import('pages/authentication/ChangePassword')));
 const AuthRegister = Loadable(lazy(() => import('pages/authentication/Register')));
 
 // ==============================|| AUTH ROUTING ||============================== //
+let data = JSON.parse(localStorage.getItem('userdata'));
 
 const LoginRoutes = {
     path: '/',
@@ -18,9 +21,10 @@ const LoginRoutes = {
             path: 'login',
             element: <AuthLogin />
         },
+
         {
-            path: 'register',
-            element: <AuthRegister />
+            path: data ? 'changePassword' : 'login',
+            element: data ? <AuthChangePassword /> : <AuthLogin />
         }
     ]
 };

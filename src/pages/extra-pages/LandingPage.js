@@ -33,6 +33,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
+import FullScreenDialog from './FullScreenModal/FullScreenModal';
 // ==============================|| SAMPLE PAGE ||============================== //
 const theme = createTheme({
     palette: {
@@ -132,6 +133,7 @@ export default function LandingPage() {
     const [imports, setImport] = React.useState(false);
     const [editModal, setEditModal] = React.useState(false);
     const [copyModal, setCopyModal] = React.useState(false);
+    const [previewModal, setPreviewModal] = React.useState(false);
     const [name, setName] = React.useState('');
     const [textUrl, setTextUrl] = React.useState('');
     const [todos, setTodos] = useState([]);
@@ -262,7 +264,7 @@ export default function LandingPage() {
             .catch((err) => {
                 console.log(err);
                 handleCheckClose();
-                Swal.fire('Failed', err.response.data.message, 'error');
+                Swal.fire('Failed', err?.response?.data?.message, 'error');
             });
     };
 
@@ -371,10 +373,9 @@ export default function LandingPage() {
                                     size="small"
                                     onChange={(e) => setName(e.target.value)}
                                 />
-                                <Button variant="contained" color="error" onClick={() => setImport(!imports)}>
+                                <Button variant="contained" color="error" style={{ width: '50%' }} onClick={() => setImport(!imports)}>
                                     Import Site
                                 </Button>
-
                                 {imports && (
                                     <>
                                         <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -392,18 +393,22 @@ export default function LandingPage() {
                                                 onChange={(e) => setTextUrl(e.target.value)}
                                             />
                                             <br />
-                                            <Button variant="contained" color="success" onClick={() => handleImportSite()}>
+                                            <Button
+                                                variant="contained"
+                                                style={{ backgroundColor: '#58adc6', color: '#e1f1f5' }}
+                                                onClick={() => handleImportSite()}
+                                            >
                                                 Import{' '}
                                             </Button>
                                         </div>
                                     </>
                                 )}
-
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     HTML
                                 </Typography>
                                 <div class="col-sm-3">
                                     <textarea
+                                        style={{ width: '100%' }}
                                         type="email"
                                         class="form-control"
                                         placeholder="HTML"
@@ -414,13 +419,8 @@ export default function LandingPage() {
                                         onChange={(e) => setText(e.target.value)}
                                     />
                                 </div>
-
-                                <Typography id="modal-modal-title" variant="h6" component="h2">
-                                    Rendered HTML
-                                </Typography>
-                                {text && stringToHtml(text)}
-
-                                <br />
+                                {/* {text && stringToHtml(text)} */}
+                                {text && <FullScreenDialog text={text} style={{ backgroundColor: 'white !important' }} />} <br />
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Redirect URL
                                 </Typography>
@@ -434,7 +434,6 @@ export default function LandingPage() {
                                     value={redirectURL}
                                     onChange={(e) => setRedirectURL(e.target.value)}
                                 />
-
                                 <div className="form-check">
                                     <input
                                         className="form-check-input"
@@ -447,7 +446,6 @@ export default function LandingPage() {
                                         Capture Submitted Data
                                     </label>
                                 </div>
-
                                 <br />
                                 <div className="container d-flex">
                                     <Button
@@ -542,7 +540,6 @@ export default function LandingPage() {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
-
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     HTML
                                 </Typography>
@@ -558,12 +555,7 @@ export default function LandingPage() {
                                         onChange={(e) => setText(e.target.value)}
                                     />
                                 </div>
-
-                                <Typography id="modal-modal-title" variant="h6" component="h2">
-                                    Rendered HTML
-                                </Typography>
-                                {text && stringToHtml(text)}
-
+                                {text && <FullScreenDialog text={text} style={{ backgroundColor: 'white !important' }} />} <br />
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Redirect URL
                                 </Typography>
@@ -577,7 +569,6 @@ export default function LandingPage() {
                                     value={redirectURL || editData.redirect_url}
                                     onChange={(e) => setRedirectURL(e.target.value)}
                                 />
-
                                 <div className="form-check">
                                     <input
                                         className="form-check-input"
@@ -637,7 +628,6 @@ export default function LandingPage() {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                 />
-
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     HTML
                                 </Typography>
@@ -653,12 +643,7 @@ export default function LandingPage() {
                                         onChange={(e) => setText(e.target.value)}
                                     />
                                 </div>
-
-                                <Typography id="modal-modal-title" variant="h6" component="h2">
-                                    Rendered HTML
-                                </Typography>
-                                {text && stringToHtml(text)}
-
+                                {text && <FullScreenDialog text={text} style={{ backgroundColor: 'white !important' }} />} <br />
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Redirect URL
                                 </Typography>
@@ -672,7 +657,6 @@ export default function LandingPage() {
                                     value={redirectURL || editData.redirect_url}
                                     onChange={(e) => setRedirectURL(e.target.value)}
                                 />
-
                                 <div className="form-check">
                                     <input
                                         className="form-check-input"
