@@ -745,7 +745,7 @@ export default function CompaignsResult() {
                                                 </>
                                             )}
                                             {eve?.status === 'Scheduled' ? (
-                                                <p> Send Date : {new Date(eve?.send_date).toLocaleString()}</p>
+                                                <p> Launch Date : {new Date(eve?.send_date).toLocaleString()}</p>
                                             ) : (
                                                 // e?.status === 'Error' && (
                                                 <p>

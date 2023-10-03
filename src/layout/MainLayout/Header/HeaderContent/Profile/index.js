@@ -106,6 +106,7 @@ const Profile = () => {
                 sx={{
                     p: 0.25,
                     bgcolor: open ? iconBackColorOpen : 'transparent',
+                    color: 'black',
                     borderRadius: 1,
                     '&:hover': { bgcolor: 'secondary.lighter' }
                 }}
@@ -117,10 +118,10 @@ const Profile = () => {
             >
                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
                     <Avatar sx={{ bgcolor: deepPurple[500] }} style={{ textTransform: 'capitalize' }}>
-                        {user?.username?.[0]}
+                        {user?.username?.name?.[0]}
                     </Avatar>
                     <Typography variant="subtitle1" style={{ textTransform: 'capitalize' }}>
-                        {user?.username}
+                        {user?.username?.name}
                     </Typography>
                 </Stack>
             </ButtonBase>
@@ -163,11 +164,11 @@ const Profile = () => {
                                                 <Grid item>
                                                     <Stack direction="row" spacing={1.25} alignItems="center">
                                                         <Avatar sx={{ bgcolor: deepPurple[500] }} style={{ textTransform: 'capitalize' }}>
-                                                            {user?.username?.[0]}
+                                                            {user?.username?.name?.[0]}
                                                         </Avatar>
                                                         <Stack>
                                                             <Typography variant="h6" style={{ textTransform: 'capitalize' }}>
-                                                                {user?.username}
+                                                                {user?.username?.name}
                                                             </Typography>
                                                             <Typography variant="body2" color="textSecondary" style={{ width: '20px' }}>
                                                                 {user?.type.toUpperCase()}

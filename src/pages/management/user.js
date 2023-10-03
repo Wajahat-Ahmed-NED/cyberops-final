@@ -7,7 +7,7 @@ import { EditOutlined, ProfileOutlined, LogoutOutlined, UserOutlined, WalletOutl
 import { Modal, Checkbox } from '@mui/material';
 import Swal from 'sweetalert2';
 import { createPortalUser, getPortalUsers, deletePortalUser } from 'api/api';
-
+import '../extra-pages/custom.css';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -106,7 +106,7 @@ const User = () => {
     const getUsers = () => {
         getPortalUsers()
             .then((res) => {
-                // console.log(res.data)
+                console.log(res.data);
                 setData(res.data.users);
                 // console.log(userData);
             })
@@ -134,11 +134,15 @@ const User = () => {
     const [confirmpassword, setCPassword] = useState('');
 
     const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
     const [wazuhChecked, setWazuhChecked] = useState(false);
     const [gophishChecked, setGophishChecked] = useState(false);
 
     const handleNameChange = (event) => {
         setName(event.target.value);
+    };
+    const handleAddress = (event) => {
+        setAddress(event.target.value);
     };
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -175,8 +179,8 @@ const User = () => {
     };
 
     const handleCreateUser = () => {
-        if (!email || !password || !name || !confirmpassword || (!wazuhChecked && !gophishChecked)) {
-            window.alert('Please fill all the details');
+        if (!email || !password || !name || !confirmpassword || !address || (!wazuhChecked && !gophishChecked)) {
+            Swal.fire('Failed', 'Fill All the Details', 'error');
         } else {
             if (password == confirmpassword) {
                 const user = {
@@ -185,6 +189,7 @@ const User = () => {
                     name,
                     wazuh: wazuhChecked,
                     gophish: gophishChecked,
+                    address: address,
                     type: 'user',
                     auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey
                 };
@@ -203,7 +208,8 @@ const User = () => {
                         Swal.fire('Oops', error.response.data, 'error');
                     });
             } else {
-                window.alert('Password and Confirm Password must be same');
+                Swal.fire('Oops', 'Password and Confirm Password must be same', 'error');
+                // window.alert('Password and Confirm Password must be same');
             }
         }
     };
@@ -216,7 +222,8 @@ const User = () => {
                 <Modal open={modal} onClose={handleModal}>
                     <div
                         style={{
-                            height: '600px'
+                            height: '600px',
+                            backgroundColor: 'rgb(36, 41, 57)'
                         }}
                         className="modal-container"
                     >
@@ -236,6 +243,7 @@ const User = () => {
                             <br />
                             <TextField
                                 label="Email"
+                                type="email"
                                 value={email}
                                 inputProps={{ style: { color: 'white' } }}
                                 onChange={handleEmailChange}
@@ -263,6 +271,15 @@ const User = () => {
                                 size="small"
                             />
                             <br />
+                            <TextField
+                                label="Address"
+                                value={address}
+                                inputProps={{ style: { color: 'white' } }}
+                                onChange={handleAddress}
+                                fullWidth
+                                size="small"
+                            />
+                            <br />
 
                             <Typography variant="h6" component="h4" className="my-2">
                                 Select Services
@@ -276,7 +293,7 @@ const User = () => {
                         </ThemeProvider>
                         <br />
 
-                        <Button fullWidth variant="contained" onClick={handleCreateUser}>
+                        <Button fullWidth variant="contained" style={{ backgroundColor: 'rgb(88, 173, 198)' }} onClick={handleCreateUser}>
                             Create User
                         </Button>
                     </div>
@@ -309,6 +326,7 @@ const User = () => {
                                 <StyledTableCell>S.No</StyledTableCell>
                                 <StyledTableCell align="left">Name</StyledTableCell>
                                 <StyledTableCell align="left">Username/Email</StyledTableCell>
+                                <StyledTableCell align="left">Address</StyledTableCell>
                                 <StyledTableCell align="left">Resources</StyledTableCell>
                                 <StyledTableCell align="left">GophishID</StyledTableCell>
                                 <StyledTableCell align="left">Gophish API Key</StyledTableCell>
@@ -324,11 +342,12 @@ const User = () => {
                                         </StyledTableCell>
                                         <StyledTableCell align="left">{e?.name}</StyledTableCell>
                                         <StyledTableCell align="left">{e?.username}</StyledTableCell>
+                                        <StyledTableCell align="left">{e?.address ? e?.address : '-'}</StyledTableCell>
                                         <StyledTableCell align="left">
                                             {' '}
                                             <ui>
-                                                {e.wazuh && <li>Wazuh</li>}
-                                                {e.gophish && <li>Gophish</li>}
+                                                {(e.wazuh == 'true' || e.wazuh == 'True') && <li>Wazuh</li>}
+                                                {(e.gophish == 'true' || e.gophish == 'True') && <li>Gophish</li>}
                                             </ui>
                                         </StyledTableCell>
                                         <StyledTableCell align="left">{e?.gophishId}</StyledTableCell>

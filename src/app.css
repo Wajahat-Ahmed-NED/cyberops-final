@@ -18,3 +18,23 @@
 }
 
 
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  /* Track */
+  /* ::-webkit-scrollbar-track {
+    background: #rgb(36, 41, 57); 
+  } */
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #bebebe; 
+    border-radius:3px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #626262; 
+  }

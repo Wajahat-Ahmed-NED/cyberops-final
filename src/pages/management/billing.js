@@ -130,7 +130,7 @@ const User = () => {
                 console.log(err);
             });
         {
-            JSON.parse(localStorage.getItem('userdata')).username === 'Troy'
+            JSON.parse(localStorage.getItem('userdata')).type === 'SuperUser'
                 ? getCampaignCostByName()
                       .then((res) => {
                           setCompaignByName(res.data);
@@ -139,7 +139,7 @@ const User = () => {
                       .catch((err) => {
                           console.log(err);
                       })
-                : getCampaignCost(JSON.parse(localStorage.getItem('userdata')).username)
+                : getCampaignCost(JSON.parse(localStorage.getItem('userdata'))?.username?.name)
                       .then((res) => {
                           setCompaignByName(res.data);
                           console.log(res.data);
@@ -231,13 +231,13 @@ const User = () => {
         </Typography> */}
                 <span>Cost Per Agent : ${cost?.agents || 0}</span> &nbsp;&nbsp;&nbsp;
                 <span>Cost Per Compaign : ${cost?.campaigns || 0}</span>&nbsp;&nbsp;&nbsp;
-                {JSON.parse(localStorage.getItem('userdata')).username !== 'Troy' && (
+                {JSON.parse(localStorage.getItem('userdata')).type !== 'SuperUser' && (
                     <>
                         <span style={{ fontWeight: 'bold' }}>Total Agents : {0}</span>&nbsp;&nbsp;&nbsp;
                         <span style={{ fontWeight: 'bold' }}>Total Compaigns : {compaignByName.length || 0}</span>
                     </>
                 )}
-                {JSON.parse(localStorage.getItem('userdata')).username === 'Troy' ? (
+                {JSON.parse(localStorage.getItem('userdata')).type === 'SuperUser' ? (
                     <Button
                         style={{ float: 'right', backgroundColor: '#e1f1f5', color: '#58adc6' }}
                         variant="outlined"
@@ -309,7 +309,7 @@ const User = () => {
                 <br />
                 <br />
                 <br />
-                {JSON.parse(localStorage.getItem('userdata')).username === 'Troy' ? (
+                {JSON.parse(localStorage.getItem('userdata')).type === 'SuperUser' ? (
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead>
@@ -401,12 +401,7 @@ const User = () => {
                                     <br />
                                     <span>
                                         <b style={{ textAlign: 'right' }}>DUE DATE</b>&nbsp;&nbsp;{' '}
-                                        {new Date().getMonth() +
-                                            1 +
-                                            '/' +
-                                            (parseInt(new Date().toLocaleDateString()[2]) + 1) +
-                                            '/' +
-                                            new Date().getFullYear()}
+                                        {new Date().getMonth() + 1 + '/' + (new Date().getDate() + 1) + '/' + new Date().getFullYear()}
                                     </span>
                                     <br />
                                     <span>
@@ -423,9 +418,15 @@ const User = () => {
                                     <h6 style={{ fontWeight: 'bold' }}>PAYMENT METHOD</h6>
                                     <p>Credit Card</p>
                                 </div>
-                                <div className="pe-3">
-                                    <h6 style={{ fontWeight: 'bold' }}>CUSTOMER NAME</h6>
-                                    <p>{JSON.parse(localStorage.getItem('userdata'))?.username}</p>
+                                <div className="d-flex justify-content-center">
+                                    <div className="pe-3">
+                                        <h6 style={{ fontWeight: 'bold' }}>CUSTOMER NAME</h6>
+                                        <p>{JSON.parse(localStorage.getItem('userdata'))?.username?.name}</p>
+                                    </div>
+                                    <div className="pe-3">
+                                        <h6 style={{ fontWeight: 'bold' }}>ADDRESS</h6>
+                                        <p>{JSON.parse(localStorage.getItem('userdata'))?.username?.address || 'Not Available'}</p>
+                                    </div>
                                 </div>
                             </div>
 

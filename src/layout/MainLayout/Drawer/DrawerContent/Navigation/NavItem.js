@@ -50,7 +50,7 @@ const NavItem = ({ item, level }) => {
     }, []);
 
     const textColor = 'text.primary';
-    const iconSelectedColor = 'primary.main';
+    const iconSelectedColor = 'rgb(88, 173, 198)';
 
     return (
         <ListItemButton
@@ -70,9 +70,10 @@ const NavItem = ({ item, level }) => {
                     //     bgcolor: 'primary.lighter'
                     // },
                     '&.Mui-selected': {
-                        bgcolor: 'primary.lighter',
-                        borderRight: `2px solid ${theme.palette.primary.main}`,
+                        bgcolor: 'rgb(225, 241, 245)',
+                        borderRight: `2px solid rgb(88, 173, 198)`,
                         color: iconSelectedColor,
+
                         '&:hover': {
                             color: iconSelectedColor,
                             bgcolor: 'primary.lighter'

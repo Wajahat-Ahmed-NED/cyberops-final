@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import './custom.css';
 // import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 
@@ -156,7 +156,7 @@ export default function Compaign() {
     const [lPage, setLPage] = useState('');
     const [url, setURL] = useState('');
     const [lDate, setLDate] = useState('');
-    const [sendEmails, setSendEmails] = useState('');
+    const [sendEmails, setSendEmails] = useState(null);
     const [sendProfile, setSendProfile] = useState('');
     const [group, setGroup] = useState('');
 
@@ -170,6 +170,10 @@ export default function Compaign() {
     const [sendingProfile, setSendingProfile] = React.useState([]);
     const [data, setData] = React.useState([]);
     const [dataLoader, setDataLoader] = React.useState(false);
+
+    useEffect(() => {
+        console.log(emailTemplate);
+    }, [emailTemplate]);
 
     const handleOpen = () => {
         setOpen(true);
@@ -190,12 +194,12 @@ export default function Compaign() {
         setOpen(false);
     };
     const handleAdd = () => {
-        setOpen(false);
-        if (name === '' || emailTemplate === '' || url === '' || lPage === '' || sendProfile === '' || group === '') {
+        if (name === '' || emailTemplate === '' || url === '' || lPage === '' || lDate === '' || sendProfile === '' || group === '') {
             Swal.fire('Invalid Data', 'Fill all fields!', 'error');
-            setOpen(true);
+            // setOpen(true);
         } else {
             // setOpen(true);
+
             Swal.fire({
                 icon: 'question',
                 title: 'Processing!',
@@ -204,34 +208,37 @@ export default function Compaign() {
                 // timer: 2000
             });
             const date = new Date(lDate);
+            console.log(date);
             if (sendEmails) {
                 var send_by_date = new Date(sendEmails);
                 console.log(sendEmails);
-                var sendDate = new Date(send_by_date.getTime() + send_by_date.getTimezoneOffset() * 60000);
+                // var sendDate = new Date(send_by_date.getTime() + send_by_date.getTimezoneOffset() * 60000);
             }
 
             // Convert the date to the UTC time zone
-            const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-            // console.log(utcDate.toISOString());
+            // const utcDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+            // console.log(utcDate);
             let obj = {
                 name: name,
                 template: { name: emailTemplate },
                 url: url,
                 page: { name: lPage },
                 smtp: { name: sendProfile },
-                launch_date: utcDate?.toISOString(),
+                launch_date: date,
                 // send_by_date: sendDate && sendDate.toISOString(),
                 groups: [{ name: group }],
                 auth: JSON.parse(localStorage.getItem('userdata'))?.gophishkey,
-                username: JSON.parse(localStorage.getItem('userdata'))?.username
+                username: JSON.parse(localStorage.getItem('userdata'))?.username?.name
             };
             if (sendEmails) {
-                obj['send_by_date'] = sendDate.toISOString();
+                obj['send_by_date'] = send_by_date;
             }
+            console.log(obj);
+            console.log(obj['launch_date'], typeof obj['launch_date']);
             createCompaign(obj)
                 .then((res) => {
                     console.log(res.data);
-
+                    setOpen(false);
                     Swal.fire({
                         icon: 'success',
                         title: 'Success!',
@@ -270,8 +277,8 @@ export default function Compaign() {
         setEmailTemplate(e?.template.name);
         setLPage(e?.page.name);
         setURL(e?.url);
-        setLDate(e?.launch_date);
-        setSendEmails(e?.send_by_date);
+        setLDate('');
+        setSendEmails(null);
         setSendProfile(e?.smtp.name);
         setGroup(e?.groups?.name);
         setCopyModal(true);
@@ -468,7 +475,10 @@ export default function Compaign() {
                                         id="ip"
                                         required
                                         value={lDate}
-                                        onChange={(e) => setLDate(e.target.value)}
+                                        onChange={(e) => {
+                                            console.log(e.target.value);
+                                            setLDate(e.target.value);
+                                        }}
                                     />
                                 </div>
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -689,14 +699,16 @@ export default function Compaign() {
                                     class="form-control"
                                     placeholder="Select Email Template"
                                     id="firstName"
-                                    value={emailTemplate}
-                                    onBlur={(e) => setEmailTemplate(e.target.value)}
+                                    // value={emailTemplate}
+                                    onBlur={(e) => {
+                                        setEmailTemplate(e.target.value);
+                                    }}
                                 >
-                                    <option value="" disabled selected>
+                                    <option value="" disabled>
                                         Select Email Template
                                     </option>
                                     {templates?.map((e, i) => (
-                                        <option key={i} value={e.name}>
+                                        <option key={i} value={e.name} selected={emailTemplate === e.name ? true : false}>
                                             {e.name}
                                         </option>
                                     ))}
@@ -711,14 +723,13 @@ export default function Compaign() {
                                     class="form-control"
                                     placeholder="Select Landing Page"
                                     id="firstName"
-                                    value={lPage}
                                     onBlur={(e) => setLPage(e.target.value)}
                                 >
-                                    <option value="" disabled selected>
+                                    <option value="" disabled>
                                         Select Landing Page
                                     </option>
                                     {pages?.map((e, i) => (
-                                        <option key={i} value={e.name}>
+                                        <option key={i} value={e.name} selected={lPage === e.name ? true : false}>
                                             {e.name}
                                         </option>
                                     ))}
@@ -774,14 +785,13 @@ export default function Compaign() {
                                     class="form-control"
                                     placeholder="Select Landing Page"
                                     id="firstName"
-                                    value={sendProfile}
                                     onBlur={(e) => setSendProfile(e.target.value)}
                                 >
-                                    <option value="" disabled selected>
+                                    <option value="" disabled>
                                         Select Sending Profile
                                     </option>
                                     {sendingProfile?.map((e, i) => (
-                                        <option key={i} value={e.name}>
+                                        <option key={i} value={e.name} selected={sendProfile === e.name ? true : false}>
                                             {e.name}
                                         </option>
                                     ))}
@@ -849,7 +859,6 @@ export default function Compaign() {
                                     class="form-control"
                                     placeholder="Select Landing Page"
                                     id="firstName"
-                                    value={group}
                                     onBlur={(e) => setGroup(e.target.value)}
                                 >
                                     <option value="" disabled selected>
