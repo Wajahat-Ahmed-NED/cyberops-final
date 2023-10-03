@@ -14,11 +14,9 @@ const User = () => {
     //const [userData, setUserData] = useState([]);
 
     const [data, setData] = useState([]);
-    useEffect(() => {
-        // setData(JSON.parse(localStorage.getItem('Users')));
-        // console.log(JSON.parse(localStorage.getItem('Users')));
+    const getFetch = () => {
         axios
-            .get('http://192.168.1.120:1338/getUser')
+            .get(`${process.env.REACT_APP_BACKEND_API}:1338/getUser`)
             .then((res) => {
                 setData(res.data.users);
                 // console.log(userData);
@@ -28,6 +26,11 @@ const User = () => {
                 window.alert('Something went wrong');
             });
         console.log(data);
+    };
+    useEffect(() => {
+        // setData(JSON.parse(localStorage.getItem('Users')));
+        // console.log(JSON.parse(localStorage.getItem('Users')));
+        getFetch();
     }, []);
     const [modal, setModal] = useState(false);
     const handleListItemClick = (event, index) => {
@@ -79,12 +82,12 @@ const User = () => {
         } else {
             if (password == confirmpassword) {
                 const user = {
-                    email,
+                    username: email,
                     password,
-                    name,
-                    wazuh: wazuhChecked,
-                    gophish: gophishChecked,
-                    type: 'user'
+                    name
+                    // wazuh: wazuhChecked,
+                    // gophish: gophishChecked,
+                    // type: 'user'
                 };
                 // let existingUsers = JSON.parse(localStorage.getItem('Users'));
                 // existingUsers ? existingUsers.push(user) : (existingUsers = [user]);
@@ -93,8 +96,8 @@ const User = () => {
                 // setModal(false);
 
                 axios
-                    .post('http://192.168.1.120:1338/createPortalUser', {
-                        userdetails: user
+                    .post(`${process.env.REACT_APP_BACKEND_API}:1338/createPortalUser`, {
+                        ...user
                     })
                     .then((res) => {
                         Swal.fire({
@@ -103,17 +106,38 @@ const User = () => {
                             text: 'User Created successfully!',
                             showConfirmButton: true
                         });
+                        getFetch();
                         setModal(!modal);
                         // Swal.fire(res.data, 'Fill all fields!', 'error');
                     })
                     .catch((error) => {
-                        //console.log('error', error.response.data);
-                        Swal.fire('Oops', error.response.data, 'error');
+                        console.log('error', error.response);
+                        Swal.fire('Oops', error.response.data.message, 'error');
                     });
             } else {
                 window.alert('Password and Confirm Password must be same');
             }
         }
+    };
+
+    const handleDeleteUser = (id) => {
+        axios
+            .delete(`${process.env.REACT_APP_BACKEND_API}:1338/deleteUsers/${id}`)
+            .then((response) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'User Deleted Successfully!',
+                    showConfirmButton: true
+                });
+                getFetch();
+            })
+            .catch((error) => {
+                // alert('Error');
+                Swal.fire('Oops', error.response.data.message, 'error');
+
+                console.log(error);
+            });
     };
     return (
         <>
@@ -140,7 +164,7 @@ const User = () => {
                         />
                         <br />
                         <TextField
-                            label="Email"
+                            label="Username"
                             value={email}
                             inputProps={{ style: { color: 'black' } }}
                             onChange={handleEmailChange}
@@ -166,7 +190,7 @@ const User = () => {
                         />
                         <br />
 
-                        <Typography variant="h4" component="h2" className="my-2">
+                        {/* <Typography variant="h4" component="h2" className="my-2">
                             Select Services
                         </Typography>
                         <div>
@@ -174,7 +198,7 @@ const User = () => {
                             Wazuh
                             <Checkbox checked={gophishChecked} onChange={handleGophishChange} name="gophish" />
                             Gophish
-                        </div>
+                        </div> */}
                         <br />
                         <Button fullWidth variant="contained" onClick={handleCreateUser}>
                             Create User
@@ -203,9 +227,10 @@ const User = () => {
                         <tr>
                             <td>S.No</td>
                             <td>Name</td>
-                            <td>Username/Email</td>
-                            <td>Resources</td>
-                            <td>GoPhish API Key</td>
+                            <td>Username</td>
+                            <td>Action</td>
+                            {/* <td>Resources</td>
+                            <td>GoPhish API Key</td> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -217,12 +242,17 @@ const User = () => {
                                         <td>{e.name}</td>
                                         <td>{e.username}</td>
                                         <td>
+                                            <Button color="error" variant="outlined" onClick={() => handleDeleteUser(e._id)}>
+                                                Delete
+                                            </Button>
+                                        </td>
+                                        {/* <td>
                                             <ul>
-                                                {/* {e.wazuh && <li>Wazuh</li>} */}
+                                               
                                                 {e.gophish && <li>Gophish</li>}
                                             </ul>
                                         </td>
-                                        <td>{e.gophishapikey}</td>
+                                        <td>{e.gophishapikey}</td> */}
                                         {/* <td>
                                             <IconButton onClick={() => alert('Edited Successfully But No Backend')}>
                                                 <EditIcon color="success" />

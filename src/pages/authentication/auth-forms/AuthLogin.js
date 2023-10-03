@@ -115,10 +115,10 @@ const AuthLogin = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <Stack spacing={1}>
-                                    <InputLabel htmlFor="email-login">Username/Email</InputLabel>
+                                    <InputLabel htmlFor="email-login">Username</InputLabel>
                                     <OutlinedInput
                                         id="email-login"
-                                        type="email"
+                                        type="text"
                                         value={values.email}
                                         name="email"
                                         onBlur={handleBlur}
@@ -170,15 +170,17 @@ const AuthLogin = () => {
                                     )}
                                 </Stack>
                             </Grid>
-
+                            {/*
                             <Grid item xs={12} sx={{ mt: -1 }}>
                                 <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
-                                    {/* <FormControlLabel /> */}
+                                    {/* <FormControlLabel /> 
                                     <Link variant="h6" component={RouterLink} to="" color="text.primary">
                                         Forgot Password?
                                     </Link>
                                 </Stack>
                             </Grid>
+
+                            */}
                             {errors.submit && (
                                 <Grid item xs={12}>
                                     <FormHelperText error>{errors.submit}</FormHelperText>

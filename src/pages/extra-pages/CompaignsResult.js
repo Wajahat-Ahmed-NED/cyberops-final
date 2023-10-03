@@ -490,7 +490,7 @@ export default function CompaignsResult() {
                                 <input
                                     type="email"
                                     class="form-control"
-                                    placeholder="http://192.168.1.1"
+                                    placeholder="http://192.168.0.107"
                                     id="ip"
                                     required
                                     value={url}

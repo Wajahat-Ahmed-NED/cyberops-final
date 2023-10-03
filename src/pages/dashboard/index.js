@@ -83,7 +83,7 @@ const DashboardDefault = () => {
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
-        navigate('/phishing');
+        navigate('/user-mgt');
     }, []);
 
     return (

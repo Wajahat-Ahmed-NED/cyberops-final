@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 import Compaigns from 'pages/extra-pages/Comapigns';
+import GophishKey from 'pages/management/gophishKey';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -73,6 +74,10 @@ const MainRoutes = {
         {
             path: '/billing-mgt',
             element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <BillingMgt /> : <DashboardDefault />
+        },
+        {
+            path: '/key-mgt',
+            element: JSON.parse(localStorage.getItem('userdata'))?.type === 'SuperUser' ? <GophishKey /> : <DashboardDefault />
         },
         {
             path: '/landing-page',

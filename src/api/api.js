@@ -3,12 +3,13 @@ import axios from '../../node_modules/axios/index';
 const https = require('https');
 
 // const api = 'http://20.63.81.190:1338/';
-// const goPhishApi = 'http://localhost:1338/';
+// const goPhishApi = 'process.env.REACT_APP_BACKEND_API:1338/';
 // const api2 = 'http://172.168.10.55:1338/';
 // const token = '5b9df0f4e8295a7ba7a9a6031fb9c503d018b51e41bc60fbca14f53f929c9afc';
-const api = 'http://192.168.1.120:1338/'; //127.0.0.1
-const goPhishApi = 'http://192.168.1.120:1338/'; //20.63.81.190:1338
-const api2 = 'http://192.168.1.120:1338/';
+console.log(process.env.REACT_APP_BACKEND_API);
+const api = `${process.env.REACT_APP_BACKEND_API}:1338/`; //127.0.0.1
+const goPhishApi = `${process.env.REACT_APP_BACKEND_API}:1338/`; //20.63.81.190:1338
+const api2 = `${process.env.REACT_APP_BACKEND_API}:1338/`;
 const token = 'fd8bc15c96d3809f1b44d852936cb71394836bbf411b4d67321a3508d02862f6';
 // const api = 'http://20.63.81.190:1338/';
 // const goPhishApi = 'http://20.63.81.190:1338/';

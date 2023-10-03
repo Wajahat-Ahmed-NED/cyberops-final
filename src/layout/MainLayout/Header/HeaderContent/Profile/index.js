@@ -163,14 +163,14 @@ const Profile = () => {
                                                 <Grid item>
                                                     <Stack direction="row" spacing={1.25} alignItems="center">
                                                         <Avatar sx={{ bgcolor: deepPurple[500] }} style={{ textTransform: 'capitalize' }}>
-                                                            {user?.username?.[0]}
+                                                            {user?.name?.[0]}
                                                         </Avatar>
                                                         <Stack>
-                                                            <Typography variant="h6" style={{ textTransform: 'capitalize' }}>
-                                                                {user?.username}
+                                                            <Typography variant="h5" style={{ textTransform: 'capitalize' }}>
+                                                                {user?.name}
                                                             </Typography>
                                                             <Typography variant="body2" color="textSecondary" style={{ width: '20px' }}>
-                                                                {user?.type}
+                                                                {user?.username}
                                                             </Typography>
                                                         </Stack>
                                                     </Stack>

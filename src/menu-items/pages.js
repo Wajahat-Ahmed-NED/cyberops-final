@@ -23,10 +23,10 @@ const pages = {
             icon: icons.ProfileOutlined
         },
         {
-            id: 'billing',
-            title: 'Billing ',
+            id: 'gophishKey',
+            title: 'Gophish Key ',
             type: 'item',
-            url: '/billing-mgt',
+            url: '/key-mgt',
             icon: icons.ProfileOutlined
         }
     ]

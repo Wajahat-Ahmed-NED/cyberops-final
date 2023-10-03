@@ -17,15 +17,15 @@ const phishing = {
     title: 'Phishing Simulation',
     type: 'group',
     children: [
-        {
-            id: 'Admin-page',
-            title: 'Phishing',
-            type: 'item',
-            url: '/phishing',
-            icon: PersonOutlineIcon,
-            color: '#ffffff',
-            children: []
-        },
+        // {
+        //     id: 'Admin-page',
+        //     title: 'Phishing',
+        //     type: 'item',
+        //     url: '/phishing',
+        //     icon: PersonOutlineIcon,
+        //     color: '#ffffff',
+        //     children: []
+        // },
         {
             id: 'user-page',
             title: 'Users And Groups',
