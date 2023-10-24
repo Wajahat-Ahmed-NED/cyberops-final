@@ -94,6 +94,15 @@ async function getCampaignCostByName() {
         });
     }
 }
+async function billPaid(obj) {
+    if (getToken() !== true) {
+        return await axios.post(`${api}billPaid`, obj, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    }
+}
 async function getCampaignCost(username) {
     if (getToken() !== true) {
         return await axios.get(`${api}getCampaignCost/${username}`, {
@@ -272,6 +281,7 @@ export {
     getCampaignCostByName,
     getCost,
     getCampaignCost,
+    billPaid,
     editCost,
     importSite,
     importEmail,

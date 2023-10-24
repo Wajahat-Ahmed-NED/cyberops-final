@@ -13,12 +13,14 @@ import MainCard from 'components/MainCard';
 import { useEffect, useRef, useState } from 'react';
 import { Typography, Button, Modal, Box, TextField, Select, MenuItem, IconButton } from '@mui/material';
 import { PDFExport } from '@progress/kendo-react-pdf';
-import { getCompaigns, getCost, editCost, getCampaignCostByName, getCampaignCost } from 'api/api';
+import { getCompaigns, getCost, editCost, getCampaignCostByName, getCampaignCost, billPaid } from 'api/api';
 import Swal from 'sweetalert2';
 import img1 from '../../assets/images/myImages/1.PNG';
 import img2 from '../../assets/images/myImages/2.PNG';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
+import Chip from '@mui/material/Chip';
+
 // ==============================|| SAMPLE PAGE ||============================== //
 const theme = createTheme({
     palette: {
@@ -119,6 +121,7 @@ const User = () => {
     const [name, setName] = useState('');
     const [cost, setCost] = useState({});
     const [compaignByName, setCompaignByName] = useState([]);
+    const [compaignToPay, setCompaignToPay] = useState(0);
 
     const getFetch = () => {
         getCost()
@@ -143,14 +146,15 @@ const User = () => {
                       .then((res) => {
                           setCompaignByName(res.data);
                           console.log(res.data);
+                          const data = res?.data?.filter((e) => e.payment !== '1');
+                          setCompaignToPay(data?.length);
                       })
                       .catch((err) => {
                           console.log(err);
                       });
         }
     };
-
-    useEffect(() => {
+    const getCompaign = () => {
         getCompaigns()
             .then((res) => {
                 setData(res.data);
@@ -160,6 +164,9 @@ const User = () => {
             .catch((err) => {
                 console.log(err);
             });
+    };
+    useEffect(() => {
+        getCompaign();
         getFetch();
         // axios
         //     .get('http://192.168.1.99:1338/getUser')
@@ -220,6 +227,45 @@ const User = () => {
         }
     };
 
+    const handlePayment = (bill, username) => {
+        const obj = {
+            username,
+            bill
+        };
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Mark the payment?. You will not be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            confirmButtonColor: 'rgb(88, 173, 198)'
+
+            // buttons: ['No, cancel it!', 'Yes, I am sure!'],
+            // dangerMode: true
+        }).then(function (isConfirm) {
+            console.log(isConfirm);
+            if (isConfirm.isConfirmed) {
+                billPaid(obj)
+                    .then((res) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: 'Payment Updated Successfully!',
+                            showConfirmButton: true,
+                            confirmButtonColor: 'rgb(88, 173, 198)'
+                        });
+                        getCompaign();
+                        getFetch();
+                    })
+                    .catch((err) => {
+                        Swal.fire('Failed', 'Could Not Update', 'error');
+                    });
+            }
+        });
+    };
+
     return (
         <>
             <MainCard title="User Management">
@@ -234,7 +280,7 @@ const User = () => {
                 {JSON.parse(localStorage.getItem('userdata')).type !== 'SuperUser' && (
                     <>
                         <span style={{ fontWeight: 'bold' }}>Total Agents : {0}</span>&nbsp;&nbsp;&nbsp;
-                        <span style={{ fontWeight: 'bold' }}>Total Compaigns : {compaignByName.length || 0}</span>
+                        <span style={{ fontWeight: 'bold' }}>Total Compaigns : {compaignToPay || 0}</span>
                     </>
                 )}
                 {JSON.parse(localStorage.getItem('userdata')).type === 'SuperUser' ? (
@@ -252,11 +298,11 @@ const User = () => {
                             variant="outlined"
                             onClick={handleDownloadInvoice}
                         >
-                            ${compaignByName.length * cost?.campaigns || 0} - Download Invoice
+                            ${compaignToPay * cost?.campaigns || 0} - Download Invoice
                         </Button>
                         {/* &nbsp;&nbsp;{' '}
                         <span style={{ float: 'right', fontWeight: 'bold' }}>
-                            Total Bill : ${compaignByName.length * cost?.campaigns || 0}
+                            Total Bill : ${compaignToPay * cost?.campaigns || 0}
                         </span> */}
                     </>
                 )}
@@ -319,10 +365,11 @@ const User = () => {
                                     <StyledTableCell align="left">Total Agent</StyledTableCell>
                                     <StyledTableCell align="left">Total Campaign</StyledTableCell>
                                     <StyledTableCell align="left">Total Cost</StyledTableCell>
+                                    <StyledTableCell align="left">Payment</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {compaignByName.map((e, i) => (
+                                {compaignByName?.map((e, i) => (
                                     <StyledTableRow key={i}>
                                         <StyledTableCell component="th" scope="row">
                                             {i + 1}
@@ -331,6 +378,16 @@ const User = () => {
                                         <StyledTableCell align="left">{0}</StyledTableCell>
                                         <StyledTableCell align="left">{e?.total}</StyledTableCell>
                                         <StyledTableCell align="left">${e?.total * cost?.campaigns}</StyledTableCell>
+                                        <StyledTableCell align="left">
+                                            <Button
+                                                color="success"
+                                                variant="contained"
+                                                style={{ fontWeight: 'bold' }}
+                                                onClick={() => handlePayment(e?.total * cost?.campaigns, e?.username)}
+                                            >
+                                                Pay
+                                            </Button>
+                                        </StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
@@ -347,10 +404,11 @@ const User = () => {
                                         <StyledTableCell align="left">AgentId</StyledTableCell>
                                         <StyledTableCell align="left">CampaignId</StyledTableCell>
                                         <StyledTableCell align="left">StartDate</StyledTableCell>
+                                        <StyledTableCell align="left">Payment</StyledTableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {compaignByName.map((e, i) => (
+                                    {compaignByName?.map((e, i) => (
                                         <StyledTableRow key={i}>
                                             <StyledTableCell component="th" scope="row">
                                                 {i + 1}
@@ -358,7 +416,14 @@ const User = () => {
                                             <StyledTableCell align="left">{e?.username}</StyledTableCell>
                                             <StyledTableCell align="left">{0}</StyledTableCell>
                                             <StyledTableCell align="left">{e?.campaignId}</StyledTableCell>
-                                            <StyledTableCell align="left">{e.startDate}</StyledTableCell>
+                                            <StyledTableCell align="left">{e?.startDate}</StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                {e?.payment === '1' ? (
+                                                    <Chip label="Paid" color="success" />
+                                                ) : (
+                                                    <Chip label="UnPaid" color="error" />
+                                                )}
+                                            </StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
@@ -449,9 +514,9 @@ const User = () => {
                                     <tbody>
                                         <tr>
                                             <td style={{ fontWeight: 'bold' }}>Total Compaigns</td>
-                                            <td>{compaignByName?.length || 0}</td>
+                                            <td>{compaignToPay || 0}</td>
                                             <td>{cost?.campaigns}</td>
-                                            <td>{compaignByName?.length * cost?.campaigns}</td>
+                                            <td>{compaignToPay * cost?.campaigns}</td>
                                             {/* <td>{e?.startDate}</td> */}
 
                                             {/* <td>${e?.total * cost.campaigns}</td> */}
@@ -469,9 +534,7 @@ const User = () => {
                                             <td style={{ fontWeight: 'bold' }}></td>
                                             <td></td>
                                             <td style={{ fontWeight: 'bold' }}>TOTAL</td>
-                                            <td style={{ fontWeight: 'bold' }}>
-                                                $ {0 * cost?.agents + compaignByName?.length * cost?.campaigns}
-                                            </td>
+                                            <td style={{ fontWeight: 'bold' }}>$ {0 * cost?.agents + compaignToPay * cost?.campaigns}</td>
                                             {/* <td>{e?.startDate}</td> */}
 
                                             {/* <td>${e?.total * cost.campaigns}</td> */}
@@ -480,9 +543,7 @@ const User = () => {
                                             <td style={{ fontWeight: 'bold' }}></td>
                                             <td></td>
                                             <td style={{ fontWeight: 'bold' }}>BALANCE DUE</td>
-                                            <td style={{ fontWeight: 'bold' }}>
-                                                $ {0 * cost?.agents + compaignByName?.length * cost?.campaigns}
-                                            </td>
+                                            <td style={{ fontWeight: 'bold' }}>$ {0 * cost?.agents + compaignToPay * cost?.campaigns}</td>
                                             {/* <td>{e?.startDate}</td> */}
 
                                             {/* <td>${e?.total * cost.campaigns}</td> */}

@@ -393,6 +393,7 @@ export default function Compaign() {
                             }}
                             noValidate
                             autoComplete="off"
+                            // style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                         >
                             <ThemeProvider theme={theme}>
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
